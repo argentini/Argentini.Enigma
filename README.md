@@ -17,14 +17,14 @@ It's easy to create a new EnigmaMachine object and encipher/decipher your own te
 ```C#
 var enigmaMachine = new EnigmaMachine(new EnigmaConfiguration
 {
-	PlugBoardCipherSeed = 1234567,
-	ReflectorCipherSeed = 6789101,
-	Rotors = new List<EnigmaRotor> // Rotors work top to bottom; original hardware has them right to left
-	{
-		new (rotorCipherSeed: 9876543210, rotorStartingPosition: 0, advanceNextRotorIncrement: 50),
-		new (rotorCipherSeed: 1234567890, rotorStartingPosition: 0, advanceNextRotorIncrement: 25),
-		new (rotorCipherSeed: 1029384756, rotorStartingPosition: 0) // No neighbor for the last rotor to advance
-	}
+    PlugBoardCipherSeed = 1234567,
+    ReflectorCipherSeed = 6789101,
+    Rotors = new List<EnigmaRotor> // Rotors work top to bottom; original hardware has them right to left
+    {
+        new (rotorCipherSeed: 9876543210, rotorStartingPosition: 0, advanceNextRotorIncrement: 50),
+        new (rotorCipherSeed: 1234567890, rotorStartingPosition: 0, advanceNextRotorIncrement: 25),
+        new (rotorCipherSeed: 1029384756, rotorStartingPosition: 0) // No neighbor for the last rotor to advance
+    }
 });
 
 var message = @"
