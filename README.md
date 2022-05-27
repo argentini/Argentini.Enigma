@@ -10,7 +10,7 @@ This project is a virtual *Enigma Machine* that supports the entire UTF-16 chara
   
 Just like the physical device, machine state is used to both encipher and decipher text with the same functions (like a text toggle). This virtual version works with UTF-16 strings using a keyless algorythm based on the inner workings of the original hardware. To accomplish this, it uses a custom predictable random number generator (PRNG) to ensure the cipher will work on any supported platform.  
   
-Unlike the original hardware, you can add as many virtual rotors as you like, set the cipher seeds for all machine components (effectively randomizing the character sets they use), set starting rotor positions, and more, which will improve the overall cipher strength.  
+Unlike the original hardware, you can add as many virtual rotors as you like, set the cipher seeds for all machine components (effectively randomizing the character sets they use), set starting rotor positions, and more, which will improve the overall cipher strength. Because the entire UTF-16 character set is used, the cipher strength is already exponentially better even without additional rotors, and should meet modern keyless cryptography needs.  
   
 It's easy to create a new EnigmaMachine object and encipher/decipher your own text:  
   
