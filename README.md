@@ -6,7 +6,7 @@ Learn more about it at [https://en.wikipedia.org/wiki/Enigma_machine](https://en
 
 # The Project
 
-This project is a virtual *Enigma Machine* that supports the entire UTF-16 character set, whereas the original German hardware only supported 26 uppercase letters (and no spaces!).  
+This project is a virtual *Enigma Machine* that supports the entire UTF-16 character set, whereas the original German hardware only supported 26 uppercase letters (no spaces!).  
   
 Just like the physical device, machine state is used to both encipher and decipher text with the same functions (like a text toggle). This virtual version works with UTF-16 strings using a keyless algorythm based on the inner workings of the original hardware. To accomplish this, it uses a custom predictable random number generator (PRNG) to ensure the cipher will work on any supported platform.  
   
@@ -19,7 +19,7 @@ var enigmaMachine = new EnigmaMachine(new EnigmaConfiguration
 {
 	PlugBoardCipherSeed = 1234567,
 	ReflectorCipherSeed = 6789101,
-	Rotors = new List<EnigmaRotor> // Rotors work top to bottom; original hardware had them right to left
+	Rotors = new List<EnigmaRotor> // Rotors work top to bottom; original hardware has them right to left
 	{
 		new (42, advanceNextRotorIncrement: 50),
 		new (86, advanceNextRotorIncrement: 25),
