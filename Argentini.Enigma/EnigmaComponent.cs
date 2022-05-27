@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-namespace Argentini.Enigma;
+﻿namespace Argentini.Enigma;
 
 /// <summary>
 /// Base class for EnigmaMachine plug board, reflector, and rotors.

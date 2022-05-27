@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Text;
+﻿using System.Text;
 
 namespace Argentini.Enigma;
 
@@ -83,7 +82,7 @@ public class EnigmaMachine
 	/// </summary>
 	/// <param name="character">UTF-16 character to encipher or decipher</param>
 	/// <returns></returns>
-	public char ScrambleCharacter(char character)
+	private char ScrambleCharacter(char character)
 	{
 		#region Core Cipher Process
 		
@@ -135,12 +134,12 @@ public class EnigmaMachine
 	}
 
 	/// <summary>
-	/// Encipher/decipher a UTF-16 string.
+	/// Encipher or decipher a UTF-16 string.
 	/// Enigma uses machine state to both encipher and decipher with the same command.
 	/// </summary>
 	/// <param name="message">UTF-16 string to encipher or decipher</param>
 	/// <returns></returns>
-	public string ScrambleString(string message)
+	public string RunCipher(string message)
 	{
 		var scrambledText = new StringBuilder();
 

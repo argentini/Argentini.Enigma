@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-namespace Argentini.Enigma;
+﻿namespace Argentini.Enigma;
 
 /// <summary>
 /// Virtual rotor used in a series as part of the cipher process.

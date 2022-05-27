@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-namespace Argentini.Enigma;
+﻿namespace Argentini.Enigma;
 
 /// <summary>
 /// EnigmaMachine configuration object.

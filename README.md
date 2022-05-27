@@ -8,11 +8,11 @@ Learn more about it at [https://en.wikipedia.org/wiki/Enigma_machine](https://en
 
 This project is a virtual *Enigma Machine* that supports the entire UTF-16 character set, whereas the original German hardware only supported 26 uppercase letters (and no spaces!).  
   
-Just like the physical device, machine state is used to both encipher and decipher text with the same functions (like a text toggle). This virtual version enciphers and deciphers a UTF-16 string using a keyless algorythm based on the inner workings of the original hardware. To accomplish this, it uses a custom predictable random number generator (PRNG) to ensure the cipher will work on any supported platform.  
+Just like the physical device, machine state is used to both encipher and decipher text with the same functions (like a text toggle). This virtual version works with UTF-16 strings using a keyless algorythm based on the inner workings of the original hardware. To accomplish this, it uses a custom predictable random number generator (PRNG) to ensure the cipher will work on any supported platform.  
   
 Unlike the original hardware, you can add as many virtual rotors as you like, set the cipher seeds for all machine components (effectively randomizing the character sets they use), set starting rotor positions, and more, which will improve the overall cipher strength.  
   
-It's easy to create a new EnigmaMachine object and de/cipher your own text:  
+It's easy to create a new EnigmaMachine object and encipher/decipher your own text:  
   
 ```C#
 var enigmaMachine = new EnigmaMachine(new EnigmaConfiguration
@@ -32,8 +32,8 @@ Fynydd is a software development & hosting company.
 Fynydd is a Welsh word (prounounced: /ˈvənɨ̞ð/) that means mountain or hill.
 ";
 
-var enciphered = enigma.ScrambleString(message);
-var deciphered = enigma.ScrambleString(enciphered);
+var enciphered = enigma.RunCipher(message);
+var deciphered = enigma.RunCipher(enciphered);
 
 Assert.Equal(message, deciphered);
 ```

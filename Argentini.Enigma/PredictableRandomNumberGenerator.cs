@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-namespace Argentini.Enigma;
+﻿namespace Argentini.Enigma;
 
 /// <summary>
 /// Generate random numbers using a linear congruential generator.

@@ -82,8 +82,8 @@ Fynydd is a software development & hosting company.
 Fynydd is a Welsh word (prounounced: /ˈvənɨ̞ð/) that means mountain or hill.
 ";
 
-		var scrambled = enigma.ScrambleString(message);
-		var unscrambled = enigma.ScrambleString(scrambled);
+		var scrambled = enigma.RunCipher(message);
+		var unscrambled = enigma.RunCipher(scrambled);
 
 		Assert.Equal(message, unscrambled);
 
@@ -91,17 +91,17 @@ Fynydd is a Welsh word (prounounced: /ˈvənɨ̞ð/) that means mountain or hill
 		
 		#region Test entire UTF-16 character space
 		
-		var message2 = string.Empty;
+		message = string.Empty;
 		
 		for (var x = EnigmaConfiguration.CharSetStart; x <= EnigmaConfiguration.CharSetEnd; x++)
 		{
-			message2 += (char) x;
+			message += (char) x;
 		}
 
-		scrambled = enigma.ScrambleString(message2);
-		unscrambled = enigma.ScrambleString(scrambled);
+		scrambled = enigma.RunCipher(message);
+		unscrambled = enigma.RunCipher(scrambled);
 
-		Assert.Equal(message2, unscrambled);
+		Assert.Equal(message, unscrambled);
 		
 		#endregion
 	}
