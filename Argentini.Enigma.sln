@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 25.0.1703.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Argentini.Enigma", "Argentini.Enigma\Argentini.Enigma.csproj", "{9764AFC9-14CE-4A1B-A5DF-CB9F791F7C22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Argentini.Enigma.Tests", "Argentini.Enigma.Tests\Argentini.Enigma.Tests.csproj", "{FEC12904-DB6D-41F1-A3EE-428A747340CC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9764AFC9-14CE-4A1B-A5DF-CB9F791F7C22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9764AFC9-14CE-4A1B-A5DF-CB9F791F7C22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9764AFC9-14CE-4A1B-A5DF-CB9F791F7C22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9764AFC9-14CE-4A1B-A5DF-CB9F791F7C22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEC12904-DB6D-41F1-A3EE-428A747340CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEC12904-DB6D-41F1-A3EE-428A747340CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEC12904-DB6D-41F1-A3EE-428A747340CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEC12904-DB6D-41F1-A3EE-428A747340CC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {670D9905-28B6-453C-A886-EC902A025B0D}
+	EndGlobalSection
+EndGlobal

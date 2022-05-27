@@ -1,0 +1,70 @@
+﻿#nullable enable
+
+namespace Argentini.Enigma;
+
+/// <summary>
+/// Generate random numbers using a linear congruential generator.
+/// Generates a predictable sequence when given the same seed.
+/// </summary>
+public class PredictableRandomNumberGenerator
+{
+	private const long m = 4294967296; // 2^32
+	private const long a = 1664525;
+	private const long c = 1013904223;
+	private long _last;
+
+	/// <summary>
+	/// Instantiate a PRNG using the current ticks as a seed for reasonably unpredictable values.
+	/// </summary>
+	public PredictableRandomNumberGenerator()
+	{
+		_last = DateTime.Now.Ticks % m;
+	}
+
+	/// <summary>
+	/// Instantiate a PRNG using a provided seed for predictable values.
+	/// </summary>
+	public PredictableRandomNumberGenerator(long seed)
+	{
+		_last = seed;
+	}
+
+	/// <summary>
+	/// Gets the next value
+	/// </summary>
+	/// <returns></returns>
+	public long Next()
+	{
+		_last = ((a * _last) + c) % m;
+
+		return _last;
+	}
+
+	/// <summary>
+	/// Get the next value from zero to maxValue, inclusive.
+	/// </summary>
+	/// <param name="maxValue"></param>
+	/// <returns></returns>
+	public long Next(long maxValue)
+	{
+		return NextBetween(0, maxValue);
+	}
+	
+	/// <summary>
+	/// Get the next value from minValue to maxValue, inclusive.
+	/// </summary>
+	/// <param name="minValue"></param>
+	/// <param name="maxValue"></param>
+	/// <returns></returns>
+	public long NextBetween(long minValue, long maxValue)
+	{
+		if (maxValue > minValue)
+		{
+			var newMaxValue = maxValue - minValue;
+
+			return (Next() % (newMaxValue + 1)) + minValue;
+		}
+
+		throw new Exception("Halide.Secrets.PredictableRandomNumberGenerator().NextBetween() => maxValue must be greater than minValue");
+	}
+}
