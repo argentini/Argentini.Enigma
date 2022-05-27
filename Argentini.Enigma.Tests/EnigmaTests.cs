@@ -65,13 +65,13 @@ public class EnigmaTests
 	{
 		var enigma = new EnigmaMachine(new EnigmaConfiguration
 		{
-			PlugBoardCipherSeed = 1234567,
-			ReflectorCipherSeed = 6789101,
-			Rotors = new List<EnigmaRotor>
+			PlugBoardCipherSeed = 5647382910,
+			ReflectorCipherSeed = 3920156474,
+			Rotors = new List<EnigmaRotor> // Rotors work top to bottom; original hardware has them right to left
 			{
-				new (42, advanceNextRotorIncrement: 50),
-				new (86, advanceNextRotorIncrement: 25),
-				new (99)
+				new (rotorCipherSeed: 9876543210, rotorStartingPosition: 0, advanceNextRotorIncrement: 50),
+				new (rotorCipherSeed: 1234567890, rotorStartingPosition: 0, advanceNextRotorIncrement: 25),
+				new (rotorCipherSeed: 1029384756, rotorStartingPosition: 0) // No neighbor for the last rotor to advance
 			}
 		});
 		
