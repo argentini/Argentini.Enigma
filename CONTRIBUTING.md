@@ -2,9 +2,9 @@
 
 #### **Did you find a bug?**
 
-* **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/fynydd/engima/issues).
+* **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/argentini/Argentini.Enigma/issues).
 
-* If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/fynydd/enigma/issues/new). Be sure to include a **title and clear description**, as much relevant information as possible, and a **code sample** or an **executable test case** demonstrating the expected behavior that is not occurring. We fix what we can't see.
+* If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/argentini/Argentini.Enigma/issues/new). Be sure to include a **title and clear description**, as much relevant information as possible, and a **code sample** or an **executable test case** demonstrating the expected behavior that is not occurring. We fix what we can't see.
 
 #### **Did you write a patch that fixes a bug?**
 
@@ -23,12 +23,10 @@ Changes that are cosmetic in nature and do not add anything substantial to the s
 
 #### **Do you have questions about the source code?**
 
-* Ask any question about how to use Enigma on the [Fynydd website](https://fynydd.com/contact-us/).
+* Ask any question about how to use Enigma on [github issues](https://github.com/argentini/Argentini.Enigma/issues).
 
 #### **Do you want to contribute to the Enigma documentation?**
 
-Enigma is a volunteer effort. We encourage you to pitch in and join! Reach out to the Fynydd team at the [Fynydd website](https://fynydd.com/contact-us/) to offer your services.
+Enigma is a volunteer effort. We encourage you to pitch in and join! Reach out to the team at [michael@argentini.us](michael@argentini.us) to offer your services.
 
 Thanks! :heart:
-
-Fynydd Team
