@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 25.0.1703.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Argentini.Enigma", "Argentini.Enigma\Argentini.Enigma.csproj", "{9764AFC9-14CE-4A1B-A5DF-CB9F791F7C22}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigma", "Enigma\Enigma.csproj", "{9764AFC9-14CE-4A1B-A5DF-CB9F791F7C22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Argentini.Enigma.Tests", "Argentini.Enigma.Tests\Argentini.Enigma.Tests.csproj", "{FEC12904-DB6D-41F1-A3EE-428A747340CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigma.Tests", "Enigma.Tests\Enigma.Tests.csproj", "{FEC12904-DB6D-41F1-A3EE-428A747340CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
