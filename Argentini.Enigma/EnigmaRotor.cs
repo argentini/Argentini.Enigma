@@ -1,4 +1,4 @@
-﻿namespace Argentini.Enigma;
+﻿namespace Enigma;
 
 /// <summary>
 /// Virtual rotor used in a series as part of the cipher process.

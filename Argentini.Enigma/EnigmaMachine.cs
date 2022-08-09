@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Argentini.Enigma;
+namespace Enigma;
 
 /// <summary>
 /// EnigmaMachine is a digital Enigma machine that supports the entire UTF-16 character set.

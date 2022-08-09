@@ -1,4 +1,4 @@
-﻿namespace Argentini.Enigma;
+﻿namespace Enigma;
 
 /// <summary>
 /// Virtual reflector used to bounce a character back through the rotors in reverse order.

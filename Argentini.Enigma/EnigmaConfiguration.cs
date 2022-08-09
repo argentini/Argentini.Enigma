@@ -1,4 +1,4 @@
-﻿namespace Argentini.Enigma;
+﻿namespace Enigma;
 
 /// <summary>
 /// EnigmaMachine configuration object.

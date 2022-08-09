@@ -1,4 +1,4 @@
-﻿namespace Argentini.Enigma;
+﻿namespace Enigma;
 
 /// <summary>
 /// Base class for EnigmaMachine plug board, reflector, and rotors.

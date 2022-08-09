@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace Argentini.Enigma.Tests;
+namespace Enigma.Tests;
 
 public class PredictableRandomNumberGeneratorTests
 {

@@ -1,4 +1,4 @@
-﻿namespace Argentini.Enigma;
+﻿namespace Enigma;
 
 /// <summary>
 /// Generate random numbers using a linear congruential generator.

@@ -1,7 +1,7 @@
 using Xunit;
 using System.Collections.Generic;
 
-namespace Argentini.Enigma.Tests;
+namespace Enigma.Tests;
 
 public class EnigmaTests
 {
