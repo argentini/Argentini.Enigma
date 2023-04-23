@@ -38,4 +38,4 @@ var deciphered = enigma.RunCipher(enciphered);
 Assert.Equal(message, deciphered);
 ```
 
-This project is a .NET 6.0 library with xUnit tests, so you can easily play with the virtual Enigma Machine.
+This project is a .NET library with xUnit tests, so you can easily play with the virtual Enigma Machine.
