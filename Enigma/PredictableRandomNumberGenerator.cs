@@ -6,9 +6,9 @@
 /// </summary>
 public class PredictableRandomNumberGenerator
 {
-	private const long m = 4294967296; // 2^32
-	private const long a = 1664525;
-	private const long c = 1013904223;
+	private const long M = 4294967296; // 2^32
+	private const long A = 1664525;
+	private const long C = 1013904223;
 	private long _last;
 
 	/// <summary>
@@ -16,7 +16,7 @@ public class PredictableRandomNumberGenerator
 	/// </summary>
 	public PredictableRandomNumberGenerator()
 	{
-		_last = DateTime.Now.Ticks % m;
+		_last = DateTime.Now.Ticks % M;
 	}
 
 	/// <summary>
@@ -33,7 +33,7 @@ public class PredictableRandomNumberGenerator
 	/// <returns></returns>
 	public long Next()
 	{
-		_last = ((a * _last) + c) % m;
+		_last = ((A * _last) + C) % M;
 
 		return _last;
 	}

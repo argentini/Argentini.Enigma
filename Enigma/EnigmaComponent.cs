@@ -16,12 +16,12 @@ public class EnigmaComponent
 	/// <summary>
 	/// Cipher seed used to generate predictably random character sets.
 	/// </summary>
-	public long CipherSeed { get; set; }
+	protected long CipherSeed { get; set; }
 
 	/// <summary>
 	/// This flag is true when it's time to rotate the next rotor.
 	/// </summary>
-	public bool AdvanceNextRotor { get; set; }
+	public bool AdvanceNextRotor { get; protected set; }
 	
 	#endregion
 
@@ -31,7 +31,7 @@ public class EnigmaComponent
 	/// the range specified in the EnigmaConfiguration. 
 	/// </summary>
 	/// <param name="charSetList">Filled with random character set data</param>
-	public void GenerateRandomCharSet(List<char> charSetList)
+	protected void GenerateRandomCharSet(List<char> charSetList)
 	{
 		var prng = new PredictableRandomNumberGenerator(CipherSeed);
 
@@ -51,7 +51,7 @@ public class EnigmaComponent
 	/// <summary>
 	/// Populate the Characters property with a reflective, predictably random character set.
 	/// </summary>
-	public void GenerateReflectorWheel()
+	protected void GenerateReflectorWheel()
 	{
 		var scrambler = new List<char>();
 
