@@ -403,3 +403,5 @@ ASALocalRun/
 
 # Local History for Visual Studio
 .localhistory/
+/Enigma/FodyWeavers.xsd
+/Enigma/FodyWeavers.xml
