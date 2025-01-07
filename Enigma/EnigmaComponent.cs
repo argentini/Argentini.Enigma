@@ -38,14 +38,10 @@ public class EnigmaComponent
 		var characterSet = new List<char>();
 
 		for (var x = EnigmaConfiguration.CharSetStart; x <= EnigmaConfiguration.CharSetEnd; x++)
-		{
 			characterSet.Add((char)x);
-		}
 
 		foreach (var item in characterSet.OrderBy(_ => prng.Next()))
-		{
 			charSetList.Add(item);
-		}
 	}
 	
 	/// <summary>
@@ -57,7 +53,7 @@ public class EnigmaComponent
 
 		GenerateRandomCharSet(scrambler);
 		
-		while (scrambler.Any())
+		while (scrambler.Count != 0)
 		{
 			var key = scrambler.ElementAt(0);
 			
@@ -65,23 +61,22 @@ public class EnigmaComponent
 			{
 				scrambler.RemoveAt(0);
 		
-				if (scrambler.Any())
+				if (scrambler.Count != 0)
 				{
 					var value = scrambler.ElementAt(0);
-		
-					if (Characters.ContainsKey(value) == false)
-					{
-						Characters.Add(key, value);
-						Characters.Add(value, key);
-					}
-				}
+
+                    if (Characters.ContainsKey(value))
+                        continue;
+                    
+                    Characters.Add(key, value);
+                    Characters.Add(value, key);
+                }
 		
 				else
 				{
 					Characters.Add(key, key);
 				}
 			}
-		
 			else
 			{
 				scrambler.RemoveAt(0);

@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using MethodTimer;
 
 namespace Enigma;
 
@@ -6,7 +7,7 @@ namespace Enigma;
 /// EnigmaMachine is a digital Enigma machine that supports the entire UTF-16 character set.
 /// Machine state is used to both encipher and decipher text with the same command.
 /// The original German hardware only supported 26 upper case characters.
-/// This modern tool enciphers and deciphers a string using a keyless algorythm based on the
+/// This modern tool enciphers and deciphers a string using a keyless algorithm based on the
 /// inner workings of the original Enigma hardware. It uses a predictable random number
 /// generator (PRNG) to ensure the cipher will work on any supported platform.
 ///
@@ -38,25 +39,17 @@ public class EnigmaMachine
 	/// <exception cref="Exception"></exception>
 	public EnigmaMachine(EnigmaConfiguration enigmaConfiguration)
 	{
-		if (enigmaConfiguration.Rotors.Any() == false)
-		{
+		if (enigmaConfiguration.Rotors.Count == 0)
 			throw new Exception("Halide.EnigmaMachine() => No rotors specified");
-		}
 
 		if (enigmaConfiguration.Rotors.Count < 2)
-		{
 			throw new Exception("Halide.EnigmaMachine() => Must have 2 or more rotors");
-		}
 		
 		if (enigmaConfiguration.PlugBoardCipherSeed < 1)
-		{
 			throw new Exception("Halide.EnigmaMachine() => Plug board seed must be a non-zero long integer");
-		}
 
 		if (enigmaConfiguration.ReflectorCipherSeed < 1)
-		{
 			throw new Exception("Halide.EnigmaMachine() => Reflector seed must be a non-zero long integer");
-		}
 		
 		Configuration = enigmaConfiguration;
 		PlugBoard = new EnigmaPlugBoard(Configuration.PlugBoardCipherSeed);
@@ -71,9 +64,7 @@ public class EnigmaMachine
 	public void Reset()
 	{
 		foreach (var rotor in Configuration.Rotors)
-		{
 			rotor.Reset();
-		}
 	}
 
 	/// <summary>
@@ -86,25 +77,21 @@ public class EnigmaMachine
 	{
 		#region Core Cipher Process
 		
-		// Plugboard
+		// Plug board
 		var glyph = PlugBoard.GetGlyph(character);
 		
 		// Rotors (simulate right to left operation)
 		foreach (var rotor in Configuration.Rotors)
-		{
 			glyph = rotor.GetGlyph(glyph);
-		}
 
 		// Reflector
 		glyph = Reflector.GetGlyph(glyph);
 		
 		// Rotors (reflected, simulate left to right operation)
 		for (var x = Configuration.Rotors.Count - 1; x >= 0; x--)
-		{
 			glyph = Configuration.Rotors[x].GetGlyphReflected(glyph);
-		}
 
-		// Plugboard (reflected)
+		// Plug board (reflected)
 		glyph = PlugBoard.GetGlyph(glyph);
 
 		#endregion
@@ -116,14 +103,9 @@ public class EnigmaMachine
 		for (var x = 0; x < Configuration.Rotors.Count; x++)
 		{
 			if (x == 0)
-			{
 				Configuration.Rotors[0].Rotate();
-			}
-
 			else
-			{
 				if (previousRotor?.AdvanceNextRotor ?? false) Configuration.Rotors[x].Rotate();
-			}
 
 			previousRotor = Configuration.Rotors[x];
 		}
@@ -139,6 +121,7 @@ public class EnigmaMachine
 	/// </summary>
 	/// <param name="message">UTF-16 string to encipher or decipher</param>
 	/// <returns></returns>
+	[Time]
 	public string RunCipher(string message)
 	{
 		var scrambledText = new StringBuilder();
@@ -153,7 +136,6 @@ public class EnigmaMachine
 
 				scrambledText.Append(ch);
 			}
-
 			else
 			{
 				scrambledText.Append(t);

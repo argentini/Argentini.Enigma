@@ -56,13 +56,11 @@ public class PredictableRandomNumberGenerator
 	/// <returns></returns>
 	public long NextBetween(long minValue, long maxValue)
 	{
-		if (maxValue > minValue)
-		{
-			var newMaxValue = maxValue - minValue;
+        if (maxValue <= minValue)
+            throw new Exception("Halide.Secrets.PredictableRandomNumberGenerator().NextBetween() => maxValue must be greater than minValue");
+        
+        var newMaxValue = maxValue - minValue;
 
-			return (Next() % (newMaxValue + 1)) + minValue;
-		}
-
-		throw new Exception("Halide.Secrets.PredictableRandomNumberGenerator().NextBetween() => maxValue must be greater than minValue");
-	}
+        return (Next() % (newMaxValue + 1)) + minValue;
+    }
 }

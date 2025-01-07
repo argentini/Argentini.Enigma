@@ -33,7 +33,7 @@ public class EnigmaConfiguration
 	public const int MaxRotorIndex = CharSetCount;
 
 	/// <summary>
-	/// Cipher activites start with the current rotor in this position if not specified.
+	/// Cipher activities start with the current rotor in this position if not specified.
 	/// </summary>
 	public const int DefaultStartRotation = 0;
 
@@ -65,5 +65,5 @@ public class EnigmaConfiguration
 	/// and then reflected back left to right. The rotors list here is used first to last
 	/// then reflected back last to first.
 	/// </summary>
-	public List<EnigmaRotor> Rotors { get; set; } = new();
+	public List<EnigmaRotor> Rotors { get; set; } = [];
 }

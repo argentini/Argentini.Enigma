@@ -19,7 +19,7 @@ public class EnigmaRotor: EnigmaComponent
 	public int Position { get; set; }
 
 	/// <summary>
-	/// Starting position (rotation) of the rotor assigned in EingmaConfiguration.
+	/// Starting position (rotation) of the rotor assigned in EnigmaConfiguration.
 	/// </summary>
 	public int OriginalStartPosition { get; }
 
@@ -37,7 +37,7 @@ public class EnigmaRotor: EnigmaComponent
 	#endregion
 	
 	/// <summary>
-	/// Creates a new EngimaMachine rotor object.
+	/// Creates a new EnigmaMachine rotor object.
 	/// </summary>
 	/// <param name="rotorCipherSeed">Determines the predictably random order of the character set.</param>
 	/// <param name="rotorStartingPosition">Usually zero but can be set to any valid rotor position index (e.g. zero through EnigmaConfiguration.CharSetCount) to change the cipher.</param>
@@ -60,15 +60,13 @@ public class EnigmaRotor: EnigmaComponent
 	/// <returns></returns>
 	public new char GetGlyph(char character)
 	{
-		if (character >= EnigmaConfiguration.CharSetStart && character <= EnigmaConfiguration.CharSetEnd)
-		{
-			var position = (character - EnigmaConfiguration.CharSetStart + Position) % Characters.Count;
+        if (character < EnigmaConfiguration.CharSetStart || character > EnigmaConfiguration.CharSetEnd)
+            return character;
+        
+        var position = (character - EnigmaConfiguration.CharSetStart + Position) % Characters.Count;
 
-			return Characters.ElementAt(position);
-		}
-
-		return character;
-	}
+        return Characters.ElementAt(position);
+    }
 
 	/// <summary>
 	/// Provide a character input to retrieve its reflected character
@@ -78,22 +76,18 @@ public class EnigmaRotor: EnigmaComponent
 	/// <returns></returns>
 	public char GetGlyphReflected(char character)
 	{
-		if (character >= EnigmaConfiguration.CharSetStart && character <= EnigmaConfiguration.CharSetEnd)
-		{
-			var position = Characters.IndexOf(character) - Position;
+        if (character < EnigmaConfiguration.CharSetStart || character > EnigmaConfiguration.CharSetEnd)
+            return character;
+        
+        var position = Characters.IndexOf(character) - Position;
 
-			if (position < EnigmaConfiguration.MinRotorIndex)
-			{
-				position += EnigmaConfiguration.MaxRotorIndex + 1;
-			}
+        if (position < EnigmaConfiguration.MinRotorIndex)
+            position += EnigmaConfiguration.MaxRotorIndex + 1;
 
-			var value = (char) (position + EnigmaConfiguration.CharSetStart);
+        var value = (char) (position + EnigmaConfiguration.CharSetStart);
 
-			return value;
-		}
-
-		return character;
-	}
+        return value;
+    }
 
 	/// <summary>
 	/// Advance (rotate) the rotor one step.

@@ -1,5 +1,4 @@
 using Xunit;
-using System.Collections.Generic;
 
 namespace Enigma.Tests;
 
@@ -67,20 +66,20 @@ public class EnigmaTests
 		{
 			PlugBoardCipherSeed = 5647382910,
 			ReflectorCipherSeed = 3920156474,
-			Rotors = new List<EnigmaRotor> // Rotors work top to bottom; original hardware has them right to left
-			{
-				new (rotorCipherSeed: 9876543210, rotorStartingPosition: 0, advanceNextRotorIncrement: 50),
-				new (rotorCipherSeed: 1234567890, rotorStartingPosition: 0, advanceNextRotorIncrement: 25),
-				new (rotorCipherSeed: 1029384756, rotorStartingPosition: 0) // No neighbor for the last rotor to advance
-			}
-		});
+			Rotors =
+            [
+                new EnigmaRotor(rotorCipherSeed: 9876543210, rotorStartingPosition: 0, advanceNextRotorIncrement: 50),
+                new EnigmaRotor(rotorCipherSeed: 1234567890, rotorStartingPosition: 0, advanceNextRotorIncrement: 25),
+                new EnigmaRotor(rotorCipherSeed: 1029384756, rotorStartingPosition: 0)
+            ]
+        });
 		
 		#region Test basic UTF-16 string
 		
-		var message = @"
-Fynydd is a software development & hosting company.
-Fynydd is a Welsh word (prounounced: /ˈvənɨ̞ð/) that means mountain or hill.
-";
+		var message = """
+                      Fynydd is a software development & hosting company.
+                      Fynydd is a Welsh word (pronounced: /ˈvənɨ̞ð/) that means mountain or hill.
+                      """;
 
 		var scrambled = enigma.RunCipher(message);
 		var unscrambled = enigma.RunCipher(scrambled);
