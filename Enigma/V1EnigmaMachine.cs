@@ -15,45 +15,45 @@ namespace Enigma;
 /// seeds for all machine components, set starting rotor positions, and more, which will all
 /// improve the overall cipher strength.
 /// </summary>
-public class EnigmaMachine
+public class V1EnigmaMachine
 {
 	/// <summary>
 	/// The configuration passed to the constructor. 
 	/// </summary>
-	public EnigmaConfiguration Configuration { get; private set; }
+	public V1EnigmaConfiguration Configuration { get; private set; }
 
 	/// <summary>
 	/// Virtual plug board.
 	/// </summary>
-	private EnigmaPlugBoard PlugBoard { get; set; }
+	private V1EnigmaPlugBoard PlugBoard { get; set; }
 	
 	/// <summary>
 	/// Virtual reflector.
 	/// </summary>
-	private EnigmaReflector Reflector { get; set; }
+	private V1EnigmaReflector Reflector { get; set; }
 
 	/// <summary>
 	/// Create a new EnigmaMachine object by passing in a configuration object.
 	/// </summary>
-	/// <param name="enigmaConfiguration">Configuration object</param>
+	/// <param name="v1EnigmaConfiguration">Configuration object</param>
 	/// <exception cref="Exception"></exception>
-	public EnigmaMachine(EnigmaConfiguration enigmaConfiguration)
+	public V1EnigmaMachine(V1EnigmaConfiguration v1EnigmaConfiguration)
 	{
-		if (enigmaConfiguration.Rotors.Count == 0)
+		if (v1EnigmaConfiguration.Rotors.Count == 0)
 			throw new Exception("Halide.EnigmaMachine() => No rotors specified");
 
-		if (enigmaConfiguration.Rotors.Count < 2)
+		if (v1EnigmaConfiguration.Rotors.Count < 2)
 			throw new Exception("Halide.EnigmaMachine() => Must have 2 or more rotors");
 		
-		if (enigmaConfiguration.PlugBoardCipherSeed < 1)
+		if (v1EnigmaConfiguration.PlugBoardCipherSeed < 1)
 			throw new Exception("Halide.EnigmaMachine() => Plug board seed must be a non-zero long integer");
 
-		if (enigmaConfiguration.ReflectorCipherSeed < 1)
+		if (v1EnigmaConfiguration.ReflectorCipherSeed < 1)
 			throw new Exception("Halide.EnigmaMachine() => Reflector seed must be a non-zero long integer");
 		
-		Configuration = enigmaConfiguration;
-		PlugBoard = new EnigmaPlugBoard(Configuration.PlugBoardCipherSeed);
-		Reflector = new EnigmaReflector(Configuration.ReflectorCipherSeed);
+		Configuration = v1EnigmaConfiguration;
+		PlugBoard = new V1EnigmaPlugBoard(Configuration.PlugBoardCipherSeed);
+		Reflector = new V1EnigmaReflector(Configuration.ReflectorCipherSeed);
 	}
 	
 	/// <summary>
@@ -98,7 +98,7 @@ public class EnigmaMachine
 		
 		#region Advance (rotate) Rotors 
 		
-		EnigmaRotor? previousRotor = null;
+		V1EnigmaRotor? previousRotor = null;
 
 		for (var x = 0; x < Configuration.Rotors.Count; x++)
 		{
@@ -130,7 +130,7 @@ public class EnigmaMachine
 
 		foreach (var t in message)
 		{
-			if (t >= EnigmaConfiguration.CharSetStart && t <= EnigmaConfiguration.CharSetEnd)
+			if (t >= V1EnigmaConfiguration.CharSetStart && t <= V1EnigmaConfiguration.CharSetEnd)
 			{
 				var ch = ScrambleCharacter(t);
 

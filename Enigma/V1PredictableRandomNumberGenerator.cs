@@ -6,7 +6,7 @@ namespace Enigma;
 /// Generate random numbers using a linear congruential generator.
 /// Generates a predictable sequence when given the same seed.
 /// </summary>
-public class PredictableRandomNumberGenerator
+public class V1PredictableRandomNumberGenerator
 {
 	private const long M = 4294967296; // 2^32
 	private const long A = 1664525;
@@ -16,7 +16,7 @@ public class PredictableRandomNumberGenerator
 	/// <summary>
 	/// Instantiate a PRNG using the current ticks as a seed for reasonably unpredictable values.
 	/// </summary>
-	public PredictableRandomNumberGenerator()
+	public V1PredictableRandomNumberGenerator()
 	{
 		_last = DateTime.Now.Ticks % M;
 	}
@@ -24,7 +24,7 @@ public class PredictableRandomNumberGenerator
 	/// <summary>
 	/// Instantiate a PRNG using a provided seed for predictable values.
 	/// </summary>
-	public PredictableRandomNumberGenerator(long seed)
+	public V1PredictableRandomNumberGenerator(long seed)
 	{
 		_last = seed;
 	}

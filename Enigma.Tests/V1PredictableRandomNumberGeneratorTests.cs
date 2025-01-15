@@ -2,12 +2,12 @@ using Xunit;
 
 namespace Enigma.Tests;
 
-public class PredictableRandomNumberGeneratorTests
+public class V1PredictableRandomNumberGeneratorTests
 {
 	[Fact]
 	public void PredictableRandomNumberGenerator()
 	{
-		var prng = new PredictableRandomNumberGenerator(42);
+		var prng = new V1PredictableRandomNumberGenerator(42);
 		var counter = 0;
 
 		while (prng.NextBetween(50, 100) != 50)

@@ -3,7 +3,7 @@
 /// <summary>
 /// Base class for EnigmaMachine plug board, reflector, and rotors.
 /// </summary>
-public class EnigmaComponent
+public class V1EnigmaComponent
 {
 	#region State Properties
 	
@@ -33,11 +33,11 @@ public class EnigmaComponent
 	/// <param name="charSetList">Filled with random character set data</param>
 	protected void GenerateRandomCharSet(List<char> charSetList)
 	{
-		var prng = new PredictableRandomNumberGenerator(CipherSeed);
+		var prng = new V1PredictableRandomNumberGenerator(CipherSeed);
 
 		var characterSet = new List<char>();
 
-		for (var x = EnigmaConfiguration.CharSetStart; x <= EnigmaConfiguration.CharSetEnd; x++)
+		for (var x = V1EnigmaConfiguration.CharSetStart; x <= V1EnigmaConfiguration.CharSetEnd; x++)
 			characterSet.Add((char)x);
 
 		foreach (var item in characterSet.OrderBy(_ => prng.Next()))
@@ -92,7 +92,7 @@ public class EnigmaComponent
 	/// <returns></returns>
 	public char GetGlyph(char character)
 	{
-		if (character >= EnigmaConfiguration.CharSetStart && character <= EnigmaConfiguration.CharSetEnd)
+		if (character >= V1EnigmaConfiguration.CharSetStart && character <= V1EnigmaConfiguration.CharSetEnd)
 			return Characters[character];
 
 		return character;

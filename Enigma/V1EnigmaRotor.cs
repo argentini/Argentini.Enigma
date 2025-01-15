@@ -3,7 +3,7 @@
 /// <summary>
 /// Virtual rotor used in a series as part of the cipher process.
 /// </summary>
-public class EnigmaRotor: EnigmaComponent
+public class V1EnigmaRotor: V1EnigmaComponent
 {
 	#region State Properties
 
@@ -42,11 +42,11 @@ public class EnigmaRotor: EnigmaComponent
 	/// <param name="rotorCipherSeed">Determines the predictably random order of the character set.</param>
 	/// <param name="rotorStartingPosition">Usually zero but can be set to any valid rotor position index (e.g. zero through EnigmaConfiguration.CharSetCount) to change the cipher.</param>
 	/// <param name="advanceNextRotorIncrement">Number of rotor position advances before the next rotor will advance.</param>
-	public EnigmaRotor(long rotorCipherSeed, int rotorStartingPosition = EnigmaConfiguration.DefaultStartRotation, int advanceNextRotorIncrement = EnigmaConfiguration.DefaultPinIncrement)
+	public V1EnigmaRotor(long rotorCipherSeed, int rotorStartingPosition = V1EnigmaConfiguration.DefaultStartRotation, int advanceNextRotorIncrement = V1EnigmaConfiguration.DefaultPinIncrement)
 	{
-		CipherSeed = rotorCipherSeed > 0 ? rotorCipherSeed : EnigmaConfiguration.DefaultCipherSeed;
-		OriginalStartPosition = rotorStartingPosition is < EnigmaConfiguration.MinRotorIndex or > EnigmaConfiguration.MaxRotorIndex ? EnigmaConfiguration.MinRotorIndex : rotorStartingPosition;
-		AdvanceNextRotorIncrement = advanceNextRotorIncrement is > 0 and < EnigmaConfiguration.CharSetCount ? advanceNextRotorIncrement : EnigmaConfiguration.DefaultPinIncrement;
+		CipherSeed = rotorCipherSeed > 0 ? rotorCipherSeed : V1EnigmaConfiguration.DefaultCipherSeed;
+		OriginalStartPosition = rotorStartingPosition is < V1EnigmaConfiguration.MinRotorIndex or > V1EnigmaConfiguration.MaxRotorIndex ? V1EnigmaConfiguration.MinRotorIndex : rotorStartingPosition;
+		AdvanceNextRotorIncrement = advanceNextRotorIncrement is > 0 and < V1EnigmaConfiguration.CharSetCount ? advanceNextRotorIncrement : V1EnigmaConfiguration.DefaultPinIncrement;
 
 		GenerateRandomCharSet(Characters);
 		Reset();
@@ -60,10 +60,10 @@ public class EnigmaRotor: EnigmaComponent
 	/// <returns></returns>
 	public new char GetGlyph(char character)
 	{
-        if (character < EnigmaConfiguration.CharSetStart || character > EnigmaConfiguration.CharSetEnd)
+        if (character < V1EnigmaConfiguration.CharSetStart || character > V1EnigmaConfiguration.CharSetEnd)
             return character;
         
-        var position = (character - EnigmaConfiguration.CharSetStart + Position) % Characters.Count;
+        var position = (character - V1EnigmaConfiguration.CharSetStart + Position) % Characters.Count;
 
         return Characters.ElementAt(position);
     }
@@ -76,15 +76,15 @@ public class EnigmaRotor: EnigmaComponent
 	/// <returns></returns>
 	public char GetGlyphReflected(char character)
 	{
-        if (character < EnigmaConfiguration.CharSetStart || character > EnigmaConfiguration.CharSetEnd)
+        if (character < V1EnigmaConfiguration.CharSetStart || character > V1EnigmaConfiguration.CharSetEnd)
             return character;
         
         var position = Characters.IndexOf(character) - Position;
 
-        if (position < EnigmaConfiguration.MinRotorIndex)
-            position += EnigmaConfiguration.MaxRotorIndex + 1;
+        if (position < V1EnigmaConfiguration.MinRotorIndex)
+            position += V1EnigmaConfiguration.MaxRotorIndex + 1;
 
-        var value = (char) (position + EnigmaConfiguration.CharSetStart);
+        var value = (char) (position + V1EnigmaConfiguration.CharSetStart);
 
         return value;
     }
@@ -96,9 +96,9 @@ public class EnigmaRotor: EnigmaComponent
 	{
 		Position++;
 		
-		if (Position > EnigmaConfiguration.MaxRotorIndex)
+		if (Position > V1EnigmaConfiguration.MaxRotorIndex)
 		{
-			Position = EnigmaConfiguration.MinRotorIndex;
+			Position = V1EnigmaConfiguration.MinRotorIndex;
 			
 			if (AdvanceNextRotorIncrement > 0)
 				AdvanceNextRotor = true;

@@ -2,12 +2,12 @@ using Xunit;
 
 namespace Enigma.Tests;
 
-public class EnigmaTests
+public class V1EnigmaTests
 {
 	[Fact]
 	public void EnigmaRotor()
 	{
-		var rotor = new EnigmaRotor(12345678);
+		var rotor = new V1EnigmaRotor(12345678);
 		const string phrase = "This is only a test.";
 		var encoded = string.Empty;
 		var echar = rotor.GetGlyph('A');
@@ -62,15 +62,15 @@ public class EnigmaTests
 	[Fact]
 	public void EnigmaMachine()
 	{
-		var enigma = new EnigmaMachine(new EnigmaConfiguration
+		var enigma = new V1EnigmaMachine(new V1EnigmaConfiguration
 		{
 			PlugBoardCipherSeed = 5647382910,
 			ReflectorCipherSeed = 3920156474,
 			Rotors =
             [
-                new EnigmaRotor(rotorCipherSeed: 9876543210, rotorStartingPosition: 0, advanceNextRotorIncrement: 50),
-                new EnigmaRotor(rotorCipherSeed: 1234567890, rotorStartingPosition: 0, advanceNextRotorIncrement: 25),
-                new EnigmaRotor(rotorCipherSeed: 1029384756, rotorStartingPosition: 0)
+                new V1EnigmaRotor(rotorCipherSeed: 9876543210, rotorStartingPosition: 0, advanceNextRotorIncrement: 50),
+                new V1EnigmaRotor(rotorCipherSeed: 1234567890, rotorStartingPosition: 0, advanceNextRotorIncrement: 25),
+                new V1EnigmaRotor(rotorCipherSeed: 1029384756, rotorStartingPosition: 0)
             ]
         });
 		
@@ -92,7 +92,7 @@ public class EnigmaTests
 		
 		message = string.Empty;
 		
-		for (var x = EnigmaConfiguration.CharSetStart; x <= EnigmaConfiguration.CharSetEnd; x++)
+		for (var x = V1EnigmaConfiguration.CharSetStart; x <= V1EnigmaConfiguration.CharSetEnd; x++)
 			message += (char) x;
 
 		scrambled = enigma.RunCipher(message);

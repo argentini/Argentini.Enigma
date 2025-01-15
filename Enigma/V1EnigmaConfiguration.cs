@@ -3,7 +3,7 @@
 /// <summary>
 /// EnigmaMachine configuration object.
 /// </summary>
-public class EnigmaConfiguration
+public class V1EnigmaConfiguration
 {
 	#region Constants
 	
@@ -65,5 +65,5 @@ public class EnigmaConfiguration
 	/// and then reflected back left to right. The rotors list here is used first to last
 	/// then reflected back last to first.
 	/// </summary>
-	public List<EnigmaRotor> Rotors { get; set; } = [];
+	public List<V1EnigmaRotor> Rotors { get; set; } = [];
 }
