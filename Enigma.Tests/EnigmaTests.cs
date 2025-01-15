@@ -93,9 +93,7 @@ public class EnigmaTests
 		message = string.Empty;
 		
 		for (var x = EnigmaConfiguration.CharSetStart; x <= EnigmaConfiguration.CharSetEnd; x++)
-		{
 			message += (char) x;
-		}
 
 		scrambled = enigma.RunCipher(message);
 		unscrambled = enigma.RunCipher(scrambled);

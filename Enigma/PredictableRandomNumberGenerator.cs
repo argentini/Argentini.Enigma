@@ -1,4 +1,6 @@
-﻿namespace Enigma;
+﻿using MethodTimer;
+
+namespace Enigma;
 
 /// <summary>
 /// Generate random numbers using a linear congruential generator.
@@ -33,7 +35,7 @@ public class PredictableRandomNumberGenerator
 	/// <returns></returns>
 	public long Next()
 	{
-		_last = ((A * _last) + C) % M;
+		_last = (A * _last + C) % M;
 
 		return _last;
 	}
@@ -54,13 +56,14 @@ public class PredictableRandomNumberGenerator
 	/// <param name="minValue"></param>
 	/// <param name="maxValue"></param>
 	/// <returns></returns>
+	[Time]
 	public long NextBetween(long minValue, long maxValue)
 	{
         if (maxValue <= minValue)
-            throw new Exception("Halide.Secrets.PredictableRandomNumberGenerator().NextBetween() => maxValue must be greater than minValue");
+            throw new Exception("Engima.PredictableRandomNumberGenerator().NextBetween() => maxValue must be greater than minValue");
         
         var newMaxValue = maxValue - minValue;
 
-        return (Next() % (newMaxValue + 1)) + minValue;
+        return Next() % (newMaxValue + 1) + minValue;
     }
 }
