@@ -1,4 +1,6 @@
-﻿namespace Enigma;
+﻿using System.Text;
+
+namespace Enigma;
 
 /// <summary>
 /// Base class for EnigmaMachine plug board, reflector, and rotors.
@@ -33,14 +35,18 @@ public class V1EnigmaComponent
 	/// <param name="charSetList">Filled with random character set data</param>
 	protected void GenerateRandomCharSet(List<char> charSetList)
 	{
-		var prng = new V1PredictableRandomNumberGenerator(CipherSeed);
-
+        var entropy = new StringBuilder(CipherSeed.ToString());
+        
+        while (entropy.Length < 32)
+            entropy.Append(CipherSeed);
+        
+		var prng = new AesCtrRandomNumberGenerator(entropy.ToString()[..32], entropy.ToString()[..16]);
 		var characterSet = new List<char>();
 
 		for (var x = V1EnigmaConfiguration.CharSetStart; x <= V1EnigmaConfiguration.CharSetEnd; x++)
 			characterSet.Add((char)x);
 
-		foreach (var item in characterSet.OrderBy(_ => prng.Next()))
+		foreach (var item in characterSet.OrderBy(_ => prng.NextUInt32()))
 			charSetList.Add(item);
 	}
 	
