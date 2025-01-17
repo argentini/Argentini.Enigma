@@ -8,7 +8,7 @@ namespace Enigma.Tests;
 public class PlugBoardTests
 {
 	[Fact]
-	public async Task PlugBoardInputOutput()
+	public void PlugBoardInputOutput()
 	{
         var pb = new PlugBoard
         {
@@ -19,13 +19,13 @@ public class PlugBoardTests
             }
         };
 
-        await pb.ResetAsync();
+        pb.Reset();
         
-        Assert.Equal('B', pb.CharacterIn('A'));
-        Assert.Equal('D', pb.CharacterIn('C'));
+        Assert.Equal('B', pb.EncipherCharacter('A'));
+        Assert.Equal('D', pb.EncipherCharacter('C'));
 
-        Assert.Equal('A', pb.CharacterOut('B'));
-        Assert.Equal('C', pb.CharacterOut('D'));
+        Assert.Equal('A', pb.DecipherCharacter('B'));
+        Assert.Equal('C', pb.DecipherCharacter('D'));
 
         pb = new PlugBoard
         {
@@ -36,7 +36,7 @@ public class PlugBoardTests
             }
         };
 
-        await Assert.ThrowsAnyAsync<Exception>(async () => await pb.ResetAsync());
+        Assert.ThrowsAny<Exception>(() => pb.Reset());
 
         Assert.ThrowsAny<Exception>(() => pb = new PlugBoard
         {
