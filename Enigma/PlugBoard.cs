@@ -9,8 +9,7 @@ public sealed class PlugBoard
 {
     public Dictionary<char,char> Wires { get; set; } = [];
     
-    private Dictionary<char,char> EncipherWires { get; set; } = [];
-    private Dictionary<char,char> DecipherWires { get; set; } = [];
+    private IndexedDictionary<char,char> EncipherWires { get; set; } = new();
 
     /// <summary>
     /// Establish IncomingWires dictionary which inverts the provided Wires values
@@ -19,12 +18,12 @@ public sealed class PlugBoard
     /// <returns></returns>
 	public void Reset()
 	{
-        EncipherWires = Wires.ToDictionary();
-        DecipherWires.Clear();
+        EncipherWires.Clear();
 
-        foreach (var w in EncipherWires)
-            if (DecipherWires.TryAdd(w.Value, w.Key) == false)
-                throw new Exception("PlugBoard.Reset() => Duplicate wire value used.");
+        if (Wires.Count == 0)
+            return;
+
+        EncipherWires.AddRange(Wires);
 	}
 
 	public char EncipherCharacter(char c)
@@ -37,7 +36,7 @@ public sealed class PlugBoard
 
 	public char DecipherCharacter(char c)
 	{
-        if (DecipherWires.TryGetValue(c, out var value))
+        if (EncipherWires.TryGetKey(c, out var value))
             return value;
         else
             return c;

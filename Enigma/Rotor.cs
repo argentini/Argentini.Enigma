@@ -8,6 +8,8 @@ namespace Enigma;
 public sealed class Rotor
 {
     public Dictionary<char,char> Wheel { get; set; } = [];
+
+    private int _notchPosition = 0;
     public int NotchPosition
     {
         get => _notchPosition;
@@ -32,9 +34,20 @@ public sealed class Rotor
         }
     }
 
-    private int _notchPosition = 0;
-    private Dictionary<char,char> EncipherWheel { get; set; } = [];
-    private Dictionary<char,char> DecipherWheel { get; set; } = [];
+    private int _rotation = 0;
+    public int Rotation
+    {
+        get => _rotation;
+        set
+        {
+            if (value >= 0 && value < Wheel.Count)
+                _rotation = value;
+            else
+                _rotation = 0;
+        }
+    }
+
+    private IndexedDictionary<char,char> EncipherWheel { get; set; } = new();
 
     /// <summary>
     /// Establish IncomingWheel dictionary which inverts the provided Wheel values
@@ -43,45 +56,35 @@ public sealed class Rotor
     /// <returns></returns>
 	public void Reset()
 	{
+        EncipherWheel.Clear();
+
         if (Wheel.Count == 0)
             return;
 
-        EncipherWheel = Wheel.ToDictionary();
-        DecipherWheel.Clear();
-
-        if (NotchPosition > 0 && NotchPosition < Wheel.Count)
-        {
-            var i = 0;
-            var vi = NotchPosition;
-
-            do
-            {
-                EncipherWheel[Wheel.ElementAt(i++).Key] = Wheel.ElementAt(vi++).Value;
-
-                if (vi == Wheel.Count)
-                    vi = 0;
-
-            } while (vi != NotchPosition);
-        }        
-
-        foreach (var w in EncipherWheel.ToDictionary())
-            if (DecipherWheel.TryAdd(w.Value, w.Key) == false)
-                throw new Exception("Rotor.Reset() => Duplicate incoming wheel value used.");
+        EncipherWheel.AddRange(Wheel, NotchPosition);
 	}
 
 	public char EncipherCharacter(char c)
 	{
-        if (EncipherWheel.TryGetValue(c, out var value))
-            return value;
-        else
+        var originalIndex = EncipherWheel.KeyIndex[c];
+
+        if (originalIndex == -1)
             throw new Exception($"Rotor.EncipherCharacter() => character is invalid ({c}).");
+
+        int rotatedIndex = (originalIndex + Rotation) % EncipherWheel.Count;
+
+        return EncipherWheel.KeyValues[rotatedIndex].Value;
 	}
 
 	public char DecipherCharacter(char c)
 	{
-        if (DecipherWheel.TryGetValue(c, out var value))
-            return value;
-        else
+        var originalIndex = EncipherWheel.ValueIndex[c];
+
+        if (originalIndex == -1)
             throw new Exception($"Rotor.DecipherCharacter() => character is invalid ({c}).");
+
+        int rotatedIndex = (originalIndex - Rotation + EncipherWheel.Count) % EncipherWheel.Count;
+
+        return EncipherWheel.KeyValues[rotatedIndex].Key;
 	}
 }

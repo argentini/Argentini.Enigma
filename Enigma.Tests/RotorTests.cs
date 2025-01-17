@@ -79,6 +79,19 @@ public class RotorTests
         Assert.Equal('B', rotor.DecipherCharacter('K'));
         Assert.Equal('~', rotor.DecipherCharacter('%'));
 
+        rotor.Rotation = 1;
+
+        Assert.Equal('d', rotor.EncipherCharacter(' '));
+        Assert.Equal('K', rotor.EncipherCharacter('A'));
+        Assert.Equal('M', rotor.EncipherCharacter('B'));
+        Assert.Equal('*', rotor.EncipherCharacter('~'));
+
+        Assert.Equal(' ', rotor.DecipherCharacter('d'));
+        Assert.Equal('A', rotor.DecipherCharacter('K'));
+        Assert.Equal('B', rotor.DecipherCharacter('M'));
+        Assert.Equal('~', rotor.DecipherCharacter('*'));
+
+        rotor.Rotation = 0;
         rotor.NotchPosition = 1;
 
         Assert.Equal('d', rotor.EncipherCharacter(' '));
