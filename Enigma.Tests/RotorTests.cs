@@ -9,7 +9,7 @@ namespace Enigma.Tests;
 public class RotorTests
 {
 	[Fact]
-	public void GenerateRotors()
+	public void GenerateRotorsClasses()
 	{
         var sb = string.Empty;
 

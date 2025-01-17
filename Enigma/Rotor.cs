@@ -49,8 +49,6 @@ public sealed class Rotor
         EncipherWheel = Wheel.ToDictionary();
         DecipherWheel.Clear();
 
-        // Process notch
-
         if (NotchPosition > 0 && NotchPosition < Wheel.Count)
         {
             var i = 0;
@@ -68,7 +66,7 @@ public sealed class Rotor
 
         foreach (var w in EncipherWheel.ToDictionary())
             if (DecipherWheel.TryAdd(w.Value, w.Key) == false)
-                throw new Exception("Rotor => Duplicate incoming wheel value used.");
+                throw new Exception("Rotor.Reset() => Duplicate incoming wheel value used.");
 	}
 
 	public char EncipherCharacter(char c)

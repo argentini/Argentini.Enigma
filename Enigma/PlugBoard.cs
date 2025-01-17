@@ -24,7 +24,7 @@ public sealed class PlugBoard
 
         foreach (var w in EncipherWires)
             if (DecipherWires.TryAdd(w.Value, w.Key) == false)
-                throw new Exception("PlugBoard => Duplicate wire value used.");
+                throw new Exception("PlugBoard.Reset() => Duplicate wire value used.");
 	}
 
 	public char EncipherCharacter(char c)
