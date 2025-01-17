@@ -8,36 +8,36 @@ namespace Enigma;
 public sealed class PlugBoard
 {
     public Dictionary<char,char> Wires { get; set; } = [];
-    private Dictionary<char,char> IncomingWires { get; set; } = [];
+    
+    private Dictionary<char,char> EncipherWires { get; set; } = [];
+    private Dictionary<char,char> DecipherWires { get; set; } = [];
 
     /// <summary>
     /// Establish IncomingWires dictionary which inverts the provided Wires values
     /// so the hashed keys can be used for faster searches when chars return for final output.
     /// </summary>
     /// <returns></returns>
-	public async ValueTask ResetAsync()
+	public void Reset()
 	{
-        if (IncomingWires.Count > 0)
-            IncomingWires.Clear();
+        EncipherWires = Wires.ToDictionary();
+        DecipherWires.Clear();
 
-        foreach (var w in Wires.ToDictionary())
-            if (IncomingWires.TryAdd(w.Value, w.Key) == false)
-                throw new Exception("EnigmaPlugBoard => Duplicate wire value used.");
-
-        await Task.CompletedTask;
+        foreach (var w in EncipherWires)
+            if (DecipherWires.TryAdd(w.Value, w.Key) == false)
+                throw new Exception("PlugBoard => Duplicate wire value used.");
 	}
 
-	public char CharacterIn(char c)
+	public char EncipherCharacter(char c)
 	{
-        if (Wires.TryGetValue(c, out var value))
+        if (EncipherWires.TryGetValue(c, out var value))
             return value;
         else
             return c;
 	}
 
-	public char CharacterOut(char c)
+	public char DecipherCharacter(char c)
 	{
-        if (IncomingWires.TryGetValue(c, out var value))
+        if (DecipherWires.TryGetValue(c, out var value))
             return value;
         else
             return c;
