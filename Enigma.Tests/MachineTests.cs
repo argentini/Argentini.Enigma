@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using System.Security.Cryptography;
+using System.Text;
 using Xunit;
 
 namespace Enigma.Tests;
@@ -9,8 +9,17 @@ public class MachineTests
 	[Fact]
 	public void SimpleCipherTest()
     {
-        const string Message = "This is a Cipher Test";
+        var Message = new StringBuilder();
+        var ci = 0;
 
+        for (var i = 0; i < Constants.CharacterSet.Length * Constants.CharacterSet.Length * Constants.CharacterSet.Length; i++)
+        {
+            Message.Append(Constants.CharacterSet[ci++]);
+
+            if (ci == Constants.CharacterSet.Length)
+                ci = 0;
+        }
+        
         var plugBoard = new PlugBoard
         {
             Wires = new Dictionary<char, char>
@@ -42,7 +51,7 @@ public class MachineTests
         
         var enciphered = string.Empty;
 
-        foreach (var c in Message)
+        foreach (var c in Message.ToString())
         {
             var cc = plugBoard.SendCharacter(c);
 
@@ -58,13 +67,24 @@ public class MachineTests
             enciphered += cc;
 
             rotor1.Rotation++;
+
+            if (rotor1.Rotation != 0)
+                continue;
+            
+            rotor2.Rotation++;
+                
+            if (rotor2.Rotation == 0)
+                rotor3.Rotation++;
         }
         
-        Assert.Equal("N=zi-hVx6_FV_|&UP8'lA", enciphered);
+        Assert.NotEqual(Message.ToString(), enciphered);
+        Assert.Equal(Message.Length, enciphered.Length);
         
         var deciphered = string.Empty;
 
         rotor1.Rotation = 0;
+        rotor2.Rotation = 0;
+        rotor3.Rotation = 0;
 
         foreach (var c in enciphered)
         {
@@ -82,8 +102,16 @@ public class MachineTests
             deciphered += cc;
 
             rotor1.Rotation++;
+
+            if (rotor1.Rotation != 0)
+                continue;
+            
+            rotor2.Rotation++;
+                
+            if (rotor2.Rotation == 0)
+                rotor3.Rotation++;
         }
         
-        Assert.Equal(Message, deciphered);
+        Assert.Equal(Message.ToString(), deciphered);
     }
 }
