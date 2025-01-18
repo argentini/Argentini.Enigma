@@ -12,7 +12,7 @@ public class ReflectorTests
 
         foreach (var cs in Constants.DefaultReflectors)
         {
-            var characters = Constants.CharacterSet.Replace("ABCDEFGHIJKLMNOPQRSTUVWXYZ", string.Empty);
+            var characters = Constants.CharacterSet;
 
             sb += 
                 $$"""
@@ -21,27 +21,39 @@ public class ReflectorTests
 
                 """;
 
-            for (var i = 32; i < 127; i++)
+            while (characters.Length > 1)
             {
-                if (i is >= 'A' and <= 'Z')
+                var c = characters[0];
+                
+                if (c is >= 'A' and <= 'Z')
                 {
                     sb += 
                         $$"""
-                                {'{{(char)i}}', '{{cs[i - 65]}}'},
+                                {'{{c}}', '{{cs[c - 65]}}'},
 
                         """;
+
+                    characters = characters.Replace($"{c}", string.Empty);
                 }
                 else
                 {
-                    var ci = characters.Length > 0 ? Random.Shared.Next(0, characters.Length) : 0;
-                    var c = characters[ci];
+                    var ii = Random.Shared.Next(0, characters.Length);
+                    var cc = characters[ii];
+
+                    while (cc is >= 'A' and <= 'Z' || cc == c)
+                    {
+                        ii = Random.Shared.Next(0, characters.Length);
+                        cc = characters[ii];
+                    }
 
                     characters = characters.Replace($"{c}", string.Empty);
+                    characters = characters.Replace($"{cc}", string.Empty);
 
                     sb += 
                         $$"""
-                                {'{{(i == '\'' ? "\\'" : i == '\\' ? "\\\\" : (char)i)}}', '{{(c == '\'' ? "\\'" : c == '\\' ? "\\\\" : c)}}'},
-
+                                {'{{(c == '\'' ? "\\'" : c == '\\' ? @"\\" : c)}}', '{{(cc == '\'' ? "\\'" : cc == '\\' ? @"\\" : cc)}}'},
+                                {'{{(cc == '\'' ? "\\'" : cc == '\\' ? @"\\" : cc)}}', '{{(c == '\'' ? "\\'" : c == '\\' ? @"\\" : c)}}'},
+                        
                         """;
                 }
             }
@@ -61,19 +73,17 @@ public class ReflectorTests
     {
         var reflector = new Reflector
         {
-            Wheel = Constants.Reflector1
+            Wires = Constants.Reflector1
         };
         
-        reflector.Reset();
+        Assert.Equal('s', reflector.SendCharacter(' '));
+        Assert.Equal('Y', reflector.SendCharacter('A'));
+        Assert.Equal('R', reflector.SendCharacter('B'));
+        Assert.Equal('!', reflector.SendCharacter('~'));
         
-        Assert.Equal('=', reflector.EncipherCharacter(' '));
-        Assert.Equal('Y', reflector.EncipherCharacter('A'));
-        Assert.Equal('R', reflector.EncipherCharacter('B'));
-        Assert.Equal('w', reflector.EncipherCharacter('~'));
-        
-        Assert.Equal(' ', reflector.DecipherCharacter('='));
-        Assert.Equal('A', reflector.DecipherCharacter('Y'));
-        Assert.Equal('B', reflector.DecipherCharacter('R'));
-        Assert.Equal('~', reflector.DecipherCharacter('w'));
+        Assert.Equal(' ', reflector.SendCharacter('s'));
+        Assert.Equal('A', reflector.SendCharacter('Y'));
+        Assert.Equal('B', reflector.SendCharacter('R'));
+        Assert.Equal('~', reflector.SendCharacter('!'));
     }
 }

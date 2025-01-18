@@ -19,13 +19,11 @@ public class PlugBoardTests
             }
         };
 
-        pb.Reset();
-        
-        Assert.Equal('B', pb.EncipherCharacter('A'));
-        Assert.Equal('D', pb.EncipherCharacter('C'));
+        Assert.Equal('B', pb.SendCharacter('A'));
+        Assert.Equal('A', pb.SendCharacter('B'));
 
-        Assert.Equal('A', pb.DecipherCharacter('B'));
-        Assert.Equal('C', pb.DecipherCharacter('D'));
+        Assert.Equal('D', pb.SendCharacter('C'));
+        Assert.Equal('C', pb.SendCharacter('D'));
 
         pb = new PlugBoard
         {
@@ -35,16 +33,5 @@ public class PlugBoardTests
                 { 'C', 'B' }
             }
         };
-
-        Assert.ThrowsAny<Exception>(() => pb.Reset());
-
-        Assert.ThrowsAny<Exception>(() => pb = new PlugBoard
-        {
-            Wires = new Dictionary<char, char>
-            {
-                { 'A', 'B' },
-                { 'A', 'D' }
-            }
-        });
 	}
 }

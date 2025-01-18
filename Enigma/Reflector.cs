@@ -3,41 +3,40 @@ namespace Enigma;
 /// <summary>
 /// Virtual reflector used to route a character back to the light board.
 /// Positioned left at the end of the rotors.
+/// Assignments are reciprocal; if A => G, then G => A.
 /// </summary>
 public sealed class Reflector
 {
-    public Dictionary<char,char> Wheel { get; set; } = [];
+    public Dictionary<char,char> Wires { get; set; } = [];
     
-    private IndexedDictionary<char,char> EncipherWheel { get; set; } = new();
+    private bool IsInitialized { get; set; }
+    private Dictionary<char,char> EncipherWires { get; } = new();
 
     /// <summary>
-    /// Establish IncomingWires dictionary which inverts the provided Wires values
-    /// so the hashed keys can be used for faster searches when chars return for final output.
+    /// Establish reciprocal dictionary entries.
     /// </summary>
     /// <returns></returns>
-	public void Reset()
-	{
-        EncipherWheel.Clear();
+    public void Reset()
+    {
+        EncipherWires.Clear();
 
-        if (Wheel.Count == 0)
+        if (Wires.Count == 0)
             return;
 
-        EncipherWheel.AddRange(Wheel);
-	}
+        foreach (var c in Wires)
+        {
+            EncipherWires.TryAdd(c.Key, c.Value);
+            EncipherWires.TryAdd(c.Value, c.Key);
+        }
 
-	public char EncipherCharacter(char c)
-	{
-        if (EncipherWheel.TryGetValue(c, out var value))
-            return value;
+        IsInitialized = true;
+    }
 
-        return c;
-	}
-
-	public char DecipherCharacter(char c)
-	{
-        if (EncipherWheel.TryGetKey(c, out var value))
-            return value;
-
-        return c;
-	}
+    public char SendCharacter(char c)
+    {
+        if (IsInitialized == false)
+            Reset();
+        
+        return EncipherWires.GetValueOrDefault(c, c);
+    }
 }

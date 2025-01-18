@@ -4,16 +4,17 @@ namespace Enigma;
 /// Virtual plug board used to send a character to be enciphered.
 /// Performs a character swap before sending to the rotors.
 /// Performs a final character swap after the enciphered character returns from the rotors.
+/// Assignments are reciprocal; if A => G, then G => A.
 /// </summary>
 public sealed class PlugBoard
 {
     public Dictionary<char,char> Wires { get; set; } = [];
-    
-    private IndexedDictionary<char,char> EncipherWires { get; set; } = new();
+
+    private bool IsInitialized { get; set; }
+    private Dictionary<char,char> EncipherWires { get; } = new();
 
     /// <summary>
-    /// Establish IncomingWires dictionary which inverts the provided Wires values
-    /// so the hashed keys can be used for faster searches when chars return for final output.
+    /// Establish reciprocal dictionary entries.
     /// </summary>
     /// <returns></returns>
 	public void Reset()
@@ -23,22 +24,20 @@ public sealed class PlugBoard
         if (Wires.Count == 0)
             return;
 
-        EncipherWires.AddRange(Wires);
-	}
+        foreach (var c in Wires)
+        {
+            EncipherWires.TryAdd(c.Key, c.Value);
+            EncipherWires.TryAdd(c.Value, c.Key);
+        }
 
-	public char EncipherCharacter(char c)
-	{
-        if (EncipherWires.TryGetValue(c, out var value))
-            return value;
-        else
-            return c;
-	}
+        IsInitialized = true;
+    }
 
-	public char DecipherCharacter(char c)
-	{
-        if (EncipherWires.TryGetKey(c, out var value))
-            return value;
-        else
-            return c;
-	}
+	public char SendCharacter(char c)
+    {
+        if (IsInitialized == false)
+            Reset();
+        
+        return EncipherWires.GetValueOrDefault(c, c);
+    }
 }
