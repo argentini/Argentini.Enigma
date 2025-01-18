@@ -48,32 +48,32 @@ public static class Reflectors
         return reflector;
     }
     
-    public static string GenerateReflector(CharacterSet charSet)
+    public static Dictionary<char,char> GenerateReflector(CharacterSet charSet)
     {
         var characterSetValue = charSet is CharacterSet.Ascii ? CharacterSetValues[CharacterSet.Ascii] : CharacterSetValues[CharacterSet.Classic];
-        var dict = new Dictionary<char,char>();
+        var reflector = new Dictionary<char,char>();
 
         foreach (var c in characterSetValue)
-            dict.Add(c, '\0');
+            reflector.Add(c, '\0');
 
         foreach (var c in characterSetValue)
         {
-            if (dict[c] != '\0')
+            if (reflector[c] != '\0')
                 continue;
             
             var ii = Random.Shared.Next(0, characterSetValue.Length);
             var cc = characterSetValue[ii];
 
-            while (dict[cc] != '\0')
+            while (reflector[cc] != '\0')
             {
                 ii = Random.Shared.Next(0, characterSetValue.Length);
                 cc = characterSetValue[ii];
             }
 
-            dict[c] = cc;
-            dict[cc] = c;
+            reflector[c] = cc;
+            reflector[cc] = c;
         }
 
-        return string.Concat(dict.Values);
+        return reflector;
     }
 }

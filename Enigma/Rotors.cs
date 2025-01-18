@@ -65,4 +65,16 @@ public static class Rotors
 
         return rotor;
     }
+    
+    public static Dictionary<char,char> GenerateRotor(CharacterSet charSet)
+    {
+        var characters = charSet is CharacterSet.Ascii ? CharacterSetValues[CharacterSet.Ascii] : CharacterSetValues[CharacterSet.Classic];
+        var cipher = new string(characters.OrderBy(_ => Random.Shared.Next()).ToArray());
+        var rotor = new Dictionary<char, char>();
+
+        for (var i = 0; i < characters.Length; i++)
+            rotor.TryAdd(characters[i], cipher[i]);
+
+        return rotor;
+    }
 }
