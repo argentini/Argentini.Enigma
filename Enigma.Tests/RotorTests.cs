@@ -1,10 +1,36 @@
 using System;
+using System.Linq;
 using Xunit;
 
 namespace Enigma.Tests;
 
 public class RotorTests
 {
+    [Fact]
+    public void RandomizeCharacterAsciiSet()
+    {
+        const string characterSet = @" !""#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+
+        var sb = string.Empty;
+        var characters = characterSet;
+
+        foreach (var _ in characters)
+        {
+            var ci = characters.Length > 0 ? Random.Shared.Next(0, characters.Length) : -1;
+
+            if (ci < 0)
+                break;
+            
+            var cc = characters[ci];
+
+            characters = characters.Replace($"{cc}", string.Empty);
+
+            sb += cc;
+        }
+
+        Assert.Equal(characterSet.Length, sb.Length);
+    }
+
 	[Fact]
 	public void GenerateRotorsClasses()
 	{
@@ -58,47 +84,48 @@ public class RotorTests
 
 	[Fact]
 	public void RotorOutput()
-	{
+    {
+        var rotorConfig = Rotors.GetRotor(Rotors.RotorType.Ascii_I);
         var rotor = new Rotor
         {
-            Wheel = Constants.Rotor1
+            Wheel = rotorConfig
         };
 
         rotor.Reset();
         
-        Assert.Equal('*', rotor.SendCharacter(' '));
-        Assert.Equal('E', rotor.SendCharacter('A'));
-        Assert.Equal('K', rotor.SendCharacter('B'));
-        Assert.Equal('%', rotor.SendCharacter('~'));
+        Assert.Equal(rotorConfig[' '], rotor.SendCharacter(' '));
+        Assert.Equal(rotorConfig['A'], rotor.SendCharacter('A'));
+        Assert.Equal(rotorConfig['B'], rotor.SendCharacter('B'));
+        Assert.Equal(rotorConfig['~'], rotor.SendCharacter('~'));
 
-        Assert.Equal(' ', rotor.ReflectedCharacter('*'));
-        Assert.Equal('A', rotor.ReflectedCharacter('E'));
-        Assert.Equal('B', rotor.ReflectedCharacter('K'));
-        Assert.Equal('~', rotor.ReflectedCharacter('%'));
+        Assert.Equal(rotorConfig.First(r => r.Value == '*').Key, rotor.ReflectedCharacter('*'));
+        Assert.Equal(rotorConfig.First(r => r.Value == 'E').Key, rotor.ReflectedCharacter('E'));
+        Assert.Equal(rotorConfig.First(r => r.Value == 'K').Key, rotor.ReflectedCharacter('K'));
+        Assert.Equal(rotorConfig.First(r => r.Value == '%').Key, rotor.ReflectedCharacter('%'));
 
         rotor.Rotation = 1;
 
-        Assert.Equal('d', rotor.SendCharacter(' '));
-        Assert.Equal('K', rotor.SendCharacter('A'));
-        Assert.Equal('M', rotor.SendCharacter('B'));
-        Assert.Equal('*', rotor.SendCharacter('~'));
+        Assert.Equal('r', rotor.SendCharacter(' '));
+        Assert.Equal('z', rotor.SendCharacter('A'));
+        Assert.Equal('~', rotor.SendCharacter('B'));
+        Assert.Equal('n', rotor.SendCharacter('~'));
 
-        Assert.Equal(' ', rotor.ReflectedCharacter('d'));
-        Assert.Equal('A', rotor.ReflectedCharacter('K'));
-        Assert.Equal('B', rotor.ReflectedCharacter('M'));
-        Assert.Equal('~', rotor.ReflectedCharacter('*'));
+        Assert.Equal('|', rotor.ReflectedCharacter('d'));
+        Assert.Equal('1', rotor.ReflectedCharacter('K'));
+        Assert.Equal(',', rotor.ReflectedCharacter('M'));
+        Assert.Equal('a', rotor.ReflectedCharacter('*'));
 
         rotor.Rotation = 0;
         rotor.NotchPosition = 1;
 
-        Assert.Equal('d', rotor.SendCharacter(' '));
-        Assert.Equal('K', rotor.SendCharacter('A'));
-        Assert.Equal('M', rotor.SendCharacter('B'));
-        Assert.Equal('*', rotor.SendCharacter('~'));
+        Assert.Equal('r', rotor.SendCharacter(' '));
+        Assert.Equal('z', rotor.SendCharacter('A'));
+        Assert.Equal('~', rotor.SendCharacter('B'));
+        Assert.Equal('n', rotor.SendCharacter('~'));
 
-        Assert.Equal(' ', rotor.ReflectedCharacter('d'));
-        Assert.Equal('A', rotor.ReflectedCharacter('K'));
-        Assert.Equal('B', rotor.ReflectedCharacter('M'));
-        Assert.Equal('~', rotor.ReflectedCharacter('*'));
+        Assert.Equal('|', rotor.ReflectedCharacter('d'));
+        Assert.Equal('1', rotor.ReflectedCharacter('K'));
+        Assert.Equal(',', rotor.ReflectedCharacter('M'));
+        Assert.Equal('a', rotor.ReflectedCharacter('*'));
 	}
 }

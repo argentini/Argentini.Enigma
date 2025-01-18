@@ -23,18 +23,18 @@ public class MachineTests
         
         var rotor1 = new Rotor
         {
-            Wheel = Constants.ClassicRotor1
+            Wheel = Rotors.GetRotor(Rotors.RotorType.Wehrmacht_I)
         };
 
         var rotor2 = new Rotor
         {
-            Wheel = Constants.ClassicRotor1,
+            Wheel = Rotors.GetRotor(Rotors.RotorType.Wehrmacht_II),
             NotchPosition = 10
         };
 
         var rotor3 = new Rotor
         {
-            Wheel = Constants.ClassicRotor1,
+            Wheel = Rotors.GetRotor(Rotors.RotorType.Wehrmacht_III),
             NotchPosition = 65
         };
 
@@ -110,7 +110,7 @@ public class MachineTests
     }
     
 	[Fact]
-	public void FullCipherTest()
+	public void FullAsciiTest()
     {
         var Message = new StringBuilder();
         var ci = 0;
@@ -134,18 +134,18 @@ public class MachineTests
         
         var rotor1 = new Rotor
         {
-            Wheel = Constants.Rotor1
+            Wheel = Rotors.GetRotor(Rotors.RotorType.Ascii_I),
         };
 
         var rotor2 = new Rotor
         {
-            Wheel = Constants.Rotor2,
+            Wheel = Rotors.GetRotor(Rotors.RotorType.Ascii_II),
             NotchPosition = 10
         };
 
         var rotor3 = new Rotor
         {
-            Wheel = Constants.Rotor3,
+            Wheel = Rotors.GetRotor(Rotors.RotorType.Ascii_III),
             NotchPosition = 65
         };
 
