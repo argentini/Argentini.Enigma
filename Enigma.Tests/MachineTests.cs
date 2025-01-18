@@ -37,12 +37,14 @@ public class MachineTests
 
         var rotor2 = new Rotor
         {
-            Wheel = Constants.Rotor2
+            Wheel = Constants.Rotor2,
+            NotchPosition = 10
         };
 
         var rotor3 = new Rotor
         {
-            Wheel = Constants.Rotor3
+            Wheel = Constants.Rotor3,
+            NotchPosition = 65
         };
 
         var reflector = new Reflector
