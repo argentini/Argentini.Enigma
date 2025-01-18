@@ -7,7 +7,7 @@ namespace Enigma.Tests;
 public class MachineTests
 {
 	[Fact]
-	public void SimpleCipherTest()
+	public void FullCipherTest()
     {
         var Message = new StringBuilder();
         var ci = 0;
