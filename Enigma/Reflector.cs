@@ -25,10 +25,7 @@ public sealed class Reflector
             return;
 
         foreach (var c in Wires)
-        {
             EncipherWires.TryAdd(c.Key, c.Value);
-            EncipherWires.TryAdd(c.Value, c.Key);
-        }
 
         IsInitialized = true;
     }

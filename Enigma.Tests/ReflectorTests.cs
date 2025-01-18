@@ -1,10 +1,20 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
+using static Enigma.Reflectors;
 
 namespace Enigma.Tests;
 
 public class ReflectorTests
 {
+    [Fact]
+    public void GenerateReflector()
+    {
+        Assert.Equal(26, Reflectors.GenerateReflector(CharacterSet.Classic).Length);
+        Assert.Equal(95, Reflectors.GenerateReflector(CharacterSet.Ascii).Length);
+    }
+    
 	[Fact]
 	public void GenerateReflectorsClasses()
 	{
@@ -72,16 +82,16 @@ public class ReflectorTests
     public void ReflectorOutput()
     {
         var reflector = new Reflector()
-            .SetWires(Constants.Reflector1);
+            .SetWires(GetReflector(ReflectorType.Ascii));
         
-        Assert.Equal('s', reflector.SendCharacter(' '));
-        Assert.Equal('Y', reflector.SendCharacter('A'));
-        Assert.Equal('R', reflector.SendCharacter('B'));
-        Assert.Equal('!', reflector.SendCharacter('~'));
+        Assert.Equal('B', reflector.SendCharacter(' '));
+        Assert.Equal('J', reflector.SendCharacter('A'));
+        Assert.Equal(' ', reflector.SendCharacter('B'));
+        Assert.Equal('N', reflector.SendCharacter('~'));
         
-        Assert.Equal(' ', reflector.SendCharacter('s'));
-        Assert.Equal('A', reflector.SendCharacter('Y'));
-        Assert.Equal('B', reflector.SendCharacter('R'));
-        Assert.Equal('~', reflector.SendCharacter('!'));
+        Assert.Equal(' ', reflector.SendCharacter('B'));
+        Assert.Equal('A', reflector.SendCharacter('J'));
+        Assert.Equal('B', reflector.SendCharacter(' '));
+        Assert.Equal('~', reflector.SendCharacter('N'));
     }
 }

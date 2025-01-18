@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using Xunit;
+using static Enigma.Reflectors;
 
 namespace Enigma.Tests;
 
@@ -31,7 +32,7 @@ public class MachineTests
             .SetNotchPosition(13);
 
         var reflector = new Reflector()
-            .SetWires(Constants.ClassicReflector1);
+            .SetWires(Reflectors.GetReflector(ReflectorType.Wehrmacht_B));
 
         var enciphered = new StringBuilder();
 
@@ -132,7 +133,7 @@ public class MachineTests
             .SetNotchPosition(65);
 
         var reflector = new Reflector()
-            .SetWires(Constants.Reflector1);
+            .SetWires(Reflectors.GetReflector(ReflectorType.Ascii));
 
         var timer = new Stopwatch();
         var enciphered = new StringBuilder();
