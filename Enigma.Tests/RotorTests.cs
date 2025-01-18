@@ -85,25 +85,21 @@ public class RotorTests
 	[Fact]
 	public void RotorOutput()
     {
-        var rotorConfig = Rotors.GetRotor(Rotors.RotorType.Ascii_I);
-        var rotor = new Rotor
-        {
-            Wheel = rotorConfig
-        };
-
-        rotor.Reset();
+        var rotorWheel = Rotors.GetRotor(Rotors.RotorType.Ascii_I);
+        var rotor = new Rotor()
+            .SetWheel(rotorWheel);
         
-        Assert.Equal(rotorConfig[' '], rotor.SendCharacter(' '));
-        Assert.Equal(rotorConfig['A'], rotor.SendCharacter('A'));
-        Assert.Equal(rotorConfig['B'], rotor.SendCharacter('B'));
-        Assert.Equal(rotorConfig['~'], rotor.SendCharacter('~'));
+        Assert.Equal(rotorWheel[' '], rotor.SendCharacter(' '));
+        Assert.Equal(rotorWheel['A'], rotor.SendCharacter('A'));
+        Assert.Equal(rotorWheel['B'], rotor.SendCharacter('B'));
+        Assert.Equal(rotorWheel['~'], rotor.SendCharacter('~'));
 
-        Assert.Equal(rotorConfig.First(r => r.Value == '*').Key, rotor.ReflectedCharacter('*'));
-        Assert.Equal(rotorConfig.First(r => r.Value == 'E').Key, rotor.ReflectedCharacter('E'));
-        Assert.Equal(rotorConfig.First(r => r.Value == 'K').Key, rotor.ReflectedCharacter('K'));
-        Assert.Equal(rotorConfig.First(r => r.Value == '%').Key, rotor.ReflectedCharacter('%'));
+        Assert.Equal(rotorWheel.First(r => r.Value == '*').Key, rotor.ReflectedCharacter('*'));
+        Assert.Equal(rotorWheel.First(r => r.Value == 'E').Key, rotor.ReflectedCharacter('E'));
+        Assert.Equal(rotorWheel.First(r => r.Value == 'K').Key, rotor.ReflectedCharacter('K'));
+        Assert.Equal(rotorWheel.First(r => r.Value == '%').Key, rotor.ReflectedCharacter('%'));
 
-        rotor.Rotation = 1;
+        rotor.SetRotation(1);
 
         Assert.Equal('r', rotor.SendCharacter(' '));
         Assert.Equal('z', rotor.SendCharacter('A'));
@@ -115,8 +111,8 @@ public class RotorTests
         Assert.Equal(',', rotor.ReflectedCharacter('M'));
         Assert.Equal('a', rotor.ReflectedCharacter('*'));
 
-        rotor.Rotation = 0;
-        rotor.NotchPosition = 1;
+        rotor.SetRotation(0);
+        rotor.SetNotchPosition(1);
 
         Assert.Equal('r', rotor.SendCharacter(' '));
         Assert.Equal('z', rotor.SendCharacter('A'));

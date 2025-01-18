@@ -8,71 +8,77 @@ namespace Enigma;
 /// </summary>
 public sealed class Rotor
 {
-    public Dictionary<char,char> Wheel { get; set; } = [];
+    public int NotchPosition => _notchPosition;
+    public int Rotation => _rotation;
+    public Dictionary<char,char> Wheel => _wheel;
 
+    private Dictionary<char,char> _wheel { get; set; } = [];
     private int _notchPosition;
-    public int NotchPosition
-    {
-        get => _notchPosition;
-        set
-        {
-            if (value >= 0 && value < Wheel.Count)
-            {
-                if (_notchPosition == value)
-                    return;
-                
-                _notchPosition = value;
-
-                Reset();
-            }
-            else
-            {
-                if (_notchPosition != value)
-                {
-                    _notchPosition = 0;
-                    Reset();
-                }
-            }
-        }
-    }
-
     private int _rotation;
-    public int Rotation
-    {
-        get => _rotation;
-        set
-        {
-            if (value >= 0 && value < Wheel.Count)
-                _rotation = value;
-            else
-                _rotation = 0;
-        }
-    }
-
     private bool IsInitialized { get; set; }
     private IndexedDictionary<char,char> EncipherWheel { get; set; } = new();
 
     /// <summary>
-    /// Establish IncomingWheel dictionary which inverts the provided Wheel values
-    /// so the hashed keys can be used for faster searches when chars return from the reflector.
+    /// Prepare the rotor for use; done at start and after the notch position changes.
     /// </summary>
     /// <returns></returns>
-	public void Reset()
+	private void Initialize()
 	{
         EncipherWheel.Clear();
 
-        if (Wheel.Count == 0)
+        if (_wheel.Count == 0)
             return;
 
-        EncipherWheel.AddRange(Wheel, NotchPosition);
+        EncipherWheel.AddRange(_wheel, NotchPosition);
 
         IsInitialized = true;
     }
 
+	public Rotor SetWheel(Dictionary<char,char> value)
+	{
+        _wheel = value;
+
+        Initialize();
+
+        return this;
+	}
+
+	public Rotor SetRotation(int value)
+	{
+        if (value >= 0 && value < _wheel.Count)
+            _rotation = value;
+        else
+            _rotation = 0;
+
+        return this;
+	}
+
+	public Rotor Rotate()
+	{
+        _rotation++;
+
+        if (_rotation >= _wheel.Count)
+            _rotation = 0;
+
+        return this;
+	}
+
+	public Rotor SetNotchPosition(int value)
+	{
+        if (value >= 0 && value < _wheel.Count)
+            _notchPosition = value;
+        else
+            _notchPosition = 0;
+
+        Initialize();
+
+        return this;
+	}
+
 	public char SendCharacter(char c)
 	{
         if (IsInitialized == false)
-            Reset();
+            Initialize();
         
         if (EncipherWheel.KeyIndex.TryGetValue(c, out var originalIndex) == false)
             return c;
@@ -85,7 +91,7 @@ public sealed class Rotor
 	public char ReflectedCharacter(char c)
 	{
         if (IsInitialized == false)
-            Reset();
+            Initialize();
 
         if (EncipherWheel.ValueIndex.TryGetValue(c, out var originalIndex) == false)
             return c;

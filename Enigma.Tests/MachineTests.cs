@@ -21,22 +21,16 @@ public class MachineTests
             }
         };
         
-        var rotor1 = new Rotor
-        {
-            Wheel = Rotors.GetRotor(Rotors.RotorType.Wehrmacht_I)
-        };
+        var rotor1 = new Rotor()
+            .SetWheel(Rotors.GetRotor(Rotors.RotorType.Wehrmacht_I));
 
-        var rotor2 = new Rotor
-        {
-            Wheel = Rotors.GetRotor(Rotors.RotorType.Wehrmacht_II),
-            NotchPosition = 10
-        };
+        var rotor2 = new Rotor()
+            .SetWheel(Rotors.GetRotor(Rotors.RotorType.Wehrmacht_II))
+            .SetNotchPosition(10);
 
-        var rotor3 = new Rotor
-        {
-            Wheel = Rotors.GetRotor(Rotors.RotorType.Wehrmacht_III),
-            NotchPosition = 65
-        };
+        var rotor3 = new Rotor()
+            .SetWheel(Rotors.GetRotor(Rotors.RotorType.Wehrmacht_III))
+            .SetNotchPosition(13);
 
         var reflector = new Reflector
         {
@@ -60,15 +54,15 @@ public class MachineTests
             
             enciphered.Append(cc);
 
-            rotor1.Rotation++;
+            rotor1.Rotate();
 
             if (rotor1.Rotation != 0)
                 continue;
-            
-            rotor2.Rotation++;
-                
+
+            rotor2.Rotate();
+
             if (rotor2.Rotation == 0)
-                rotor3.Rotation++;
+                rotor3.Rotate();
         }
 
         Assert.NotEqual(Message, enciphered.ToString());
@@ -76,9 +70,9 @@ public class MachineTests
         
         var deciphered = new StringBuilder();
 
-        rotor1.Rotation = 0;
-        rotor2.Rotation = 0;
-        rotor3.Rotation = 0;
+        rotor1.SetRotation(0);
+        rotor2.SetRotation(0);
+        rotor3.SetRotation(0);
 
         foreach (var c in enciphered.ToString())
         {
@@ -95,15 +89,15 @@ public class MachineTests
 
             deciphered.Append(cc);
 
-            rotor1.Rotation++;
+            rotor1.Rotate();
 
             if (rotor1.Rotation != 0)
                 continue;
-            
-            rotor2.Rotation++;
-                
+
+            rotor2.Rotate();
+
             if (rotor2.Rotation == 0)
-                rotor3.Rotation++;
+                rotor3.Rotate();
         }
         
         Assert.Equal(Message, deciphered.ToString());
@@ -132,22 +126,16 @@ public class MachineTests
             }
         };
         
-        var rotor1 = new Rotor
-        {
-            Wheel = Rotors.GetRotor(Rotors.RotorType.Ascii_I),
-        };
+        var rotor1 = new Rotor()
+            .SetWheel(Rotors.GetRotor(Rotors.RotorType.Ascii_I));
 
-        var rotor2 = new Rotor
-        {
-            Wheel = Rotors.GetRotor(Rotors.RotorType.Ascii_II),
-            NotchPosition = 10
-        };
+        var rotor2 = new Rotor()
+            .SetWheel(Rotors.GetRotor(Rotors.RotorType.Ascii_II))
+            .SetNotchPosition(10);
 
-        var rotor3 = new Rotor
-        {
-            Wheel = Rotors.GetRotor(Rotors.RotorType.Ascii_III),
-            NotchPosition = 65
-        };
+        var rotor3 = new Rotor()
+            .SetWheel(Rotors.GetRotor(Rotors.RotorType.Ascii_III))
+            .SetNotchPosition(65);
 
         var reflector = new Reflector
         {
@@ -174,15 +162,15 @@ public class MachineTests
             
             enciphered.Append(cc);
 
-            rotor1.Rotation++;
+            rotor1.Rotate();
 
             if (rotor1.Rotation != 0)
                 continue;
-            
-            rotor2.Rotation++;
-                
+
+            rotor2.Rotate();
+
             if (rotor2.Rotation == 0)
-                rotor3.Rotation++;
+                rotor3.Rotate();
         }
 
         timer.Stop();
@@ -194,9 +182,9 @@ public class MachineTests
         
         var deciphered = new StringBuilder();
 
-        rotor1.Rotation = 0;
-        rotor2.Rotation = 0;
-        rotor3.Rotation = 0;
+        rotor1.SetRotation(0);
+        rotor2.SetRotation(0);
+        rotor3.SetRotation(0);
 
         foreach (var c in enciphered.ToString())
         {
@@ -213,15 +201,15 @@ public class MachineTests
 
             deciphered.Append(cc);
 
-            rotor1.Rotation++;
+            rotor1.Rotate();
 
             if (rotor1.Rotation != 0)
                 continue;
-            
-            rotor2.Rotation++;
-                
+
+            rotor2.Rotate();
+
             if (rotor2.Rotation == 0)
-                rotor3.Rotation++;
+                rotor3.Rotate();
         }
         
         Assert.True(Message.Equals(deciphered));
