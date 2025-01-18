@@ -24,7 +24,17 @@ public class MachineTests
         {
             Wheel = Constants.Rotor1
         };
-        
+
+        var rotor2 = new Rotor
+        {
+            Wheel = Constants.Rotor2
+        };
+
+        var rotor3 = new Rotor
+        {
+            Wheel = Constants.Rotor3
+        };
+
         var reflector = new Reflector
         {
             Wires = Constants.Reflector1
@@ -37,7 +47,11 @@ public class MachineTests
             var cc = plugBoard.SendCharacter(c);
 
             cc = rotor1.SendCharacter(cc);
+            cc = rotor2.SendCharacter(cc);
+            cc = rotor3.SendCharacter(cc);
             cc = reflector.SendCharacter(cc);
+            cc = rotor3.ReflectedCharacter(cc);
+            cc = rotor2.ReflectedCharacter(cc);
             cc = rotor1.ReflectedCharacter(cc);
             cc = plugBoard.SendCharacter(cc);
             
@@ -46,7 +60,7 @@ public class MachineTests
             rotor1.Rotation++;
         }
         
-        Assert.Equal("H[iX[z_eAw@*q&{A&HhYl", enciphered);
+        Assert.Equal("N=zi-hVx6_FV_|&UP8'lA", enciphered);
         
         var deciphered = string.Empty;
 
@@ -57,7 +71,11 @@ public class MachineTests
             var cc = plugBoard.SendCharacter(c);
 
             cc = rotor1.SendCharacter(cc);
+            cc = rotor2.SendCharacter(cc);
+            cc = rotor3.SendCharacter(cc);
             cc = reflector.SendCharacter(cc);
+            cc = rotor3.ReflectedCharacter(cc);
+            cc = rotor2.ReflectedCharacter(cc);
             cc = rotor1.ReflectedCharacter(cc);
             cc = plugBoard.SendCharacter(cc);
 
