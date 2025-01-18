@@ -10,7 +10,7 @@ public sealed class Rotor
 {
     public Dictionary<char,char> Wheel { get; set; } = [];
 
-    private int _notchPosition = 0;
+    private int _notchPosition;
     public int NotchPosition
     {
         get => _notchPosition;
@@ -18,11 +18,12 @@ public sealed class Rotor
         {
             if (value >= 0 && value < Wheel.Count)
             {
-                if (_notchPosition != value)
-                {
-                    _notchPosition = value;
-                    Reset();
-                }
+                if (_notchPosition == value)
+                    return;
+                
+                _notchPosition = value;
+
+                Reset();
             }
             else
             {
@@ -35,7 +36,7 @@ public sealed class Rotor
         }
     }
 
-    private int _rotation = 0;
+    private int _rotation;
     public int Rotation
     {
         get => _rotation;
@@ -48,6 +49,7 @@ public sealed class Rotor
         }
     }
 
+    private bool IsInitialized { get; set; }
     private IndexedDictionary<char,char> EncipherWheel { get; set; } = new();
 
     /// <summary>
@@ -63,26 +65,34 @@ public sealed class Rotor
             return;
 
         EncipherWheel.AddRange(Wheel, NotchPosition);
-	}
 
-	public char EncipherCharacter(char c)
+        IsInitialized = true;
+    }
+
+	public char SendCharacter(char c)
 	{
+        if (IsInitialized == false)
+            Reset();
+        
         var originalIndex = EncipherWheel.KeyIndex[c];
 
         if (originalIndex == -1)
-            throw new Exception($"Rotor.EncipherCharacter() => character is invalid ({c}).");
+            throw new Exception($"Rotor.SendCharacter() => character is invalid ({c}).");
 
         int rotatedIndex = (originalIndex + Rotation) % EncipherWheel.Count;
 
         return EncipherWheel.KeyValues[rotatedIndex].Value;
 	}
 
-	public char DecipherCharacter(char c)
+	public char ReflectedCharacter(char c)
 	{
+        if (IsInitialized == false)
+            Reset();
+
         var originalIndex = EncipherWheel.ValueIndex[c];
 
         if (originalIndex == -1)
-            throw new Exception($"Rotor.DecipherCharacter() => character is invalid ({c}).");
+            throw new Exception($"Rotor.ReflectedCharacter() => character is invalid ({c}).");
 
         int rotatedIndex = (originalIndex - Rotation + EncipherWheel.Count) % EncipherWheel.Count;
 
