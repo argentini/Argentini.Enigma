@@ -8,17 +8,18 @@ namespace Enigma;
 /// </summary>
 public sealed class PlugBoard
 {
-    public Dictionary<char,char> Wires { get; set; } = [];
+    public Dictionary<char,char> Wires => _wires;
 
+    private Dictionary<char,char> _wires { get; set; } = [];
     private bool IsInitialized { get; set; }
-    private Dictionary<char,char> EncipherWires { get; } = new();
+    private Dictionary<char,char> EncipherWires { get; } = [];
 
     /// <summary>
     /// Establish reciprocal dictionary entries.
     /// </summary>
     /// <returns></returns>
-	public void Reset()
-	{
+    private void Initialize()
+    {
         EncipherWires.Clear();
 
         if (Wires.Count == 0)
@@ -33,10 +34,19 @@ public sealed class PlugBoard
         IsInitialized = true;
     }
 
-	public char SendCharacter(char c)
+	public PlugBoard SetWires(Dictionary<char,char> value)
+	{
+        _wires = value;
+
+        Initialize();
+
+        return this;
+	}
+
+    public char SendCharacter(char c)
     {
         if (IsInitialized == false)
-            Reset();
+            Initialize();
         
         return EncipherWires.GetValueOrDefault(c, c);
     }

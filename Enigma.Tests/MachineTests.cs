@@ -12,14 +12,12 @@ public class MachineTests
     {
         const string Message = "THIS IS A TEST MESSAGE WITH SPACES";
         
-        var plugBoard = new PlugBoard
-        {
-            Wires = new Dictionary<char, char>
+        var plugBoard = new PlugBoard()
+            .SetWires(new Dictionary<char, char>
             {
                 { 'T', 'A' },
                 { 'S', 'B' }
-            }
-        };
+            });
         
         var rotor1 = new Rotor()
             .SetWheel(Rotors.GetRotor(Rotors.RotorType.Wehrmacht_I));
@@ -32,10 +30,8 @@ public class MachineTests
             .SetWheel(Rotors.GetRotor(Rotors.RotorType.Wehrmacht_III))
             .SetNotchPosition(13);
 
-        var reflector = new Reflector
-        {
-            Wires = Constants.ClassicReflector1
-        };
+        var reflector = new Reflector()
+            .SetWires(Constants.ClassicReflector1);
 
         var enciphered = new StringBuilder();
 
@@ -117,14 +113,12 @@ public class MachineTests
                 ci = 0;
         }
         
-        var plugBoard = new PlugBoard
-        {
-            Wires = new Dictionary<char, char>
+        var plugBoard = new PlugBoard()
+            .SetWires(new Dictionary<char, char>
             {
                 { 'T', 'A' },
                 { 'C', 'B' }
-            }
-        };
+            });
         
         var rotor1 = new Rotor()
             .SetWheel(Rotors.GetRotor(Rotors.RotorType.Ascii_I));
@@ -137,10 +131,8 @@ public class MachineTests
             .SetWheel(Rotors.GetRotor(Rotors.RotorType.Ascii_III))
             .SetNotchPosition(65);
 
-        var reflector = new Reflector
-        {
-            Wires = Constants.Reflector1
-        };
+        var reflector = new Reflector()
+            .SetWires(Constants.Reflector1);
 
         var timer = new Stopwatch();
         var enciphered = new StringBuilder();

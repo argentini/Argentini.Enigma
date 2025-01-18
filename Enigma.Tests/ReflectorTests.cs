@@ -71,10 +71,8 @@ public class ReflectorTests
     [Fact]
     public void ReflectorOutput()
     {
-        var reflector = new Reflector
-        {
-            Wires = Constants.Reflector1
-        };
+        var reflector = new Reflector()
+            .SetWires(Constants.Reflector1);
         
         Assert.Equal('s', reflector.SendCharacter(' '));
         Assert.Equal('Y', reflector.SendCharacter('A'));
