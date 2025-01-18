@@ -66,39 +66,39 @@ public class RotorTests
 
         rotor.Reset();
         
-        Assert.Equal('*', rotor.EncipherCharacter(' '));
-        Assert.Equal('E', rotor.EncipherCharacter('A'));
-        Assert.Equal('K', rotor.EncipherCharacter('B'));
-        Assert.Equal('%', rotor.EncipherCharacter('~'));
+        Assert.Equal('*', rotor.SendCharacter(' '));
+        Assert.Equal('E', rotor.SendCharacter('A'));
+        Assert.Equal('K', rotor.SendCharacter('B'));
+        Assert.Equal('%', rotor.SendCharacter('~'));
 
-        Assert.Equal(' ', rotor.DecipherCharacter('*'));
-        Assert.Equal('A', rotor.DecipherCharacter('E'));
-        Assert.Equal('B', rotor.DecipherCharacter('K'));
-        Assert.Equal('~', rotor.DecipherCharacter('%'));
+        Assert.Equal(' ', rotor.ReflectedCharacter('*'));
+        Assert.Equal('A', rotor.ReflectedCharacter('E'));
+        Assert.Equal('B', rotor.ReflectedCharacter('K'));
+        Assert.Equal('~', rotor.ReflectedCharacter('%'));
 
         rotor.Rotation = 1;
 
-        Assert.Equal('d', rotor.EncipherCharacter(' '));
-        Assert.Equal('K', rotor.EncipherCharacter('A'));
-        Assert.Equal('M', rotor.EncipherCharacter('B'));
-        Assert.Equal('*', rotor.EncipherCharacter('~'));
+        Assert.Equal('d', rotor.SendCharacter(' '));
+        Assert.Equal('K', rotor.SendCharacter('A'));
+        Assert.Equal('M', rotor.SendCharacter('B'));
+        Assert.Equal('*', rotor.SendCharacter('~'));
 
-        Assert.Equal(' ', rotor.DecipherCharacter('d'));
-        Assert.Equal('A', rotor.DecipherCharacter('K'));
-        Assert.Equal('B', rotor.DecipherCharacter('M'));
-        Assert.Equal('~', rotor.DecipherCharacter('*'));
+        Assert.Equal(' ', rotor.ReflectedCharacter('d'));
+        Assert.Equal('A', rotor.ReflectedCharacter('K'));
+        Assert.Equal('B', rotor.ReflectedCharacter('M'));
+        Assert.Equal('~', rotor.ReflectedCharacter('*'));
 
         rotor.Rotation = 0;
         rotor.NotchPosition = 1;
 
-        Assert.Equal('d', rotor.EncipherCharacter(' '));
-        Assert.Equal('K', rotor.EncipherCharacter('A'));
-        Assert.Equal('M', rotor.EncipherCharacter('B'));
-        Assert.Equal('*', rotor.EncipherCharacter('~'));
+        Assert.Equal('d', rotor.SendCharacter(' '));
+        Assert.Equal('K', rotor.SendCharacter('A'));
+        Assert.Equal('M', rotor.SendCharacter('B'));
+        Assert.Equal('*', rotor.SendCharacter('~'));
 
-        Assert.Equal(' ', rotor.DecipherCharacter('d'));
-        Assert.Equal('A', rotor.DecipherCharacter('K'));
-        Assert.Equal('B', rotor.DecipherCharacter('M'));
-        Assert.Equal('~', rotor.DecipherCharacter('*'));
+        Assert.Equal(' ', rotor.ReflectedCharacter('d'));
+        Assert.Equal('A', rotor.ReflectedCharacter('K'));
+        Assert.Equal('B', rotor.ReflectedCharacter('M'));
+        Assert.Equal('~', rotor.ReflectedCharacter('*'));
 	}
 }
