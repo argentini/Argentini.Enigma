@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using Xunit;
 
@@ -48,9 +49,12 @@ public class MachineTests
         {
             Wires = Constants.Reflector1
         };
-        
-        var enciphered = string.Empty;
 
+        var timer = new Stopwatch();
+        var enciphered = new StringBuilder();
+
+        timer.Start();
+        
         foreach (var c in Message.ToString())
         {
             var cc = plugBoard.SendCharacter(c);
@@ -64,7 +68,7 @@ public class MachineTests
             cc = rotor1.ReflectedCharacter(cc);
             cc = plugBoard.SendCharacter(cc);
             
-            enciphered += cc;
+            enciphered.Append(cc);
 
             rotor1.Rotation++;
 
@@ -76,17 +80,21 @@ public class MachineTests
             if (rotor2.Rotation == 0)
                 rotor3.Rotation++;
         }
+
+        timer.Stop();
         
-        Assert.NotEqual(Message.ToString(), enciphered);
+        Assert.False(Message.Equals(enciphered));
         Assert.Equal(Message.Length, enciphered.Length);
         
-        var deciphered = string.Empty;
+        Debug.WriteLine($"NEW Encipher => {timer.Elapsed.TotalSeconds}");
+        
+        var deciphered = new StringBuilder();
 
         rotor1.Rotation = 0;
         rotor2.Rotation = 0;
         rotor3.Rotation = 0;
 
-        foreach (var c in enciphered)
+        foreach (var c in enciphered.ToString())
         {
             var cc = plugBoard.SendCharacter(c);
 
@@ -99,7 +107,7 @@ public class MachineTests
             cc = rotor1.ReflectedCharacter(cc);
             cc = plugBoard.SendCharacter(cc);
 
-            deciphered += cc;
+            deciphered.Append(cc);
 
             rotor1.Rotation++;
 
@@ -112,6 +120,6 @@ public class MachineTests
                 rotor3.Rotation++;
         }
         
-        Assert.Equal(Message.ToString(), deciphered);
+        Assert.True(Message.Equals(deciphered));
     }
 }
