@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Enigma.Tests;
@@ -26,7 +23,7 @@ public class RotorTests
 
             for (var i = 32; i < 127; i++)
             {
-                if (i >= 'A' && i <= 'Z')
+                if (i is >= 'A' and <= 'Z')
                 {
                     sb += 
                         $$"""
@@ -56,7 +53,7 @@ public class RotorTests
                 """;
         }
 
-        Assert.True(true);
+        Assert.NotEmpty(sb);
     }
 
 	[Fact]
