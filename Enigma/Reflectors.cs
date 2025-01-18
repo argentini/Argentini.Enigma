@@ -15,6 +15,7 @@ public static class Reflectors
         // Standard 95 ASCII character reflector
         Ascii,
     }
+    
     private static readonly Dictionary<ReflectorType, string> ReflectorValues = new()
     {
         { ReflectorType.Wehrmacht_B, "YRUHQSLDPXNGOKMIEBFZCWVJAT" },

@@ -27,8 +27,17 @@ public static class Rotors
         Ascii_III,
     }
 
-    private static string ClassicCharacterSet => "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private static string AsciiCharacterSet => @" !""#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+    public enum CharacterSet
+    {
+        Classic,
+        Ascii,
+    }
+    private static readonly Dictionary<CharacterSet, string> CharacterSetValues = new()
+    {
+        { CharacterSet.Classic, "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
+        { CharacterSet.Ascii, @" !""#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~" },
+    };
+
     private static readonly Dictionary<RotorType, string> RotorValues = new()
     {
         { RotorType.Wehrmacht_I, "EKMFLGDQVZNTOWYHXUSPAIBRCJ" },
@@ -49,7 +58,7 @@ public static class Rotors
     public static Dictionary<char, char> GetRotor(RotorType type)
     {
         var rotor = new Dictionary<char, char>();
-        var charSet = type is RotorType.Ascii_I or RotorType.Ascii_II or RotorType.Ascii_III ? AsciiCharacterSet : ClassicCharacterSet; 
+        var charSet = type is RotorType.Ascii_I or RotorType.Ascii_II or RotorType.Ascii_III ? CharacterSetValues[CharacterSet.Ascii] : CharacterSetValues[CharacterSet.Classic];
 
         for (var i = 0; i < charSet.Length; i++)
             rotor.Add(charSet[i], RotorValues[type][i]);
