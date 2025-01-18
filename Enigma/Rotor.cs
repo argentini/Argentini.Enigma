@@ -74,12 +74,10 @@ public sealed class Rotor
         if (IsInitialized == false)
             Reset();
         
-        var originalIndex = EncipherWheel.KeyIndex[c];
+        if (EncipherWheel.KeyIndex.TryGetValue(c, out var originalIndex) == false)
+            return c;
 
-        if (originalIndex == -1)
-            throw new Exception($"Rotor.SendCharacter() => character is invalid ({c}).");
-
-        int rotatedIndex = (originalIndex + Rotation) % EncipherWheel.Count;
+        var rotatedIndex = (originalIndex + Rotation) % EncipherWheel.Count;
 
         return EncipherWheel.KeyValues[rotatedIndex].Value;
 	}
@@ -89,12 +87,10 @@ public sealed class Rotor
         if (IsInitialized == false)
             Reset();
 
-        var originalIndex = EncipherWheel.ValueIndex[c];
+        if (EncipherWheel.ValueIndex.TryGetValue(c, out var originalIndex) == false)
+            return c;
 
-        if (originalIndex == -1)
-            throw new Exception($"Rotor.ReflectedCharacter() => character is invalid ({c}).");
-
-        int rotatedIndex = (originalIndex - Rotation + EncipherWheel.Count) % EncipherWheel.Count;
+        var rotatedIndex = (originalIndex - Rotation + EncipherWheel.Count) % EncipherWheel.Count;
 
         return EncipherWheel.KeyValues[rotatedIndex].Key;
 	}

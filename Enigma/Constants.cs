@@ -26,6 +26,36 @@ public static class Constants
         "FSOKANUERHMBTIYCWLQPZXVGJD"
     ];
 
+    public static Dictionary<char,char> ClassicRotor1 = new()
+    {
+        {'A', 'E'},
+        {'B', 'K'},
+        {'C', 'M'},
+        {'D', 'F'},
+        {'E', 'L'},
+        {'F', 'G'},
+        {'G', 'D'},
+        {'H', 'Q'},
+        {'I', 'V'},
+        {'J', 'Z'},
+        {'K', 'N'},
+        {'L', 'T'},
+        {'M', 'O'},
+        {'N', 'W'},
+        {'O', 'Y'},
+        {'P', 'H'},
+        {'Q', 'X'},
+        {'R', 'U'},
+        {'S', 'S'},
+        {'T', 'P'},
+        {'U', 'A'},
+        {'V', 'I'},
+        {'W', 'B'},
+        {'X', 'R'},
+        {'Y', 'C'},
+        {'Z', 'J'},
+    };
+
     public static Dictionary<char,char> Rotor1 = new()
     {
         {' ', '*'},
@@ -1032,6 +1062,36 @@ public static class Constants
         "ENKQAUYWJICOPBLMDXZVFTHRGS",
         "RDOBJNTKVEHMLFCWZAXGYIPSUQ"
     ];
+
+    public static Dictionary<char,char> ClassicReflector1 = new()
+    {
+        {'A', 'Y'},
+        {'B', 'R'},
+        {'C', 'U'},
+        {'D', 'H'},
+        {'E', 'Q'},
+        {'F', 'S'},
+        {'G', 'L'},
+        {'H', 'D'},
+        {'I', 'P'},
+        {'J', 'X'},
+        {'K', 'N'},
+        {'L', 'G'},
+        {'M', 'O'},
+        {'N', 'K'},
+        {'O', 'M'},
+        {'P', 'I'},
+        {'Q', 'E'},
+        {'R', 'B'},
+        {'S', 'F'},
+        {'T', 'Z'},
+        {'U', 'C'},
+        {'V', 'W'},
+        {'W', 'V'},
+        {'X', 'J'},
+        {'Y', 'A'},
+        {'Z', 'T'},
+    };
 
     public static Dictionary<char,char> Reflector1 = new()
     {
