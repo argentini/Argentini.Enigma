@@ -31,28 +31,25 @@ public sealed class IndexedDictionary<TKey, TValue> where TKey : notnull where T
         ValueIndex[value] = idx;
     }
 
-    public void AddRange(Dictionary<TKey, TValue> dictionary, int notchPosition = 0)
+    public void AddRange(Dictionary<TKey, TValue> dictionary, int ringPosition = 0)
     {
-        if (notchPosition == 0)
+        if (ringPosition <= 0 || ringPosition >= dictionary.Count)
         {
             foreach (var kvp in dictionary)
                 Add(kvp.Key, kvp.Value);
         }
         else
         {
-            if (notchPosition < dictionary.Count)
+            var counter = ringPosition;
+
+            foreach (var kvp in dictionary)
             {
-                var counter = notchPosition;
-
-                foreach (var kvp in dictionary)
-                {
-                    Add(kvp.Key, dictionary.Skip(counter).First().Value);
+                Add(kvp.Key, dictionary.Skip(counter).First().Value);
                     
-                    counter++;
+                counter++;
 
-                    if (counter >= dictionary.Count)
-                        counter = 0;
-                }
+                if (counter >= dictionary.Count)
+                    counter = 0;
             }
         }
     }

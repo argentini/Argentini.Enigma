@@ -8,20 +8,14 @@ namespace Enigma;
 /// </summary>
 public sealed class Rotor
 {
-    public int NotchPosition => _notchPosition;
-    public int Rotation => _rotation;
+    public int RingPosition { get; private set; }
+    public int Rotation { get; private set; }
     public Dictionary<char,char> Wheel => _wheel;
 
     private Dictionary<char,char> _wheel { get; set; } = [];
-    private int _notchPosition;
-    private int _rotation;
     private bool IsInitialized { get; set; }
     private IndexedDictionary<char,char> EncipherWheel { get; set; } = new();
 
-    /// <summary>
-    /// Prepare the rotor for use; done at start and after the notch position changes.
-    /// </summary>
-    /// <returns></returns>
 	private void Initialize()
 	{
         EncipherWheel.Clear();
@@ -29,7 +23,7 @@ public sealed class Rotor
         if (_wheel.Count == 0)
             return;
 
-        EncipherWheel.AddRange(_wheel, NotchPosition);
+        EncipherWheel.AddRange(_wheel, RingPosition);
 
         IsInitialized = true;
     }
@@ -46,29 +40,29 @@ public sealed class Rotor
 	public Rotor SetRotation(int value)
 	{
         if (value >= 0 && value < _wheel.Count)
-            _rotation = value;
+            Rotation = value;
         else
-            _rotation = 0;
+            Rotation = 0;
 
         return this;
 	}
 
 	public Rotor Rotate()
 	{
-        _rotation++;
+        Rotation++;
 
-        if (_rotation >= _wheel.Count)
-            _rotation = 0;
+        if (Rotation >= _wheel.Count)
+            Rotation = 0;
 
         return this;
 	}
 
-	public Rotor SetNotchPosition(int value)
+	public Rotor SetRingPosition(int value)
 	{
         if (value >= 0 && value < _wheel.Count)
-            _notchPosition = value;
+            RingPosition = value;
         else
-            _notchPosition = 0;
+            RingPosition = 0;
 
         Initialize();
 

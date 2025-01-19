@@ -25,11 +25,11 @@ public class MachineTests
 
         var rotor2 = new Rotor()
             .SetWheel(Rotors.GetRotor(Rotors.RotorType.Wehrmacht_II))
-            .SetNotchPosition(10);
+            .SetRingPosition(10);
 
         var rotor3 = new Rotor()
             .SetWheel(Rotors.GetRotor(Rotors.RotorType.Wehrmacht_III))
-            .SetNotchPosition(13);
+            .SetRingPosition(13);
 
         var reflector = new Reflector()
             .SetWires(Reflectors.GetReflector(ReflectorType.Wehrmacht_B));
@@ -126,11 +126,11 @@ public class MachineTests
 
         var rotor2 = new Rotor()
             .SetWheel(Rotors.GetRotor(Rotors.RotorType.Ascii_II))
-            .SetNotchPosition(10);
+            .SetRingPosition(10);
 
         var rotor3 = new Rotor()
             .SetWheel(Rotors.GetRotor(Rotors.RotorType.Ascii_III))
-            .SetNotchPosition(65);
+            .SetRingPosition(65);
 
         var reflector = new Reflector()
             .SetWires(Reflectors.GetReflector(ReflectorType.Ascii));

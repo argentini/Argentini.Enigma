@@ -53,7 +53,7 @@ public class RotorTests
         Assert.Equal('a', rotor.ReflectedCharacter('*'));
 
         rotor.SetRotation(0);
-        rotor.SetNotchPosition(1);
+        rotor.SetRingPosition(1);
 
         Assert.Equal('r', rotor.SendCharacter(' '));
         Assert.Equal('z', rotor.SendCharacter('A'));
