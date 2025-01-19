@@ -1,9 +1,8 @@
 namespace Enigma;
 
 /// <summary>
-/// Virtual plug board used to send a character to be enciphered.
-/// Performs a character swap before sending to the rotors.
-/// Performs a final character swap after the enciphered character returns from the rotors.
+/// Virtual rotor used to encipher a letter.
+/// One or more rotors can be used in sequence.
 /// Assignments are NOT reciprocal; if A => G, then G => (not) A.
 /// </summary>
 public sealed class Rotor
