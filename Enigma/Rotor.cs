@@ -33,8 +33,27 @@ public sealed class Rotor
 
         #region Notches
 
-        Notch1 = Configuration.NotchPosition1;
-        Notch2 = Configuration.NotchPosition2;
+        if (Configuration.RotorPreset is not null)
+        {
+            var notches = Constants.TurnoverNotchPositions[Configuration.RotorPreset.Value].Split(',');
+
+            if (notches.Length != 2)
+                throw new Exception("Rotor => Preset notch positions could not be read");
+            
+            if (int.TryParse(notches[0], out var notch1) == false)
+                throw new Exception("Rotor => Preset notch position 1 is not an integer");
+
+            if (int.TryParse(notches[1], out var notch2) == false)
+                throw new Exception("Rotor => Preset notch position 2 is not an integer");
+
+            Notch1 = notch1;
+            Notch2 = notch2;
+        }
+        else
+        {
+            Notch1 = Configuration.NotchPosition1;
+            Notch2 = Configuration.NotchPosition2;
+        }
 
         if (Notch1 < 0 || Notch1 >= Configuration.RotorWheel.Count)
             throw new Exception($"Rotor => Rotor notch 1 position is invalid (0-{Configuration.RotorWheel.Count - 1})");

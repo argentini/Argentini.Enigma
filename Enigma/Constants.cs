@@ -1,5 +1,11 @@
 namespace Enigma;
 
+public enum CharacterSets
+{
+    Classic,
+    Ascii,
+}
+
 public enum RotorPresets
 {
     // Default rotors used by the Wehrmacht and Kriegsmarine
@@ -25,12 +31,6 @@ public enum RotorPresets
     Ascii_III,
 }
 
-public enum CharacterSets
-{
-    Classic,
-    Ascii,
-}
-
 public enum ReflectorPresets
 {
     // Default reflectors used by the Wehrmacht and Luftwaffe
@@ -47,6 +47,12 @@ public enum ReflectorPresets
 
 public static class Constants
 {
+    public static readonly Dictionary<CharacterSets, string> CharacterSetValues = new()
+    {
+        { CharacterSets.Classic, "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
+        { CharacterSets.Ascii, @" !""#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~" },
+    };
+
     public static readonly Dictionary<RotorPresets, string> RotorPresetsCiphers = new()
     {
         { RotorPresets.Wehrmacht_I, "EKMFLGDQVZNTOWYHXUSPAIBRCJ" },
@@ -64,13 +70,24 @@ public static class Constants
         { RotorPresets.Ascii_III , @"':6/w`o8(fA5$)e!YDW>c%vb_P<SilB@L,kG;V^+jH7E&1pyM=FRm-hatz|#{rQq U.4""g~?NT3ZKn2\C9XIJ}d[Ous]0x*" },
     };
 
-    public static readonly Dictionary<CharacterSets, string> CharacterSetValues = new()
+    public static readonly Dictionary<RotorPresets, string> TurnoverNotchPositions = new()
     {
-        { CharacterSets.Classic, "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
-        { CharacterSets.Ascii, @" !""#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~" },
+        { RotorPresets.Wehrmacht_I, "16,-1" },
+        { RotorPresets.Wehrmacht_II, "4,-1" },
+        { RotorPresets.Wehrmacht_III, "21,-1" },
+        { RotorPresets.Wehrmacht_IV, "9,-1" },
+        { RotorPresets.Wehrmacht_V, "25,-1" },
+        { RotorPresets.Kriegsmarine_M3_M4_VI, "12,25" },
+        { RotorPresets.Kriegsmarine_M3_M4_VII, "12,25" },
+        { RotorPresets.Kriegsmarine_M3_M4_VIII, "12,25" },
+        { RotorPresets.Zusatzwalzen_Beta, "-1,-1" },
+        { RotorPresets.Zusatzwalzen_Gamma, "-1,-1" },
+        { RotorPresets.Ascii_I , "47,94" },
+        { RotorPresets.Ascii_II , "47,94" },
+        { RotorPresets.Ascii_III , "47,94" },
     };
-    
-    public static readonly Dictionary<ReflectorPresets, string> ReflectorPresetsValues = new()
+
+    public static readonly Dictionary<ReflectorPresets, string> ReflectorPresetsCiphers = new()
     {
         { ReflectorPresets.Wehrmacht_B, "YRUHQSLDPXNGOKMIEBFZCWVJAT" },
         { ReflectorPresets.Wehrmacht_C, "FVPJIAOYEDRZXWGCTKUQSBNMHL" },
@@ -78,11 +95,4 @@ public static class Constants
         { ReflectorPresets.Kriegsmarine_M4_C_Thin, "RDOBJNTKVEHMLFCWZAXGYIPSUQ" },
         { ReflectorPresets.Ascii , @"BIK}p/h@b58fMo_%i3c1P)sH*?XwCm{9'J <vL|g7!A""E,~T4zSROWZU:tVdjxk.la(2[r+G&0\^`=q-$ne6YuD;]yQ>F#N" },
     };
-    
-    
-    
-    
-    
-    
-    
 }

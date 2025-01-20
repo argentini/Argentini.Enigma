@@ -14,7 +14,7 @@ public sealed class ReflectorConfiguration
         if (ReflectorPreset is not null)
         {        
             var charSet = ReflectorPreset is ReflectorPresets.Ascii ? Constants.CharacterSetValues[CharacterSets.Ascii] : Constants.CharacterSetValues[CharacterSets.Classic];
-            var cipher = Constants.ReflectorPresetsValues[ReflectorPreset.Value];
+            var cipher = Constants.ReflectorPresetsCiphers[ReflectorPreset.Value];
             
             ReflectorWheel.Clear();
 
