@@ -214,4 +214,100 @@ public class MachineTests
         
         Assert.True(Message.Equals(deciphered));
     }
+    
+	[Fact]
+	public void ClassicMachineTest()
+    {
+        const string Message = "THIS IS A TEST MESSAGE WITH SPACES";
+
+        var machine = new Machine()
+            .AddPlugBoard(new Dictionary<char, char>
+            {
+                { 'T', 'A' },
+                { 'S', 'B' }
+            })
+            .AddRotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Wehrmacht_I
+            })
+            .AddRotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Wehrmacht_II,
+                RingPosition = 10
+            })
+            .AddRotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Wehrmacht_III,
+                RingPosition = 13
+            })
+            .AddReflector(new ReflectorConfiguration
+            {
+                ReflectorPreset = ReflectorPresets.Wehrmacht_B
+            });
+
+        var enciphered = machine.Encipher(Message);
+        
+        Assert.NotEqual(Message, enciphered);
+        Assert.Equal(Message.Length, enciphered.Length);
+
+        machine.Reset();
+        
+        var deciphered = machine.Encipher(enciphered);
+
+        Assert.Equal(Message, deciphered);
+    }
+    
+	[Fact]
+	public void AsciiMachineTest()
+    {
+        var Message = new StringBuilder();
+        var ci = 0;
+
+        for (var i = 0; i < Constants.CharacterSetValues[CharacterSets.Ascii].Length * Constants.CharacterSetValues[CharacterSets.Ascii].Length * Constants.CharacterSetValues[CharacterSets.Ascii].Length; i++)
+        {
+            Message.Append(Constants.CharacterSetValues[CharacterSets.Ascii][ci++]);
+
+            if (ci == Constants.CharacterSetValues[CharacterSets.Ascii].Length)
+                ci = 0;
+        }
+        
+        var machine = new Machine()
+            .AddPlugBoard(new Dictionary<char, char>
+            {
+                { 'T', 'A' },
+                { 'C', 'B' }
+            })
+            .AddRotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Ascii_I,
+                StartingRotation = 15
+            })
+            .AddRotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Ascii_II,
+                RingPosition = 10,
+                StartingRotation = 5
+            })
+            .AddRotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Ascii_III,
+                RingPosition = 65,
+                StartingRotation = 45
+            })
+            .AddReflector(new ReflectorConfiguration
+            {
+                ReflectorPreset = ReflectorPresets.Ascii
+            });
+
+        var enciphered = machine.Encipher(Message.ToString());
+        
+        Assert.NotEqual(Message.ToString(), enciphered);
+        Assert.Equal(Message.Length, enciphered.Length);
+
+        machine.Reset();
+        
+        var deciphered = machine.Encipher(enciphered);
+
+        Assert.Equal(Message.ToString(), deciphered);
+    }
 }
