@@ -1,10 +1,11 @@
 using System.Text;
 using MethodTimer;
+using Microsoft.Extensions.ObjectPool;
 
 namespace Enigma;
 
 /// <summary>
-/// Engima Machine entry point for encipher/decipher.
+/// Enigma Machine entry point for encipher/decipher.
 /// </summary>
 public class Machine
 {
@@ -15,6 +16,8 @@ public class Machine
     public Reflector? Reflector { get; set; }
     public AesCtrRandomNumberGenerator? Acrn { get; set; }
 
+    private ObjectPool<StringBuilder> StringBuilderPool { get; } = new DefaultObjectPoolProvider().CreateStringBuilderPool();
+    
     public Machine()
     {
     }
@@ -104,40 +107,47 @@ public class Machine
         if (Reflector is null)
             throw new Exception("Enigma Machine => No reflector configured");
 
-        var enciphered = new StringBuilder();
+        var enciphered = StringBuilderPool.Get();
 
-        foreach (var c in text)
+        try
         {
-            Rotors[0].Rotate();
-
-            if (Rotors.Count > 1 && Rotors[0].IsAtNotch)
+            foreach (var c in text)
             {
-                for (var i = 1; i < Rotors.Count; i++)
+                Rotors[0].Rotate();
+
+                if (Rotors.Count > 1 && Rotors[0].IsAtNotch)
                 {
-                    if (Rotors[i - 1].IsAtNotch)
-                        Rotors[i].Rotate();
+                    for (var i = 1; i < Rotors.Count; i++)
+                    {
+                        if (Rotors[i - 1].IsAtNotch)
+                            Rotors[i].Rotate();
+                    }
                 }
+
+                var cc = PlugBoard.SendCharacter(c);
+
+                foreach (var t in Rotors.OrderBy(r => r.Key))
+                {
+                    cc = t.Value.SendCharacter(cc);
+                }
+
+                cc = Reflector.SendCharacter(cc);
+
+                foreach (var t in Rotors.OrderByDescending(r => r.Key))
+                {
+                    cc = t.Value.ReflectedCharacter(cc);
+                }
+
+                cc = PlugBoard.SendCharacter(cc);
+
+                enciphered.Append(cc);
             }
 
-            var cc = PlugBoard.SendCharacter(c);
-
-            foreach (var t in Rotors.OrderBy(r => r.Key))
-            {
-                cc = t.Value.SendCharacter(cc);
-            }
-            
-            cc = Reflector.SendCharacter(cc);
-
-            foreach (var t in Rotors.OrderByDescending(r => r.Key))
-            {
-                cc = t.Value.ReflectedCharacter(cc);
-            }
-
-            cc = PlugBoard.SendCharacter(cc);
-            
-            enciphered.Append(cc);
+            return enciphered.ToString();
         }
-
-        return enciphered.ToString();
+        finally
+        {
+            StringBuilderPool.Return(enciphered);
+        }
     }
 }

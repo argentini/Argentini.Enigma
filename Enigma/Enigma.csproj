@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="MethodTimer.Fody" Version="3.2.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Extensions.ObjectPool" Version="9.0.1" />
   </ItemGroup>
 
 </Project>

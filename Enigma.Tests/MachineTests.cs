@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text;
 using Xunit;
 
@@ -146,11 +145,8 @@ public class MachineTests
             ReflectorPreset = ReflectorPresets.Ascii
         });
 
-        var timer = new Stopwatch();
         var enciphered = new StringBuilder();
 
-        timer.Start();
-        
         foreach (var c in Message.ToString())
         {
             rotor1.Rotate();
@@ -175,12 +171,8 @@ public class MachineTests
             enciphered.Append(cc);
         }
 
-        timer.Stop();
-        
         Assert.False(Message.Equals(enciphered));
         Assert.Equal(Message.Length, enciphered.Length);
-        
-        Debug.WriteLine($"NEW Encipher => {timer.Elapsed.TotalSeconds}");
         
         var deciphered = new StringBuilder();
 
