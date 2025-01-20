@@ -9,13 +9,13 @@ public sealed class Rotor
 {
     public int RingPosition { get; private set; }
     public int Rotation { get; private set; }
-    public char Notch1 { get; set; } = '\0';
-    public char Notch2 { get; set; } = '\0';
+    public int Notch1 { get; set; } = -1;
+    public int Notch2 { get; set; } = -1;
     public Dictionary<char,char> Wheel => _wheel;
 
     private Dictionary<char,char> _wheel { get; set; } = [];
+    private IndexedDictionary<char,char> EncipherWheel { get; } = new();
     private bool IsInitialized { get; set; }
-    private IndexedDictionary<char,char> EncipherWheel { get; set; } = new();
 
     #region Configuration
     
@@ -34,22 +34,22 @@ public sealed class Rotor
         IsInitialized = true;
     }
 
-	public Rotor SetWheel(Dictionary<char,char> value, char notch1 = '\0', char notch2 = '\0')
+	public Rotor SetWheel(Dictionary<char,char> value, int notch1 = -1, int notch2 = -1)
 	{
         if (value.Count == 0)
             throw new Exception("Rotor.SetWheel() => Value is empty");
 
         _wheel = value;
 
-        if (_wheel.ContainsKey(notch1))
+        if (notch1 >= 0 && notch1 < _wheel.Count)
             Notch1 = notch1;
         else
-            Notch1 = _wheel.First().Value;
+            Notch1 = 0;
 
-        if (_wheel.ContainsKey(notch2) && notch2 != Notch1)
+        if (notch2 >= 0 && notch2 < _wheel.Count && notch2 != Notch1)
             Notch2 = notch2;
         else
-            Notch2 = '\0';
+            Notch2 = -1;
         
         Initialize();
 
@@ -82,14 +82,12 @@ public sealed class Rotor
     
     #region Actions
     
-    public Rotor Rotate()
+    public void Rotate()
     {
         Rotation++;
 
         if (Rotation >= _wheel.Count)
             Rotation = 0;
-
-        return this;
     }
 
 	public char SendCharacter(char c)
