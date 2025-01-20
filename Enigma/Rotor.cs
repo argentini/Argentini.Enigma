@@ -29,18 +29,20 @@ public sealed class Rotor
         Configuration.Initialize();
 
         if (Configuration.RotorWheel.Count == 0)
-            throw new Exception("Rotor.SetWheel() => Value is empty");
+            throw new Exception("Rotor => Rotor Wheel is empty");
 
         #region Notches
-        
-        if (Configuration.NotchPosition1 >= 0 && Configuration.NotchPosition1 < Configuration.RotorWheel.Count)
-            Notch1 = Configuration.NotchPosition1;
-        else
-            Notch1 = 0;
 
-        if (Configuration.NotchPosition2 >= 0 && Configuration.NotchPosition2 < Configuration.RotorWheel.Count && Configuration.NotchPosition2 != Notch1)
-            Notch2 = Configuration.NotchPosition2;
-        else
+        Notch1 = Configuration.NotchPosition1;
+        Notch2 = Configuration.NotchPosition2;
+
+        if (Notch1 < 0 || Notch1 >= Configuration.RotorWheel.Count)
+            throw new Exception($"Rotor => Rotor notch 1 position is invalid (0-{Configuration.RotorWheel.Count - 1})");
+
+        if (Notch2 >= Configuration.RotorWheel.Count)
+            throw new Exception($"Rotor => Rotor notch 2 position is invalid (0-{Configuration.RotorWheel.Count - 1} or -1 if not used)");
+
+        if (Notch2 == Notch1)
             Notch2 = -1;
 
         #endregion

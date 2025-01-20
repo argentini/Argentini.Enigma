@@ -7,43 +7,25 @@ namespace Enigma;
 /// </summary>
 public sealed class Reflector
 {
-    public Dictionary<char,char> Wires => _wires;
+    public ReflectorConfiguration Configuration { get; set; }
 
-    private Dictionary<char,char> _wires { get; set; } = [];
-    private bool IsInitialized { get; set; }
-    private Dictionary<char,char> EncipherWires { get; } = [];
-
-    /// <summary>
-    /// Establish reciprocal dictionary entries.
-    /// </summary>
-    /// <returns></returns>
-    private void Initialize()
+    public Reflector(ReflectorConfiguration configuration)
     {
-        EncipherWires.Clear();
-
-        if (Wires.Count == 0)
-            return;
-
-        foreach (var c in Wires)
-            EncipherWires.TryAdd(c.Key, c.Value);
-
-        IsInitialized = true;
+        Configuration = configuration;
+        
+        Initialize();
     }
 
-	public Reflector SetWires(Dictionary<char,char> value)
-	{
-        _wires = value;
-
-        Initialize();
-
-        return this;
-	}
-
+    private void Initialize()
+    {
+        Configuration.Initialize();
+        
+        if (Configuration.ReflectorWheel.Count == 0)
+            throw new Exception("Reflector => Reflector Wheel is empty");
+    }
+    
     public char SendCharacter(char c)
     {
-        if (IsInitialized == false)
-            Initialize();
-        
-        return EncipherWires.GetValueOrDefault(c, c);
+        return Configuration.ReflectorWheel.GetValueOrDefault(c, c);
     }
 }

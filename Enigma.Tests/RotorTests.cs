@@ -10,7 +10,7 @@ public class RotorTests
     {
         var rotor = new Rotor(new RotorConfiguration
         {
-            CharacterSet = CharacterSet.Ascii,
+            CharacterSets = CharacterSets.Ascii,
             Secret = "ThisIsA32ByteLongSecretKey123456",
             Nonce = "UniqueNonce12345"
         });
@@ -31,7 +31,7 @@ public class RotorTests
     {
         var rotor = new Rotor(new RotorConfiguration
         {
-            RotorPreset = RotorType.Ascii_I
+            RotorPreset = RotorPresets.Ascii_I
         });
         
         Assert.Equal(rotor.Configuration.RotorWheel[' '], rotor.SendCharacter(' '));
@@ -59,7 +59,7 @@ public class RotorTests
 
         rotor = new Rotor(new RotorConfiguration
         {
-            RotorPreset = RotorType.Ascii_I,
+            RotorPreset = RotorPresets.Ascii_I,
             RingPosition = 1
         });
 

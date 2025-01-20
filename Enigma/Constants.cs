@@ -1,6 +1,6 @@
 namespace Enigma;
 
-public enum RotorType
+public enum RotorPresets
 {
     // Default rotors used by the Wehrmacht and Kriegsmarine
     Wehrmacht_I,
@@ -25,13 +25,13 @@ public enum RotorType
     Ascii_III,
 }
 
-public enum CharacterSet
+public enum CharacterSets
 {
     Classic,
     Ascii,
 }
 
-public enum ReflectorType
+public enum ReflectorPresets
 {
     // Default reflectors used by the Wehrmacht and Luftwaffe
     Wehrmacht_B,
@@ -47,36 +47,36 @@ public enum ReflectorType
 
 public static class Constants
 {
-    public static readonly Dictionary<RotorType, string> RotorTypeCiphers = new()
+    public static readonly Dictionary<RotorPresets, string> RotorPresetsCiphers = new()
     {
-        { RotorType.Wehrmacht_I, "EKMFLGDQVZNTOWYHXUSPAIBRCJ" },
-        { RotorType.Wehrmacht_II, "AJDKSIRUXBLHWTMCQGZNPYFVOE" },
-        { RotorType.Wehrmacht_III, "BDFHJLCPRTXVZNYEIWGAKMUSQO" },
-        { RotorType.Wehrmacht_IV, "ESOVPZJAYQUIRHXLNFTGKDCMWB" },
-        { RotorType.Wehrmacht_V, "VZBRGITYUPSDNHLXAWMJQOFECK" },
-        { RotorType.Kriegsmarine_M3_M4_VI, "JPGVOUMFYQBENHZRDKASXLICTW" },
-        { RotorType.Kriegsmarine_M3_M4_VII, "NZJHGRCXMYSWBOUFAIVLPEKQDT" },
-        { RotorType.Kriegsmarine_M3_M4_VIII, "FKQHTLXOCBJSPDZRAMEWNIUYGV" },
-        { RotorType.Zusatzwalzen_Beta, "LEYJVCNIXWPBQMDRTAKZGFUHOS" },
-        { RotorType.Zusatzwalzen_Gamma, "FSOKANUERHMBTIYCWLQPZXVGJD" },
-        { RotorType.Ascii_I , @"nr.Fc[l;/vm+8M`'2=KG, -$ig?Q57V|saz~B_N19bL#Ap(WEOPZqH>""DUI}3uSTk&*^:<Xj{e@!C\hY]w60fyJ%)xt4Rdo" },
-        { RotorType.Ascii_II , @"IHiapwjB#5n\*!|G?~l0P XehW&['N{YL<""f1oT7-2t_M694z/A>s(u+)JbEc@$%CZy:qrQK}d8vmR`Fx]S;kOV=g,U3^.D" },
-        { RotorType.Ascii_III , @"':6/w`o8(fA5$)e!YDW>c%vb_P<SilB@L,kG;V^+jH7E&1pyM=FRm-hatz|#{rQq U.4""g~?NT3ZKn2\C9XIJ}d[Ous]0x*" },
+        { RotorPresets.Wehrmacht_I, "EKMFLGDQVZNTOWYHXUSPAIBRCJ" },
+        { RotorPresets.Wehrmacht_II, "AJDKSIRUXBLHWTMCQGZNPYFVOE" },
+        { RotorPresets.Wehrmacht_III, "BDFHJLCPRTXVZNYEIWGAKMUSQO" },
+        { RotorPresets.Wehrmacht_IV, "ESOVPZJAYQUIRHXLNFTGKDCMWB" },
+        { RotorPresets.Wehrmacht_V, "VZBRGITYUPSDNHLXAWMJQOFECK" },
+        { RotorPresets.Kriegsmarine_M3_M4_VI, "JPGVOUMFYQBENHZRDKASXLICTW" },
+        { RotorPresets.Kriegsmarine_M3_M4_VII, "NZJHGRCXMYSWBOUFAIVLPEKQDT" },
+        { RotorPresets.Kriegsmarine_M3_M4_VIII, "FKQHTLXOCBJSPDZRAMEWNIUYGV" },
+        { RotorPresets.Zusatzwalzen_Beta, "LEYJVCNIXWPBQMDRTAKZGFUHOS" },
+        { RotorPresets.Zusatzwalzen_Gamma, "FSOKANUERHMBTIYCWLQPZXVGJD" },
+        { RotorPresets.Ascii_I , @"nr.Fc[l;/vm+8M`'2=KG, -$ig?Q57V|saz~B_N19bL#Ap(WEOPZqH>""DUI}3uSTk&*^:<Xj{e@!C\hY]w60fyJ%)xt4Rdo" },
+        { RotorPresets.Ascii_II , @"IHiapwjB#5n\*!|G?~l0P XehW&['N{YL<""f1oT7-2t_M694z/A>s(u+)JbEc@$%CZy:qrQK}d8vmR`Fx]S;kOV=g,U3^.D" },
+        { RotorPresets.Ascii_III , @"':6/w`o8(fA5$)e!YDW>c%vb_P<SilB@L,kG;V^+jH7E&1pyM=FRm-hatz|#{rQq U.4""g~?NT3ZKn2\C9XIJ}d[Ous]0x*" },
     };
 
-    public static readonly Dictionary<CharacterSet, string> CharacterSetValues = new()
+    public static readonly Dictionary<CharacterSets, string> CharacterSetValues = new()
     {
-        { CharacterSet.Classic, "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
-        { CharacterSet.Ascii, @" !""#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~" },
+        { CharacterSets.Classic, "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
+        { CharacterSets.Ascii, @" !""#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~" },
     };
     
-    public static readonly Dictionary<ReflectorType, string> ReflectorValues = new()
+    public static readonly Dictionary<ReflectorPresets, string> ReflectorPresetsValues = new()
     {
-        { ReflectorType.Wehrmacht_B, "YRUHQSLDPXNGOKMIEBFZCWVJAT" },
-        { ReflectorType.Wehrmacht_C, "FVPJIAOYEDRZXWGCTKUQSBNMHL" },
-        { ReflectorType.Kriegsmarine_M4_B_Thin, "ENKQAUYWJICOPBLMDXZVFTHRGS" },
-        { ReflectorType.Kriegsmarine_M4_C_Thin, "RDOBJNTKVEHMLFCWZAXGYIPSUQ" },
-        { ReflectorType.Ascii , @"BIK}p/h@b58fMo_%i3c1P)sH*?XwCm{9'J <vL|g7!A""E,~T4zSROWZU:tVdjxk.la(2[r+G&0\^`=q-$ne6YuD;]yQ>F#N" },
+        { ReflectorPresets.Wehrmacht_B, "YRUHQSLDPXNGOKMIEBFZCWVJAT" },
+        { ReflectorPresets.Wehrmacht_C, "FVPJIAOYEDRZXWGCTKUQSBNMHL" },
+        { ReflectorPresets.Kriegsmarine_M4_B_Thin, "ENKQAUYWJICOPBLMDXZVFTHRGS" },
+        { ReflectorPresets.Kriegsmarine_M4_C_Thin, "RDOBJNTKVEHMLFCWZAXGYIPSUQ" },
+        { ReflectorPresets.Ascii , @"BIK}p/h@b58fMo_%i3c1P)sH*?XwCm{9'J <vL|g7!A""E,~T4zSROWZU:tVdjxk.la(2[r+G&0\^`=q-$ne6YuD;]yQ>F#N" },
     };
     
     
