@@ -38,6 +38,14 @@ public class MachineTests
 
         foreach (var c in Message)
         {
+            rotor1.Rotate();
+
+            if (rotor1.Rotation == 0)
+                rotor2.Rotate();
+
+            if (rotor2.Rotation == 0)
+                rotor3.Rotate();
+            
             var cc = plugBoard.SendCharacter(c);
 
             cc = rotor1.SendCharacter(cc);
@@ -50,16 +58,6 @@ public class MachineTests
             cc = plugBoard.SendCharacter(cc);
             
             enciphered.Append(cc);
-
-            rotor1.Rotate();
-
-            if (rotor1.Rotation != 0)
-                continue;
-
-            rotor2.Rotate();
-
-            if (rotor2.Rotation == 0)
-                rotor3.Rotate();
         }
 
         Assert.NotEqual(Message, enciphered.ToString());
@@ -73,6 +71,14 @@ public class MachineTests
 
         foreach (var c in enciphered.ToString())
         {
+            rotor1.Rotate();
+
+            if (rotor1.Rotation == 0)
+                rotor2.Rotate();
+
+            if (rotor2.Rotation == 0)
+                rotor3.Rotate();
+
             var cc = plugBoard.SendCharacter(c);
 
             cc = rotor1.SendCharacter(cc);
@@ -85,16 +91,6 @@ public class MachineTests
             cc = plugBoard.SendCharacter(cc);
 
             deciphered.Append(cc);
-
-            rotor1.Rotate();
-
-            if (rotor1.Rotation != 0)
-                continue;
-
-            rotor2.Rotate();
-
-            if (rotor2.Rotation == 0)
-                rotor3.Rotate();
         }
         
         Assert.Equal(Message, deciphered.ToString());
@@ -142,6 +138,14 @@ public class MachineTests
         
         foreach (var c in Message.ToString())
         {
+            rotor1.Rotate();
+
+            if (rotor1.Rotation == 0)
+                rotor2.Rotate();
+
+            if (rotor2.Rotation == 0)
+                rotor3.Rotate();
+        
             var cc = plugBoard.SendCharacter(c);
 
             cc = rotor1.SendCharacter(cc);
@@ -154,16 +158,6 @@ public class MachineTests
             cc = plugBoard.SendCharacter(cc);
             
             enciphered.Append(cc);
-
-            rotor1.Rotate();
-
-            if (rotor1.Rotation != 0)
-                continue;
-
-            rotor2.Rotate();
-
-            if (rotor2.Rotation == 0)
-                rotor3.Rotate();
         }
 
         timer.Stop();
@@ -181,6 +175,14 @@ public class MachineTests
 
         foreach (var c in enciphered.ToString())
         {
+            rotor1.Rotate();
+
+            if (rotor1.Rotation == 0)
+                rotor2.Rotate();
+
+            if (rotor2.Rotation == 0)
+                rotor3.Rotate();
+
             var cc = plugBoard.SendCharacter(c);
 
             cc = rotor1.SendCharacter(cc);
@@ -193,16 +195,6 @@ public class MachineTests
             cc = plugBoard.SendCharacter(cc);
 
             deciphered.Append(cc);
-
-            rotor1.Rotate();
-
-            if (rotor1.Rotation != 0)
-                continue;
-
-            rotor2.Rotate();
-
-            if (rotor2.Rotation == 0)
-                rotor3.Rotate();
         }
         
         Assert.True(Message.Equals(deciphered));
