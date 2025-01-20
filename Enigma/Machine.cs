@@ -12,6 +12,7 @@ public class Machine
     #region Configuration
 
     public PlugBoard PlugBoard { get; set; } = new();
+    public EntryWheel? EntryWheel { get; set; }
     public Dictionary<int,Rotor> Rotors { get; set; } = [];
     public Reflector? Reflector { get; set; }
     public AesCtrRandomNumberGenerator? Acrn { get; set; }
@@ -50,7 +51,13 @@ public class Machine
 
             AddPlugBoard(wires);
         }
-        
+
+        AddEntryWheel(new EntryWheelConfiguration
+        {
+            CharacterSets = charSet,
+            Acrn = Acrn
+        });
+
         for (var i = 0; i < rotorCount; i++)
         {
             Rotors.Add(i, new Rotor(new RotorConfiguration
@@ -70,6 +77,13 @@ public class Machine
     public Machine AddPlugBoard(Dictionary<char,char> wires)
     {
         PlugBoard.SetWires(wires);
+
+        return this;
+    }
+
+    public Machine AddEntryWheel(EntryWheelConfiguration configuration)
+    {
+        EntryWheel = new EntryWheel(configuration);
 
         return this;
     }
@@ -126,6 +140,9 @@ public class Machine
 
                 var cc = PlugBoard.SendCharacter(c);
 
+                if (EntryWheel is not null)
+                    cc = EntryWheel.SendCharacter(cc);
+                
                 foreach (var t in Rotors.OrderBy(r => r.Key))
                 {
                     cc = t.Value.SendCharacter(cc);
@@ -137,6 +154,9 @@ public class Machine
                 {
                     cc = t.Value.ReflectedCharacter(cc);
                 }
+
+                if (EntryWheel is not null)
+                    cc = EntryWheel.ReflectedCharacter(cc);
 
                 cc = PlugBoard.SendCharacter(cc);
 

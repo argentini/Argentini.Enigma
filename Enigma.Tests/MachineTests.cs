@@ -18,6 +18,11 @@ public class MachineTests
                 { 'S', 'B' }
             });
         
+        var entryWheel = new EntryWheel(new EntryWheelConfiguration
+        {
+            EntryWheelPreset = EntryWheelPresets.Wehrmacht,
+        });
+        
         var rotor1 = new Rotor(new RotorConfiguration
             {
                 RotorPreset = RotorPresets.Wehrmacht_I
@@ -54,6 +59,7 @@ public class MachineTests
             
             var cc = plugBoard.SendCharacter(c);
 
+            cc = entryWheel.SendCharacter(cc);
             cc = rotor1.SendCharacter(cc);
             cc = rotor2.SendCharacter(cc);
             cc = rotor3.SendCharacter(cc);
@@ -61,6 +67,8 @@ public class MachineTests
             cc = rotor3.ReflectedCharacter(cc);
             cc = rotor2.ReflectedCharacter(cc);
             cc = rotor1.ReflectedCharacter(cc);
+            cc = entryWheel.ReflectedCharacter(cc);
+
             cc = plugBoard.SendCharacter(cc);
             
             enciphered.Append(cc);
@@ -87,6 +95,7 @@ public class MachineTests
 
             var cc = plugBoard.SendCharacter(c);
 
+            cc = entryWheel.SendCharacter(cc);
             cc = rotor1.SendCharacter(cc);
             cc = rotor2.SendCharacter(cc);
             cc = rotor3.SendCharacter(cc);
@@ -94,6 +103,8 @@ public class MachineTests
             cc = rotor3.ReflectedCharacter(cc);
             cc = rotor2.ReflectedCharacter(cc);
             cc = rotor1.ReflectedCharacter(cc);
+            cc = entryWheel.ReflectedCharacter(cc);
+
             cc = plugBoard.SendCharacter(cc);
 
             deciphered.Append(cc);
@@ -122,6 +133,11 @@ public class MachineTests
                 { 'T', 'A' },
                 { 'C', 'B' }
             });
+
+        var entryWheel = new EntryWheel(new EntryWheelConfiguration
+        {
+            EntryWheelPreset = EntryWheelPresets.Ascii,
+        });
         
         var rotor1 = new Rotor(new RotorConfiguration
         {
@@ -159,6 +175,7 @@ public class MachineTests
         
             var cc = plugBoard.SendCharacter(c);
 
+            cc = entryWheel.SendCharacter(cc);
             cc = rotor1.SendCharacter(cc);
             cc = rotor2.SendCharacter(cc);
             cc = rotor3.SendCharacter(cc);
@@ -166,6 +183,8 @@ public class MachineTests
             cc = rotor3.ReflectedCharacter(cc);
             cc = rotor2.ReflectedCharacter(cc);
             cc = rotor1.ReflectedCharacter(cc);
+            cc = entryWheel.ReflectedCharacter(cc);
+
             cc = plugBoard.SendCharacter(cc);
             
             enciphered.Append(cc);
@@ -192,6 +211,7 @@ public class MachineTests
 
             var cc = plugBoard.SendCharacter(c);
 
+            cc = entryWheel.SendCharacter(cc);
             cc = rotor1.SendCharacter(cc);
             cc = rotor2.SendCharacter(cc);
             cc = rotor3.SendCharacter(cc);
@@ -199,6 +219,8 @@ public class MachineTests
             cc = rotor3.ReflectedCharacter(cc);
             cc = rotor2.ReflectedCharacter(cc);
             cc = rotor1.ReflectedCharacter(cc);
+            cc = entryWheel.ReflectedCharacter(cc);
+
             cc = plugBoard.SendCharacter(cc);
 
             deciphered.Append(cc);
@@ -217,6 +239,10 @@ public class MachineTests
             {
                 { 'T', 'A' },
                 { 'S', 'B' }
+            })
+            .AddEntryWheel(new EntryWheelConfiguration
+            {
+                EntryWheelPreset = EntryWheelPresets.Wehrmacht,
             })
             .AddRotor(new RotorConfiguration
             {
@@ -268,6 +294,10 @@ public class MachineTests
             {
                 { 'T', 'A' },
                 { 'C', 'B' }
+            })
+            .AddEntryWheel(new EntryWheelConfiguration
+            {
+                EntryWheelPreset = EntryWheelPresets.Ascii,
             })
             .AddRotor(new RotorConfiguration
             {
