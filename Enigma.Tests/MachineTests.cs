@@ -325,13 +325,7 @@ public class MachineTests
                 ci = 0;
         }
 
-        var machine = new Machine("ThisIsA32ByteLongSecretKey123456", "UniqueNonce12345", CharacterSets.Ascii, 4)
-            .AddPlugBoard(new Dictionary<char, char>
-            {
-                { 'T', 'A' },
-                { 'C', 'B' }
-            });
-
+        var machine = new Machine("ThisIsA32ByteLongSecretKey123456", "UniqueNonce12345");
         var enciphered = machine.Encipher(Message.ToString());
         
         Assert.NotEqual(Message.ToString(), enciphered);

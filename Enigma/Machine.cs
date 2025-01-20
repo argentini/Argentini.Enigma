@@ -1,4 +1,5 @@
 using System.Text;
+using MethodTimer;
 
 namespace Enigma;
 
@@ -12,19 +13,41 @@ public class Machine
     public PlugBoard PlugBoard { get; set; } = new();
     public Dictionary<int,Rotor> Rotors { get; set; } = [];
     public Reflector? Reflector { get; set; }
-    public AesCtrRandomNumberGenerator? Acrn { get; set; } = null;
+    public AesCtrRandomNumberGenerator? Acrn { get; set; }
 
     public Machine()
     {
     }
 
-    public Machine(string secret, string nonce, CharacterSets charSet = CharacterSets.Ascii, int rotorCount = 3)
+    public Machine(string secret, string nonce, CharacterSets charSet = CharacterSets.Ascii, int rotorCount = 3, int plugWires = 10)
     {
         if (string.IsNullOrEmpty(secret) || string.IsNullOrEmpty(nonce))
-            return;
+            throw new Exception("Machine => invalid secret or nonce");
+
+        if (plugWires > Constants.CharacterSetValues[charSet].Length / 2)
+            throw new Exception("Machine => too many plug wires specified");
 
         Acrn = new AesCtrRandomNumberGenerator(secret, nonce);
 
+        if (plugWires > 0)
+        {
+            var wires = new Dictionary<char, char>();
+            var reflector = new Reflector(new ReflectorConfiguration
+            {
+                CharacterSets = charSet,
+                Acrn = Acrn
+            });
+
+            for (var i = 0; i < plugWires; i++)
+            {
+                var pair = reflector.Configuration.ReflectorWheel.ElementAt(i);
+
+                wires.Add(pair.Key, pair.Value);
+            }
+
+            AddPlugBoard(wires);
+        }
+        
         for (var i = 0; i < rotorCount; i++)
         {
             Rotors.Add(i, new Rotor(new RotorConfiguration
@@ -72,6 +95,7 @@ public class Machine
         }
     }
     
+    [Time]
     public string Encipher(string text)
     {
         if (Rotors.Count == 0)
