@@ -11,6 +11,7 @@ public sealed class Rotor
     public int Rotation { get; private set; }
     public int Notch1 { get; set; } = -1;
     public int Notch2 { get; set; } = -1;
+    public bool IsAtNotch { get; private set; }
     public Dictionary<char,char> Wheel => _wheel;
 
     private Dictionary<char,char> _wheel { get; set; } = [];
@@ -28,9 +29,6 @@ public sealed class Rotor
 
         EncipherWheel.AddRange(_wheel, RingPosition);
 
-        if (Notch1 == '\0')
-            Notch1 = _wheel.First().Value;
-        
         IsInitialized = true;
     }
 
@@ -56,6 +54,34 @@ public sealed class Rotor
         return this;
 	}
 
+    public Rotor SetRingPosition(int value)
+    {
+        if (value >= 0 && value < _wheel.Count)
+            RingPosition = value;
+        else
+            RingPosition = 0;
+
+        if (RingPosition > 0)
+        {
+            Notch1 += RingPosition;
+
+            if (Notch1 >= _wheel.Count)
+                Notch1 -= _wheel.Count;
+
+            if (Notch2 >= 0)
+            {
+                Notch2 += RingPosition;
+                
+                if (Notch2 >= _wheel.Count)
+                    Notch2 -= _wheel.Count;
+            }
+        }
+        
+        Initialize();
+
+        return this;
+    }
+
 	public Rotor SetRotation(int value)
 	{
         if (value >= 0 && value < _wheel.Count)
@@ -66,18 +92,6 @@ public sealed class Rotor
         return this;
 	}
     
-	public Rotor SetRingPosition(int value)
-	{
-        if (value >= 0 && value < _wheel.Count)
-            RingPosition = value;
-        else
-            RingPosition = 0;
-
-        Initialize();
-
-        return this;
-	}
-
     #endregion
     
     #region Actions
@@ -88,13 +102,17 @@ public sealed class Rotor
 
         if (Rotation >= _wheel.Count)
             Rotation = 0;
+
+        IsAtNotch = Notch1 == Rotation || Notch2 == Rotation;
     }
 
 	public char SendCharacter(char c)
 	{
         if (IsInitialized == false)
             Initialize();
-        
+
+        IsAtNotch = false;
+
         if (EncipherWheel.KeyIndex.TryGetValue(c, out var originalIndex) == false)
             return c;
 

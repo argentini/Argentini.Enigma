@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using Xunit;
-using static Enigma.Reflectors;
 
 namespace Enigma.Tests;
 
@@ -32,7 +31,7 @@ public class MachineTests
             .SetRingPosition(13);
 
         var reflector = new Reflector()
-            .SetWires(Reflectors.GetReflector(ReflectorType.Wehrmacht_B));
+            .SetWires(Reflectors.GetReflector(Reflectors.ReflectorType.Wehrmacht_B));
 
         var enciphered = new StringBuilder();
 
@@ -40,10 +39,10 @@ public class MachineTests
         {
             rotor1.Rotate();
 
-            if (rotor1.Rotation == 0)
+            if (rotor1.IsAtNotch)
                 rotor2.Rotate();
 
-            if (rotor2.Rotation == 0)
+            if (rotor2.IsAtNotch)
                 rotor3.Rotate();
             
             var cc = plugBoard.SendCharacter(c);
@@ -73,10 +72,10 @@ public class MachineTests
         {
             rotor1.Rotate();
 
-            if (rotor1.Rotation == 0)
+            if (rotor1.IsAtNotch)
                 rotor2.Rotate();
 
-            if (rotor2.Rotation == 0)
+            if (rotor2.IsAtNotch)
                 rotor3.Rotate();
 
             var cc = plugBoard.SendCharacter(c);
@@ -129,7 +128,7 @@ public class MachineTests
             .SetRingPosition(65);
 
         var reflector = new Reflector()
-            .SetWires(Reflectors.GetReflector(ReflectorType.Ascii));
+            .SetWires(Reflectors.GetReflector(Reflectors.ReflectorType.Ascii));
 
         var timer = new Stopwatch();
         var enciphered = new StringBuilder();
@@ -140,10 +139,10 @@ public class MachineTests
         {
             rotor1.Rotate();
 
-            if (rotor1.Rotation == 0)
+            if (rotor1.IsAtNotch)
                 rotor2.Rotate();
 
-            if (rotor2.Rotation == 0)
+            if (rotor2.IsAtNotch)
                 rotor3.Rotate();
         
             var cc = plugBoard.SendCharacter(c);
@@ -177,10 +176,10 @@ public class MachineTests
         {
             rotor1.Rotate();
 
-            if (rotor1.Rotation == 0)
+            if (rotor1.IsAtNotch)
                 rotor2.Rotate();
 
-            if (rotor2.Rotation == 0)
+            if (rotor2.IsAtNotch)
                 rotor3.Rotate();
 
             var cc = plugBoard.SendCharacter(c);
