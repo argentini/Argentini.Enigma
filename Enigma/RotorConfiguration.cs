@@ -9,6 +9,7 @@ public sealed class RotorConfiguration
 
     public string Secret { get; set; } = string.Empty;
     public string Nonce { get; set; } = string.Empty;
+    public AesCtrRandomNumberGenerator? Acrn { get; set; } = null;    
     public CharacterSets CharacterSets { get; set; } = CharacterSets.Ascii;
     
     public Dictionary<char, char> RotorWheel { get; } = [];
@@ -25,15 +26,15 @@ public sealed class RotorConfiguration
             for (var i = 0; i < charSet.Length; i++)
                 RotorWheel.Add(charSet[i], Constants.RotorPresetsCiphers[RotorPreset.Value][i]);
         }
-        else if (string.IsNullOrEmpty(Secret) == false && string.IsNullOrEmpty(Nonce) == false)
+        else if (Acrn is not null || (string.IsNullOrEmpty(Secret) == false && string.IsNullOrEmpty(Nonce) == false))
         {
-            if (Secret.Length < 32)
-                throw new Exception("RotorConfiguration.GenerateRotor() => key must be at least 32 characters");
+            if (Acrn is null && Secret.Length < 32)
+                throw new Exception("RotorConfiguration.Initialize() => key must be at least 32 characters");
 
-            if (Nonce.Length < 16)
-                throw new Exception("RotorConfiguration.GenerateRotor() => nonce must be at least 16 characters");
+            if (Acrn is null && Nonce.Length < 16)
+                throw new Exception("RotorConfiguration.Initialize() => nonce must be at least 16 characters");
 
-            var aesCtrRng = new AesCtrRandomNumberGenerator(Secret, Nonce);
+            var aesCtrRng = Acrn ?? new AesCtrRandomNumberGenerator(Secret, Nonce);
             var characters = CharacterSets is CharacterSets.Ascii ? Constants.CharacterSetValues[CharacterSets.Ascii] : Constants.CharacterSetValues[CharacterSets.Classic];
             var cipher = new string(characters.OrderBy(_ => aesCtrRng.NextUInt32()).ToArray());
 

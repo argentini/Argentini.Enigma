@@ -310,4 +310,37 @@ public class MachineTests
 
         Assert.Equal(Message.ToString(), deciphered);
     }
+    
+    [Fact]
+    public void GeneratedMachineTest()
+    {
+        var Message = new StringBuilder();
+        var ci = 0;
+
+        for (var i = 0; i < Constants.CharacterSetValues[CharacterSets.Ascii].Length * Constants.CharacterSetValues[CharacterSets.Ascii].Length * Constants.CharacterSetValues[CharacterSets.Ascii].Length; i++)
+        {
+            Message.Append(Constants.CharacterSetValues[CharacterSets.Ascii][ci++]);
+
+            if (ci == Constants.CharacterSetValues[CharacterSets.Ascii].Length)
+                ci = 0;
+        }
+
+        var machine = new Machine("ThisIsA32ByteLongSecretKey123456", "UniqueNonce12345", CharacterSets.Ascii, 4)
+            .AddPlugBoard(new Dictionary<char, char>
+            {
+                { 'T', 'A' },
+                { 'C', 'B' }
+            });
+
+        var enciphered = machine.Encipher(Message.ToString());
+        
+        Assert.NotEqual(Message.ToString(), enciphered);
+        Assert.Equal(Message.Length, enciphered.Length);
+
+        machine.Reset();
+        
+        var deciphered = machine.Encipher(enciphered);
+
+        Assert.Equal(Message.ToString(), deciphered);
+    }
 }

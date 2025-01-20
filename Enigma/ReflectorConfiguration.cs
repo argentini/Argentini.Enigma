@@ -5,7 +5,7 @@ public sealed class ReflectorConfiguration
     public string Secret { get; set; } = string.Empty;
     public string Nonce { get; set; } = string.Empty;
     public CharacterSets CharacterSets { get; set; } = CharacterSets.Ascii;
-    
+    public AesCtrRandomNumberGenerator? Acrn { get; set; } = null;    
     public Dictionary<char, char> ReflectorWheel { get; } = [];
     public ReflectorPresets? ReflectorPreset { get; set; }
     
@@ -21,15 +21,15 @@ public sealed class ReflectorConfiguration
             foreach (var c in charSet)
                 ReflectorWheel.TryAdd(c, cipher[charSet.IndexOf(c)]);
         }
-        else if (string.IsNullOrEmpty(Secret) == false && string.IsNullOrEmpty(Nonce) == false)
+        else if (Acrn is not null || (string.IsNullOrEmpty(Secret) == false && string.IsNullOrEmpty(Nonce) == false))
         {
-            if (Secret.Length < 32)
-                throw new Exception("ReflectorConfiguration.GenerateRotor() => key must be at least 32 characters");
+            if (Acrn is null && Secret.Length < 32)
+                throw new Exception("ReflectorConfiguration.Initialize() => key must be at least 32 characters");
 
-            if (Nonce.Length < 16)
-                throw new Exception("ReflectorConfiguration.GenerateRotor() => nonce must be at least 16 characters");
+            if (Acrn is null && Nonce.Length < 16)
+                throw new Exception("ReflectorConfiguration.Initialize() => nonce must be at least 16 characters");
 
-            var aesCtrRng = new AesCtrRandomNumberGenerator(Secret, Nonce);
+            var aesCtrRng = Acrn ?? new AesCtrRandomNumberGenerator(Secret, Nonce);
             var characters = CharacterSets is CharacterSets.Ascii ? Constants.CharacterSetValues[CharacterSets.Ascii] : Constants.CharacterSetValues[CharacterSets.Classic];
 
             ReflectorWheel.Clear();

@@ -12,6 +12,34 @@ public class Machine
     public PlugBoard PlugBoard { get; set; } = new();
     public Dictionary<int,Rotor> Rotors { get; set; } = [];
     public Reflector? Reflector { get; set; }
+    public AesCtrRandomNumberGenerator? Acrn { get; set; } = null;
+
+    public Machine()
+    {
+    }
+
+    public Machine(string secret, string nonce, CharacterSets charSet = CharacterSets.Ascii, int rotorCount = 3)
+    {
+        if (string.IsNullOrEmpty(secret) || string.IsNullOrEmpty(nonce))
+            return;
+
+        Acrn = new AesCtrRandomNumberGenerator(secret, nonce);
+
+        for (var i = 0; i < rotorCount; i++)
+        {
+            Rotors.Add(i, new Rotor(new RotorConfiguration
+            {
+                CharacterSets = charSet,
+                Acrn = Acrn
+            }));
+        }
+
+        AddReflector(new ReflectorConfiguration
+        {
+            CharacterSets = charSet,
+            Acrn = Acrn
+        });
+    }
 
     public Machine AddPlugBoard(Dictionary<char,char> wires)
     {
