@@ -2,20 +2,6 @@ namespace Enigma;
 
 public static class Reflectors
 {
-    public enum ReflectorType
-    {
-        // Default reflectors used by the Wehrmacht and Luftwaffe
-        Wehrmacht_B,
-        Wehrmacht_C,
-
-        // Additional rotors used by Kriegsmarine M4 only
-        Kriegsmarine_M4_B_Thin,
-        Kriegsmarine_M4_C_Thin,
-
-        // Standard 95 ASCII character reflector
-        Ascii,
-    }
-    
     private static readonly Dictionary<ReflectorType, string> ReflectorValues = new()
     {
         { ReflectorType.Wehrmacht_B, "YRUHQSLDPXNGOKMIEBFZCWVJAT" },
@@ -25,11 +11,6 @@ public static class Reflectors
         { ReflectorType.Ascii , @"BIK}p/h@b58fMo_%i3c1P)sH*?XwCm{9'J <vL|g7!A""E,~T4zSROWZU:tVdjxk.la(2[r+G&0\^`=q-$ne6YuD;]yQ>F#N" },
     };
 
-    public enum CharacterSet
-    {
-        Classic,
-        Ascii,
-    }
     private static readonly Dictionary<CharacterSet, string> CharacterSetValues = new()
     {
         { CharacterSet.Classic, "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },

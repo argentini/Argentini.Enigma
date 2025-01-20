@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+
 namespace Enigma;
 
 /// <summary>
@@ -12,7 +14,7 @@ public sealed class Rotor
     private int Rotation { get; set; }
     private int Notch1 { get; set; } = -1;
     private int Notch2 { get; set; } = -1;
-    private RotorConfiguration Configuration { get; set; }
+    public RotorConfiguration Configuration { get; set; }
     private IndexedDictionary<char,char> EncipherWheel { get; } = new();
 
     public Rotor(RotorConfiguration configuration)
@@ -25,7 +27,9 @@ public sealed class Rotor
     #region Configuration
     
 	private void Initialize()
-	{
+    {
+        Configuration.Initialize();
+
         if (Configuration.RotorWheel.Count == 0)
             throw new Exception("Rotor.SetWheel() => Value is empty");
 

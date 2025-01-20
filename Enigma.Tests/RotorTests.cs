@@ -8,48 +8,45 @@ public class RotorTests
     [Fact]
     public void GeneratedRotor()
     {
-        var rotorWheel = Rotors.GenerateRotor(Rotors.CharacterSet.Ascii);
         var rotor = new Rotor(new RotorConfiguration
         {
-            RotorWheel = rotorWheel
+            CharacterSet = CharacterSet.Ascii,
+            Secret = "ThisIsA32ByteLongSecretKey123456",
+            Nonce = "UniqueNonce12345"
         });
         
-        Assert.Equal(rotorWheel[' '], rotor.SendCharacter(' '));
-        Assert.Equal(rotorWheel['A'], rotor.SendCharacter('A'));
-        Assert.Equal(rotorWheel['B'], rotor.SendCharacter('B'));
-        Assert.Equal(rotorWheel['~'], rotor.SendCharacter('~'));
+        Assert.Equal(rotor.Configuration.RotorWheel[' '], rotor.SendCharacter(' '));
+        Assert.Equal(rotor.Configuration.RotorWheel['A'], rotor.SendCharacter('A'));
+        Assert.Equal(rotor.Configuration.RotorWheel['B'], rotor.SendCharacter('B'));
+        Assert.Equal(rotor.Configuration.RotorWheel['~'], rotor.SendCharacter('~'));
 
-        Assert.Equal(rotorWheel.First(r => r.Value == '*').Key, rotor.ReflectedCharacter('*'));
-        Assert.Equal(rotorWheel.First(r => r.Value == 'E').Key, rotor.ReflectedCharacter('E'));
-        Assert.Equal(rotorWheel.First(r => r.Value == 'K').Key, rotor.ReflectedCharacter('K'));
-        Assert.Equal(rotorWheel.First(r => r.Value == '%').Key, rotor.ReflectedCharacter('%'));
+        Assert.Equal(rotor.Configuration.RotorWheel.First(r => r.Value == '*').Key, rotor.ReflectedCharacter('*'));
+        Assert.Equal(rotor.Configuration.RotorWheel.First(r => r.Value == 'E').Key, rotor.ReflectedCharacter('E'));
+        Assert.Equal(rotor.Configuration.RotorWheel.First(r => r.Value == 'K').Key, rotor.ReflectedCharacter('K'));
+        Assert.Equal(rotor.Configuration.RotorWheel.First(r => r.Value == '%').Key, rotor.ReflectedCharacter('%'));
     }
 
     [Fact]
 	public void AsciiRotor()
     {
-        var rotorWheel = Rotors.GetRotor(Rotors.RotorType.Ascii_I);
         var rotor = new Rotor(new RotorConfiguration
         {
-            RotorWheel = rotorWheel
+            RotorPreset = RotorType.Ascii_I
         });
         
-        Assert.Equal(rotorWheel[' '], rotor.SendCharacter(' '));
-        Assert.Equal(rotorWheel['A'], rotor.SendCharacter('A'));
-        Assert.Equal(rotorWheel['B'], rotor.SendCharacter('B'));
-        Assert.Equal(rotorWheel['~'], rotor.SendCharacter('~'));
+        Assert.Equal(rotor.Configuration.RotorWheel[' '], rotor.SendCharacter(' '));
+        Assert.Equal(rotor.Configuration.RotorWheel['A'], rotor.SendCharacter('A'));
+        Assert.Equal(rotor.Configuration.RotorWheel['B'], rotor.SendCharacter('B'));
+        Assert.Equal(rotor.Configuration.RotorWheel['~'], rotor.SendCharacter('~'));
 
-        Assert.Equal(rotorWheel.First(r => r.Value == '*').Key, rotor.ReflectedCharacter('*'));
-        Assert.Equal(rotorWheel.First(r => r.Value == 'E').Key, rotor.ReflectedCharacter('E'));
-        Assert.Equal(rotorWheel.First(r => r.Value == 'K').Key, rotor.ReflectedCharacter('K'));
-        Assert.Equal(rotorWheel.First(r => r.Value == '%').Key, rotor.ReflectedCharacter('%'));
+        Assert.Equal(rotor.Configuration.RotorWheel.First(r => r.Value == '*').Key, rotor.ReflectedCharacter('*'));
+        Assert.Equal(rotor.Configuration.RotorWheel.First(r => r.Value == 'E').Key, rotor.ReflectedCharacter('E'));
+        Assert.Equal(rotor.Configuration.RotorWheel.First(r => r.Value == 'K').Key, rotor.ReflectedCharacter('K'));
+        Assert.Equal(rotor.Configuration.RotorWheel.First(r => r.Value == '%').Key, rotor.ReflectedCharacter('%'));
 
-        rotor = new Rotor(new RotorConfiguration
-        {
-            RotorWheel = rotorWheel,
-            StartingRotation = 1
-        });
-
+        rotor.ResetRotation();
+        rotor.Rotate();
+        
         Assert.Equal('r', rotor.SendCharacter(' '));
         Assert.Equal('z', rotor.SendCharacter('A'));
         Assert.Equal('~', rotor.SendCharacter('B'));
@@ -62,7 +59,7 @@ public class RotorTests
 
         rotor = new Rotor(new RotorConfiguration
         {
-            RotorWheel = rotorWheel,
+            RotorPreset = RotorType.Ascii_I,
             RingPosition = 1
         });
 

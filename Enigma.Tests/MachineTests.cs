@@ -21,23 +21,23 @@ public class MachineTests
         
         var rotor1 = new Rotor(new RotorConfiguration
             {
-                RotorWheel = Rotors.GetRotor(Rotors.RotorType.Wehrmacht_I)
+                RotorPreset = RotorType.Wehrmacht_I
             });
 
         var rotor2 = new Rotor(new RotorConfiguration
         {
-            RotorWheel = Rotors.GetRotor(Rotors.RotorType.Wehrmacht_II),
+            RotorPreset = RotorType.Wehrmacht_II,
             RingPosition = 10
         });
 
         var rotor3 = new Rotor(new RotorConfiguration
         {
-            RotorWheel = Rotors.GetRotor(Rotors.RotorType.Wehrmacht_III),
+            RotorPreset = RotorType.Wehrmacht_III,
             RingPosition = 13
         });
 
         var reflector = new Reflector()
-            .SetWires(Reflectors.GetReflector(Reflectors.ReflectorType.Wehrmacht_B));
+            .SetWires(Reflectors.GetReflector(ReflectorType.Wehrmacht_B));
 
         var enciphered = new StringBuilder();
 
@@ -107,11 +107,11 @@ public class MachineTests
         var Message = new StringBuilder();
         var ci = 0;
 
-        for (var i = 0; i < Constants.CharacterSet.Length * Constants.CharacterSet.Length * Constants.CharacterSet.Length; i++)
+        for (var i = 0; i < Constants.CharacterSetValues[CharacterSet.Ascii].Length * Constants.CharacterSetValues[CharacterSet.Ascii].Length * Constants.CharacterSetValues[CharacterSet.Ascii].Length; i++)
         {
-            Message.Append(Constants.CharacterSet[ci++]);
+            Message.Append(Constants.CharacterSetValues[CharacterSet.Ascii][ci++]);
 
-            if (ci == Constants.CharacterSet.Length)
+            if (ci == Constants.CharacterSetValues[CharacterSet.Ascii].Length)
                 ci = 0;
         }
         
@@ -124,23 +124,23 @@ public class MachineTests
         
         var rotor1 = new Rotor(new RotorConfiguration
         {
-            RotorWheel = Rotors.GetRotor(Rotors.RotorType.Ascii_I)
+            RotorPreset = RotorType.Ascii_I,
         });
 
         var rotor2 = new Rotor(new RotorConfiguration
         {
-            RotorWheel = Rotors.GetRotor(Rotors.RotorType.Ascii_II),
+            RotorPreset = RotorType.Ascii_II,
             RingPosition = 10
         });
 
         var rotor3 = new Rotor(new RotorConfiguration
         {
-            RotorWheel = Rotors.GetRotor(Rotors.RotorType.Ascii_III),
+            RotorPreset = RotorType.Ascii_III,
             RingPosition = 65
         });
 
         var reflector = new Reflector()
-            .SetWires(Reflectors.GetReflector(Reflectors.ReflectorType.Ascii));
+            .SetWires(Reflectors.GetReflector(ReflectorType.Ascii));
 
         var timer = new Stopwatch();
         var enciphered = new StringBuilder();
