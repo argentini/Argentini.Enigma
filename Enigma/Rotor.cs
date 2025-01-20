@@ -7,100 +7,92 @@ namespace Enigma;
 /// </summary>
 public sealed class Rotor
 {
-    public int RingPosition { get; private set; }
-    public int Rotation { get; private set; }
-    public int Notch1 { get; set; } = -1;
-    public int Notch2 { get; set; } = -1;
     public bool IsAtNotch { get; private set; }
-    public Dictionary<char,char> Wheel => _wheel;
 
-    private Dictionary<char,char> _wheel { get; set; } = [];
+    private int Rotation { get; set; }
+    private int Notch1 { get; set; } = -1;
+    private int Notch2 { get; set; } = -1;
+    private RotorConfiguration Configuration { get; set; }
     private IndexedDictionary<char,char> EncipherWheel { get; } = new();
-    private bool IsInitialized { get; set; }
 
+    public Rotor(RotorConfiguration configuration)
+    {
+        Configuration = configuration;
+        
+        Initialize();
+    }
+    
     #region Configuration
     
 	private void Initialize()
 	{
-        EncipherWheel.Clear();
-
-        if (_wheel.Count == 0)
-            return;
-
-        EncipherWheel.AddRange(_wheel, RingPosition);
-
-        IsInitialized = true;
-    }
-
-	public Rotor SetWheel(Dictionary<char,char> value, int notch1 = -1, int notch2 = -1)
-	{
-        if (value.Count == 0)
+        if (Configuration.RotorWheel.Count == 0)
             throw new Exception("Rotor.SetWheel() => Value is empty");
 
-        _wheel = value;
-
-        if (notch1 >= 0 && notch1 < _wheel.Count)
-            Notch1 = notch1;
+        #region Notches
+        
+        if (Configuration.NotchPosition1 >= 0 && Configuration.NotchPosition1 < Configuration.RotorWheel.Count)
+            Notch1 = Configuration.NotchPosition1;
         else
             Notch1 = 0;
 
-        if (notch2 >= 0 && notch2 < _wheel.Count && notch2 != Notch1)
-            Notch2 = notch2;
+        if (Configuration.NotchPosition2 >= 0 && Configuration.NotchPosition2 < Configuration.RotorWheel.Count && Configuration.NotchPosition2 != Notch1)
+            Notch2 = Configuration.NotchPosition2;
         else
             Notch2 = -1;
+
+        #endregion
+
+        #region Ring Position
         
-        Initialize();
+        if (Configuration.RingPosition < 0 || Configuration.RingPosition >= Configuration.RotorWheel.Count)
+            Configuration.RingPosition = 0;
 
-        return this;
-	}
-
-    public Rotor SetRingPosition(int value)
-    {
-        if (value >= 0 && value < _wheel.Count)
-            RingPosition = value;
-        else
-            RingPosition = 0;
-
-        if (RingPosition > 0)
+        if (Configuration.RingPosition > 0)
         {
-            Notch1 += RingPosition;
+            Notch1 += Configuration.RingPosition;
 
-            if (Notch1 >= _wheel.Count)
-                Notch1 -= _wheel.Count;
+            if (Notch1 >= Configuration.RotorWheel.Count)
+                Notch1 -= Configuration.RotorWheel.Count;
 
             if (Notch2 >= 0)
             {
-                Notch2 += RingPosition;
+                Notch2 += Configuration.RingPosition;
                 
-                if (Notch2 >= _wheel.Count)
-                    Notch2 -= _wheel.Count;
+                if (Notch2 >= Configuration.RotorWheel.Count)
+                    Notch2 -= Configuration.RotorWheel.Count;
             }
         }
         
-        Initialize();
+        #endregion
+        
+        #region Starting Rotation
 
-        return this;
+        if (Configuration.StartingRotation < 0 || Configuration.StartingRotation >= Configuration.RotorWheel.Count)
+            Configuration.StartingRotation = 0;
+
+        Rotation = Configuration.StartingRotation;
+        
+        #endregion
+        
+        EncipherWheel.Clear();
+        EncipherWheel.AddRange(Configuration.RotorWheel, Configuration.RingPosition);
     }
-
-	public Rotor SetRotation(int value)
-	{
-        if (value >= 0 && value < _wheel.Count)
-            Rotation = value;
-        else
-            Rotation = 0;
-
-        return this;
-	}
-    
+  
     #endregion
     
     #region Actions
-    
+
+    public void ResetRotation()
+    {
+        Rotation = Configuration.StartingRotation;
+    }
+
     public void Rotate()
     {
         Rotation++;
 
-        if (Rotation >= _wheel.Count)
+        if (Rotation >= Configuration.RotorWheel.Count)
             Rotation = 0;
 
         IsAtNotch = Notch1 == Rotation || Notch2 == Rotation;
@@ -108,10 +100,8 @@ public sealed class Rotor
 
 	public char SendCharacter(char c)
 	{
-        if (IsInitialized == false)
-            Initialize();
-
-        IsAtNotch = false;
+        if (IsAtNotch)
+            IsAtNotch = false;
 
         if (EncipherWheel.KeyIndex.TryGetValue(c, out var originalIndex) == false)
             return c;
@@ -123,9 +113,6 @@ public sealed class Rotor
 
 	public char ReflectedCharacter(char c)
 	{
-        if (IsInitialized == false)
-            Initialize();
-
         if (EncipherWheel.ValueIndex.TryGetValue(c, out var originalIndex) == false)
             return c;
 

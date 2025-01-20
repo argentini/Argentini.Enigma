@@ -19,16 +19,22 @@ public class MachineTests
                 { 'S', 'B' }
             });
         
-        var rotor1 = new Rotor()
-            .SetWheel(Rotors.GetRotor(Rotors.RotorType.Wehrmacht_I));
+        var rotor1 = new Rotor(new RotorConfiguration
+            {
+                RotorWheel = Rotors.GetRotor(Rotors.RotorType.Wehrmacht_I)
+            });
 
-        var rotor2 = new Rotor()
-            .SetWheel(Rotors.GetRotor(Rotors.RotorType.Wehrmacht_II))
-            .SetRingPosition(10);
+        var rotor2 = new Rotor(new RotorConfiguration
+        {
+            RotorWheel = Rotors.GetRotor(Rotors.RotorType.Wehrmacht_II),
+            RingPosition = 10
+        });
 
-        var rotor3 = new Rotor()
-            .SetWheel(Rotors.GetRotor(Rotors.RotorType.Wehrmacht_III))
-            .SetRingPosition(13);
+        var rotor3 = new Rotor(new RotorConfiguration
+        {
+            RotorWheel = Rotors.GetRotor(Rotors.RotorType.Wehrmacht_III),
+            RingPosition = 13
+        });
 
         var reflector = new Reflector()
             .SetWires(Reflectors.GetReflector(Reflectors.ReflectorType.Wehrmacht_B));
@@ -64,9 +70,9 @@ public class MachineTests
         
         var deciphered = new StringBuilder();
 
-        rotor1.SetRotation(0);
-        rotor2.SetRotation(0);
-        rotor3.SetRotation(0);
+        rotor1.ResetRotation();
+        rotor2.ResetRotation();
+        rotor3.ResetRotation();
 
         foreach (var c in enciphered.ToString())
         {
@@ -116,16 +122,22 @@ public class MachineTests
                 { 'C', 'B' }
             });
         
-        var rotor1 = new Rotor()
-            .SetWheel(Rotors.GetRotor(Rotors.RotorType.Ascii_I));
+        var rotor1 = new Rotor(new RotorConfiguration
+        {
+            RotorWheel = Rotors.GetRotor(Rotors.RotorType.Ascii_I)
+        });
 
-        var rotor2 = new Rotor()
-            .SetWheel(Rotors.GetRotor(Rotors.RotorType.Ascii_II))
-            .SetRingPosition(10);
+        var rotor2 = new Rotor(new RotorConfiguration
+        {
+            RotorWheel = Rotors.GetRotor(Rotors.RotorType.Ascii_II),
+            RingPosition = 10
+        });
 
-        var rotor3 = new Rotor()
-            .SetWheel(Rotors.GetRotor(Rotors.RotorType.Ascii_III))
-            .SetRingPosition(65);
+        var rotor3 = new Rotor(new RotorConfiguration
+        {
+            RotorWheel = Rotors.GetRotor(Rotors.RotorType.Ascii_III),
+            RingPosition = 65
+        });
 
         var reflector = new Reflector()
             .SetWires(Reflectors.GetReflector(Reflectors.ReflectorType.Ascii));
@@ -168,9 +180,9 @@ public class MachineTests
         
         var deciphered = new StringBuilder();
 
-        rotor1.SetRotation(0);
-        rotor2.SetRotation(0);
-        rotor3.SetRotation(0);
+        rotor1.ResetRotation();
+        rotor2.ResetRotation();
+        rotor3.ResetRotation();
 
         foreach (var c in enciphered.ToString())
         {

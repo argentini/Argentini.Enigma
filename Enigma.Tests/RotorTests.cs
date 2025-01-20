@@ -9,8 +9,10 @@ public class RotorTests
     public void GeneratedRotor()
     {
         var rotorWheel = Rotors.GenerateRotor(Rotors.CharacterSet.Ascii);
-        var rotor = new Rotor()
-            .SetWheel(rotorWheel);
+        var rotor = new Rotor(new RotorConfiguration
+        {
+            RotorWheel = rotorWheel
+        });
         
         Assert.Equal(rotorWheel[' '], rotor.SendCharacter(' '));
         Assert.Equal(rotorWheel['A'], rotor.SendCharacter('A'));
@@ -27,8 +29,10 @@ public class RotorTests
 	public void AsciiRotor()
     {
         var rotorWheel = Rotors.GetRotor(Rotors.RotorType.Ascii_I);
-        var rotor = new Rotor()
-            .SetWheel(rotorWheel);
+        var rotor = new Rotor(new RotorConfiguration
+        {
+            RotorWheel = rotorWheel
+        });
         
         Assert.Equal(rotorWheel[' '], rotor.SendCharacter(' '));
         Assert.Equal(rotorWheel['A'], rotor.SendCharacter('A'));
@@ -40,7 +44,11 @@ public class RotorTests
         Assert.Equal(rotorWheel.First(r => r.Value == 'K').Key, rotor.ReflectedCharacter('K'));
         Assert.Equal(rotorWheel.First(r => r.Value == '%').Key, rotor.ReflectedCharacter('%'));
 
-        rotor.SetRotation(1);
+        rotor = new Rotor(new RotorConfiguration
+        {
+            RotorWheel = rotorWheel,
+            StartingRotation = 1
+        });
 
         Assert.Equal('r', rotor.SendCharacter(' '));
         Assert.Equal('z', rotor.SendCharacter('A'));
@@ -52,8 +60,11 @@ public class RotorTests
         Assert.Equal(',', rotor.ReflectedCharacter('M'));
         Assert.Equal('a', rotor.ReflectedCharacter('*'));
 
-        rotor.SetRotation(0);
-        rotor.SetRingPosition(1);
+        rotor = new Rotor(new RotorConfiguration
+        {
+            RotorWheel = rotorWheel,
+            RingPosition = 1
+        });
 
         Assert.Equal('r', rotor.SendCharacter(' '));
         Assert.Equal('z', rotor.SendCharacter('A'));
