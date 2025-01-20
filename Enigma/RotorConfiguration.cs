@@ -1,6 +1,6 @@
 namespace Enigma;
 
-public class RotorConfiguration
+public sealed class RotorConfiguration
 {
     public int RingPosition { get; set; }
     public int StartingRotation { get; set; }
