@@ -18,12 +18,22 @@ public class Machine
     public AesCtrRandomNumberGenerator? Acrn { get; set; }
 
     private ObjectPool<StringBuilder> StringBuilderPool { get; } = new DefaultObjectPoolProvider().CreateStringBuilderPool();
-    
+
+    /// <summary>
+    /// Constructor used when manually building a machine with chained (fluent-style) .Add...() methods.
+    /// </summary>
     public Machine()
     {
     }
+
+    /// <summary>
+    /// Used to create a historical machine from a preset.
+    /// </summary>
+    /// <param name="configuration"></param>
     public Machine(MachineConfiguration configuration)
     {
+        AddPlugBoard(configuration.PlugBoardWires);
+        
         if (configuration.MachinePreset == MachinePresets.Commercial_1924)
         {
             AddEntryWheel(new EntryWheelConfiguration
@@ -33,17 +43,23 @@ public class Machine
 
             Rotors.Add(0, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Commercial_I
+                RotorPreset = RotorPresets.Commercial_I,
+                RingPosition = configuration.Rotor1RingPosition,
+                StartingRotation = configuration.Rotor1StartingRotation
             }));
 
             Rotors.Add(1, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Commercial_II
+                RotorPreset = RotorPresets.Commercial_II,
+                RingPosition = configuration.Rotor2RingPosition,
+                StartingRotation = configuration.Rotor2StartingRotation
             }));
 
             Rotors.Add(2, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Commercial_III
+                RotorPreset = RotorPresets.Commercial_III,
+                RingPosition = configuration.Rotor3RingPosition,
+                StartingRotation = configuration.Rotor3StartingRotation
             }));
 
             AddReflector(new ReflectorConfiguration
@@ -60,17 +76,23 @@ public class Machine
 
             Rotors.Add(0, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Wehrmacht_I
+                RotorPreset = RotorPresets.Wehrmacht_I,
+                RingPosition = configuration.Rotor1RingPosition,
+                StartingRotation = configuration.Rotor1StartingRotation
             }));
 
             Rotors.Add(1, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Wehrmacht_II
+                RotorPreset = RotorPresets.Wehrmacht_II,
+                RingPosition = configuration.Rotor2RingPosition,
+                StartingRotation = configuration.Rotor2StartingRotation
             }));
 
             Rotors.Add(2, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Wehrmacht_III
+                RotorPreset = RotorPresets.Wehrmacht_III,
+                RingPosition = configuration.Rotor3RingPosition,
+                StartingRotation = configuration.Rotor3StartingRotation
             }));
 
             AddReflector(new ReflectorConfiguration
@@ -87,17 +109,23 @@ public class Machine
 
             Rotors.Add(0, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Wehrmacht_III
+                RotorPreset = RotorPresets.Wehrmacht_III,
+                RingPosition = configuration.Rotor1RingPosition,
+                StartingRotation = configuration.Rotor1StartingRotation
             }));
 
             Rotors.Add(1, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Wehrmacht_IV
+                RotorPreset = RotorPresets.Wehrmacht_IV,
+                RingPosition = configuration.Rotor2RingPosition,
+                StartingRotation = configuration.Rotor2StartingRotation
             }));
 
             Rotors.Add(2, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Wehrmacht_V
+                RotorPreset = RotorPresets.Wehrmacht_V,
+                RingPosition = configuration.Rotor3RingPosition,
+                StartingRotation = configuration.Rotor3StartingRotation
             }));
 
             AddReflector(new ReflectorConfiguration
@@ -114,17 +142,23 @@ public class Machine
 
             Rotors.Add(0, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Swiss_K_I
+                RotorPreset = RotorPresets.Swiss_K_I,
+                RingPosition = configuration.Rotor1RingPosition,
+                StartingRotation = configuration.Rotor1StartingRotation
             }));
 
             Rotors.Add(1, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Swiss_K_II
+                RotorPreset = RotorPresets.Swiss_K_II,
+                RingPosition = configuration.Rotor2RingPosition,
+                StartingRotation = configuration.Rotor2StartingRotation
             }));
 
             Rotors.Add(2, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Swiss_K_III
+                RotorPreset = RotorPresets.Swiss_K_III,
+                RingPosition = configuration.Rotor3RingPosition,
+                StartingRotation = configuration.Rotor3StartingRotation
             }));
 
             AddReflector(new ReflectorConfiguration
@@ -141,22 +175,30 @@ public class Machine
 
             Rotors.Add(0, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Wehrmacht_I
+                RotorPreset = RotorPresets.Wehrmacht_I,
+                RingPosition = configuration.Rotor1RingPosition,
+                StartingRotation = configuration.Rotor1StartingRotation
             }));
 
             Rotors.Add(1, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VI
+                RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VI,
+                RingPosition = configuration.Rotor2RingPosition,
+                StartingRotation = configuration.Rotor2StartingRotation
             }));
 
             Rotors.Add(2, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VII
+                RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VII,
+                RingPosition = configuration.Rotor3RingPosition,
+                StartingRotation = configuration.Rotor3StartingRotation
             }));
 
             Rotors.Add(3, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VIII
+                RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VIII,
+                RingPosition = configuration.Rotor4RingPosition,
+                StartingRotation = configuration.Rotor4StartingRotation
             }));
 
             AddReflector(new ReflectorConfiguration
@@ -173,17 +215,23 @@ public class Machine
 
             Rotors.Add(0, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Railway_Rocket_I
+                RotorPreset = RotorPresets.Railway_Rocket_I,
+                RingPosition = configuration.Rotor1RingPosition,
+                StartingRotation = configuration.Rotor1StartingRotation
             }));
 
             Rotors.Add(1, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Railway_Rocket_II
+                RotorPreset = RotorPresets.Railway_Rocket_II,
+                RingPosition = configuration.Rotor2RingPosition,
+                StartingRotation = configuration.Rotor2StartingRotation
             }));
 
             Rotors.Add(2, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Railway_Rocket_III
+                RotorPreset = RotorPresets.Railway_Rocket_III,
+                RingPosition = configuration.Rotor3RingPosition,
+                StartingRotation = configuration.Rotor3StartingRotation
             }));
 
             AddReflector(new ReflectorConfiguration
@@ -200,22 +248,30 @@ public class Machine
 
             Rotors.Add(0, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Wehrmacht_III
+                RotorPreset = RotorPresets.Wehrmacht_III,
+                RingPosition = configuration.Rotor1RingPosition,
+                StartingRotation = configuration.Rotor1StartingRotation
             }));
 
             Rotors.Add(1, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VI
+                RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VI,
+                RingPosition = configuration.Rotor2RingPosition,
+                StartingRotation = configuration.Rotor2StartingRotation
             }));
 
             Rotors.Add(2, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VII
+                RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VII,
+                RingPosition = configuration.Rotor3RingPosition,
+                StartingRotation = configuration.Rotor3StartingRotation
             }));
 
             Rotors.Add(3, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VIII
+                RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VIII,
+                RingPosition = configuration.Rotor4RingPosition,
+                StartingRotation = configuration.Rotor4StartingRotation
             }));
 
             AddReflector(new ReflectorConfiguration
@@ -232,17 +288,23 @@ public class Machine
 
             Rotors.Add(0, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Ascii_I
+                RotorPreset = RotorPresets.Ascii_I,
+                RingPosition = configuration.Rotor1RingPosition,
+                StartingRotation = configuration.Rotor1StartingRotation
             }));
 
             Rotors.Add(1, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Ascii_II
+                RotorPreset = RotorPresets.Ascii_II,
+                RingPosition = configuration.Rotor2RingPosition,
+                StartingRotation = configuration.Rotor2StartingRotation
             }));
 
             Rotors.Add(2, new Rotor(new RotorConfiguration
             {
-                RotorPreset = RotorPresets.Ascii_III
+                RotorPreset = RotorPresets.Ascii_III,
+                RingPosition = configuration.Rotor3RingPosition,
+                StartingRotation = configuration.Rotor3StartingRotation
             }));
 
             AddReflector(new ReflectorConfiguration

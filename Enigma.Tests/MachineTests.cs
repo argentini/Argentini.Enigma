@@ -376,7 +376,8 @@ public class MachineTests
 
         var machine = new Machine(new MachineConfiguration
         {
-            MachinePreset = MachinePresets.Commercial_1924
+            MachinePreset = MachinePresets.Commercial_1924,
+            Rotor1RingPosition = 15,
         });
 
         var enciphered = machine.Encipher(Message.ToString());
@@ -387,6 +388,43 @@ public class MachineTests
         machine.Reset();
         
         var deciphered = machine.Encipher(enciphered);
+
+        Assert.Equal(Message.ToString(), deciphered);
+        
+        machine = new Machine(new MachineConfiguration
+        {
+            MachinePreset = MachinePresets.Kriegsmarine_M4_1941,
+            Rotor1RingPosition = 5,
+            Rotor2RingPosition = 15,
+            Rotor3RingPosition = 22,
+            Rotor4RingPosition = 3,
+            Rotor1StartingRotation = 10,
+            Rotor2StartingRotation = 6,
+            Rotor3StartingRotation = 17,
+            Rotor4StartingRotation = 23,
+            PlugBoardWires =
+            {
+                { 'A', 'T' },
+                { 'B', 'V' },
+                { 'C', 'M' },
+                { 'D', 'O' },
+                { 'E', 'Y' },
+                { 'F', 'Q' },
+                { 'G', 'R' },
+                { 'H', 'S' },
+                { 'I', 'L' },
+                { 'J', 'K' },
+            }
+        });
+
+        enciphered = machine.Encipher(Message.ToString());
+        
+        Assert.NotEqual(Message.ToString(), enciphered);
+        Assert.Equal(Message.Length, enciphered.Length);
+
+        machine.Reset();
+        
+        deciphered = machine.Encipher(enciphered);
 
         Assert.Equal(Message.ToString(), deciphered);
     }
