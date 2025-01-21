@@ -200,7 +200,7 @@ public static class Constants
         { EntryWheelPresets.Swiss_K_ETW, "QWERTZUIOASDFGHJKPYXCVBNML" },
         { EntryWheelPresets.Railway_Rocket_ETW, "QWERTZUIOASDFGHJKPYXCVBNML" },
         { EntryWheelPresets.Wehrmacht, "QWERTZUIOPASDFGHJKLYXCVBNM" },
-        { EntryWheelPresets.Kriegsmarine, "JGDQVUBSLAPITKEKDWHMFERCZY" },
+        { EntryWheelPresets.Kriegsmarine, "JGDQVUBSLAPITKENXWHMFORCZY" },
         { EntryWheelPresets.Ascii, @"t~|MYy26z-@L(uP/vkI_SC"".x0A=<#K%!b[94^U&7TpG')>cHFdR1ae*5?{,+X`lV}\OW:qgisn]Bm$8Z3EJho Dw;rQjfN" },
     };
 }
