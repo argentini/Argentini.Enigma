@@ -22,6 +22,235 @@ public class Machine
     public Machine()
     {
     }
+    public Machine(MachineConfiguration configuration)
+    {
+        if (configuration.MachinePreset == MachinePresets.Commercial_1924)
+        {
+            AddEntryWheel(new EntryWheelConfiguration
+            {
+                EntryWheelPreset = EntryWheelPresets.Commercial_ETW
+            });
+
+            Rotors.Add(0, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Commercial_I
+            }));
+
+            Rotors.Add(1, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Commercial_II
+            }));
+
+            Rotors.Add(2, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Commercial_III
+            }));
+
+            AddReflector(new ReflectorConfiguration
+            {
+                ReflectorPreset = ReflectorPresets.Wehrmacht_A
+            });
+        }
+        else if (configuration.MachinePreset == MachinePresets.Wehrmacht_Kriegsmarine_1930)
+        {
+            AddEntryWheel(new EntryWheelConfiguration
+            {
+                EntryWheelPreset = EntryWheelPresets.Wehrmacht
+            });
+
+            Rotors.Add(0, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Wehrmacht_I
+            }));
+
+            Rotors.Add(1, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Wehrmacht_II
+            }));
+
+            Rotors.Add(2, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Wehrmacht_III
+            }));
+
+            AddReflector(new ReflectorConfiguration
+            {
+                ReflectorPreset = ReflectorPresets.Wehrmacht_A
+            });
+        }
+        else if (configuration.MachinePreset == MachinePresets.Wehrmacht_Kriegsmarine_1938)
+        {
+            AddEntryWheel(new EntryWheelConfiguration
+            {
+                EntryWheelPreset = EntryWheelPresets.Wehrmacht
+            });
+
+            Rotors.Add(0, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Wehrmacht_III
+            }));
+
+            Rotors.Add(1, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Wehrmacht_IV
+            }));
+
+            Rotors.Add(2, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Wehrmacht_V
+            }));
+
+            AddReflector(new ReflectorConfiguration
+            {
+                ReflectorPreset = ReflectorPresets.Wehrmacht_B
+            });
+        }
+        else if (configuration.MachinePreset == MachinePresets.Swiss_K_1939)
+        {
+            AddEntryWheel(new EntryWheelConfiguration
+            {
+                EntryWheelPreset = EntryWheelPresets.Swiss_K_ETW
+            });
+
+            Rotors.Add(0, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Swiss_K_I
+            }));
+
+            Rotors.Add(1, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Swiss_K_II
+            }));
+
+            Rotors.Add(2, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Swiss_K_III
+            }));
+
+            AddReflector(new ReflectorConfiguration
+            {
+                ReflectorPreset = ReflectorPresets.Swiss_K_UKW
+            });
+        }
+        else if (configuration.MachinePreset == MachinePresets.Kriegsmarine_M3_1939)
+        {
+            AddEntryWheel(new EntryWheelConfiguration
+            {
+                EntryWheelPreset = EntryWheelPresets.Kriegsmarine
+            });
+
+            Rotors.Add(0, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Wehrmacht_I
+            }));
+
+            Rotors.Add(1, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VI
+            }));
+
+            Rotors.Add(2, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VII
+            }));
+
+            Rotors.Add(3, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VIII
+            }));
+
+            AddReflector(new ReflectorConfiguration
+            {
+                ReflectorPreset = ReflectorPresets.Kriegsmarine_M4_B_Thin
+            });
+        }
+        else if (configuration.MachinePreset == MachinePresets.German_Railway_Rocket_1941)
+        {
+            AddEntryWheel(new EntryWheelConfiguration
+            {
+                EntryWheelPreset = EntryWheelPresets.Railway_Rocket_ETW
+            });
+
+            Rotors.Add(0, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Railway_Rocket_I
+            }));
+
+            Rotors.Add(1, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Railway_Rocket_II
+            }));
+
+            Rotors.Add(2, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Railway_Rocket_III
+            }));
+
+            AddReflector(new ReflectorConfiguration
+            {
+                ReflectorPreset = ReflectorPresets.Railway_Rocket_UKW
+            });
+        }
+        else if (configuration.MachinePreset == MachinePresets.Kriegsmarine_M4_1941)
+        {
+            AddEntryWheel(new EntryWheelConfiguration
+            {
+                EntryWheelPreset = EntryWheelPresets.Kriegsmarine
+            });
+
+            Rotors.Add(0, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Wehrmacht_III
+            }));
+
+            Rotors.Add(1, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VI
+            }));
+
+            Rotors.Add(2, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VII
+            }));
+
+            Rotors.Add(3, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VIII
+            }));
+
+            AddReflector(new ReflectorConfiguration
+            {
+                ReflectorPreset = ReflectorPresets.Kriegsmarine_M4_C_Thin
+            });
+        }
+        else if (configuration.MachinePreset == MachinePresets.Modern_Ascii)
+        {
+            AddEntryWheel(new EntryWheelConfiguration
+            {
+                EntryWheelPreset = EntryWheelPresets.Ascii
+            });
+
+            Rotors.Add(0, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Ascii_I
+            }));
+
+            Rotors.Add(1, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Ascii_II
+            }));
+
+            Rotors.Add(2, new Rotor(new RotorConfiguration
+            {
+                RotorPreset = RotorPresets.Ascii_III
+            }));
+
+            AddReflector(new ReflectorConfiguration
+            {
+                ReflectorPreset = ReflectorPresets.Ascii
+            });
+        }
+    }
 
     public Machine(string secret, string nonce, CharacterSets charSet = CharacterSets.Ascii, int rotorCount = 3, int plugWires = 10)
     {
@@ -104,6 +333,12 @@ public class Machine
     
     #endregion
 
+    #region Actions
+    
+    /// <summary>
+    /// Call this to reset the machine for another encipher operation.
+    /// Effectively clears rotor rotations to their starting positions.
+    /// </summary>
     public void Reset()
     {
         foreach (var t in Rotors)
@@ -112,6 +347,13 @@ public class Machine
         }
     }
     
+    /// <summary>
+    /// Encipher a provided string.
+    /// Call Reset() between each successive call.
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     [Time]
     public string Encipher(string text)
     {
@@ -170,4 +412,6 @@ public class Machine
             StringBuilderPool.Return(enciphered);
         }
     }
+    
+    #endregion
 }

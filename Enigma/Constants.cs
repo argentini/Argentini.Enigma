@@ -6,6 +6,33 @@ public enum CharacterSets
     Ascii,
 }
 
+public enum MachinePresets
+{
+    // Commercial Enigma (1924)
+    Commercial_1924,
+
+    // Wehrmacht and Kriegsmarine (1930)
+    Wehrmacht_Kriegsmarine_1930,
+
+    // Wehrmacht and Kriegsmarine (1938)
+    Wehrmacht_Kriegsmarine_1938,
+
+    // Swiss K (1939)
+    Swiss_K_1939,
+
+    // Kriegsmarine M3 and M4 (1939)
+    Kriegsmarine_M3_1939,
+
+    // German Railway (Rocket; 1941)
+    German_Railway_Rocket_1941,
+    
+    // Kriegsmarine M4 with thin reflectors:
+    Kriegsmarine_M4_1941,
+
+    // Standard 95 ASCII characters
+    Modern_Ascii,
+}
+
 public enum RotorPresets
 {
     // Commercial Enigma (1924)
@@ -23,16 +50,16 @@ public enum RotorPresets
     Railway_Rocket_II,
     Railway_Rocket_III,
     
-    // Default rotors used by the Wehrmacht and Kriegsmarine (1930)
+    // Wehrmacht and Kriegsmarine (1930)
     Wehrmacht_I,
     Wehrmacht_II,
     Wehrmacht_III,
 
-    // Default rotors used by the Wehrmacht and Kriegsmarine (1938)
+    // Wehrmacht and Kriegsmarine (1938)
     Wehrmacht_IV,
     Wehrmacht_V,
 
-    // Additional rotors used by Kriegsmarine M3 and M4 only (1939)
+    // Kriegsmarine M3 and M4 only (1939)
     Kriegsmarine_M3_M4_VI,
     Kriegsmarine_M3_M4_VII,
     Kriegsmarine_M3_M4_VIII,
@@ -71,7 +98,7 @@ public enum ReflectorPresets
 
 public enum EntryWheelPresets
 {
-    ETW,
+    Commercial_ETW,
     Swiss_K_ETW,
     Railway_Rocket_ETW,
     Wehrmacht,
@@ -169,7 +196,7 @@ public static class Constants
 
     public static readonly Dictionary<EntryWheelPresets, string> EntryWheelPresetsCiphers = new()
     {
-        { EntryWheelPresets.ETW, "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
+        { EntryWheelPresets.Commercial_ETW, "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
         { EntryWheelPresets.Swiss_K_ETW, "QWERTZUIOASDFGHJKPYXCVBNML" },
         { EntryWheelPresets.Railway_Rocket_ETW, "QWERTZUIOASDFGHJKPYXCVBNML" },
         { EntryWheelPresets.Wehrmacht, "QWERTZUIOPASDFGHJKLYXCVBNM" },

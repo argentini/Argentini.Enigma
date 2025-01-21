@@ -230,7 +230,7 @@ public class MachineTests
     }
     
 	[Fact]
-	public void ClassicMachineTest()
+	public void ManualClassicMachineTest()
     {
         const string Message = "THIS IS A TEST MESSAGE WITH SPACES";
 
@@ -276,7 +276,7 @@ public class MachineTests
     }
     
 	[Fact]
-	public void AsciiMachineTest()
+	public void ManualAsciiMachineTest()
     {
         var Message = new StringBuilder();
         var ci = 0;
@@ -334,7 +334,7 @@ public class MachineTests
     }
     
     [Fact]
-    public void GeneratedMachineTest()
+    public void GeneratedAsciiMachineTest()
     {
         var Message = new StringBuilder();
         var ci = 0;
@@ -348,6 +348,37 @@ public class MachineTests
         }
 
         var machine = new Machine("ThisIsA32ByteLongSecretKey123456", "UniqueNonce12345");
+        var enciphered = machine.Encipher(Message.ToString());
+        
+        Assert.NotEqual(Message.ToString(), enciphered);
+        Assert.Equal(Message.Length, enciphered.Length);
+
+        machine.Reset();
+        
+        var deciphered = machine.Encipher(enciphered);
+
+        Assert.Equal(Message.ToString(), deciphered);
+    }
+    
+    [Fact]
+    public void MachinePresetTest()
+    {
+        var Message = new StringBuilder();
+        var ci = 0;
+
+        for (var i = 0; i < Constants.CharacterSetValues[CharacterSets.Ascii].Length * Constants.CharacterSetValues[CharacterSets.Ascii].Length * Constants.CharacterSetValues[CharacterSets.Ascii].Length; i++)
+        {
+            Message.Append(Constants.CharacterSetValues[CharacterSets.Ascii][ci++]);
+
+            if (ci == Constants.CharacterSetValues[CharacterSets.Ascii].Length)
+                ci = 0;
+        }
+
+        var machine = new Machine(new MachineConfiguration
+        {
+            MachinePreset = MachinePresets.Commercial_1924
+        });
+
         var enciphered = machine.Encipher(Message.ToString());
         
         Assert.NotEqual(Message.ToString(), enciphered);
