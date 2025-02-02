@@ -10,7 +10,7 @@ public class EntryWheelTests
     {
         var etw = new EntryWheel(new EntryWheelConfiguration
         {
-            CharacterSets = CharacterSets.Ascii,
+            CharacterSet = CharacterSets.Ascii,
             Secret = "ThisIsA32ByteLongSecretKey123456",
             Nonce = "UniqueNonce12345"
         });

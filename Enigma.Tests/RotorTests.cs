@@ -10,7 +10,7 @@ public class RotorTests
     {
         var rotor = new Rotor(new RotorConfiguration
         {
-            CharacterSets = CharacterSets.Ascii,
+            CharacterSet = CharacterSets.Ascii,
             Secret = "ThisIsA32ByteLongSecretKey123456",
             Nonce = "UniqueNonce12345"
         });

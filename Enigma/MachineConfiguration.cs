@@ -1,3 +1,5 @@
+// ReSharper disable PropertyCanBeMadeInitOnly.Global
+
 namespace Enigma;
 
 public class MachineConfiguration

@@ -1,3 +1,5 @@
+// ReSharper disable MemberCanBePrivate.Global
+
 namespace Enigma;
 
 /// <summary>
@@ -8,9 +10,9 @@ namespace Enigma;
 /// </summary>
 public sealed class PlugBoard
 {
-    public Dictionary<char,char> Wires => _wires;
+    public Dictionary<char,char> Wires => InternalWireswires;
 
-    private Dictionary<char,char> _wires { get; set; } = [];
+    private Dictionary<char,char> InternalWireswires { get; set; } = [];
     private bool IsInitialized { get; set; }
     private Dictionary<char,char> EncipherWires { get; } = [];
 
@@ -36,7 +38,7 @@ public sealed class PlugBoard
 
 	public PlugBoard SetWires(Dictionary<char,char> value)
 	{
-        _wires = value;
+        InternalWireswires = value;
 
         Initialize();
 

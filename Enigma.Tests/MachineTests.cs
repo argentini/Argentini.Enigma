@@ -9,7 +9,7 @@ public class MachineTests
 	[Fact]
 	public void UnsupportedCharacterTest()
     {
-        const string Message = "THIS IS A TEST MESSAGE WITH SPACES";
+        const string message = "THIS IS A TEST MESSAGE WITH SPACES";
         
         var plugBoard = new PlugBoard()
             .SetWires(new Dictionary<char, char>
@@ -47,7 +47,7 @@ public class MachineTests
 
         var enciphered = new StringBuilder();
 
-        foreach (var c in Message)
+        foreach (var c in message)
         {
             rotor1.Rotate();
 
@@ -74,8 +74,8 @@ public class MachineTests
             enciphered.Append(cc);
         }
 
-        Assert.NotEqual(Message, enciphered.ToString());
-        Assert.Equal(Message.Length, enciphered.Length);
+        Assert.NotEqual(message, enciphered.ToString());
+        Assert.Equal(message.Length, enciphered.Length);
         
         var deciphered = new StringBuilder();
 
@@ -110,18 +110,18 @@ public class MachineTests
             deciphered.Append(cc);
         }
         
-        Assert.Equal(Message, deciphered.ToString());
+        Assert.Equal(message, deciphered.ToString());
     }
     
 	[Fact]
 	public void FullAsciiTest()
     {
-        var Message = new StringBuilder();
+        var message = new StringBuilder();
         var ci = 0;
 
         for (var i = 0; i < Constants.CharacterSetValues[CharacterSets.Ascii].Length * Constants.CharacterSetValues[CharacterSets.Ascii].Length * Constants.CharacterSetValues[CharacterSets.Ascii].Length; i++)
         {
-            Message.Append(Constants.CharacterSetValues[CharacterSets.Ascii][ci++]);
+            message.Append(Constants.CharacterSetValues[CharacterSets.Ascii][ci++]);
 
             if (ci == Constants.CharacterSetValues[CharacterSets.Ascii].Length)
                 ci = 0;
@@ -163,7 +163,7 @@ public class MachineTests
 
         var enciphered = new StringBuilder();
 
-        foreach (var c in Message.ToString())
+        foreach (var c in message.ToString())
         {
             rotor1.Rotate();
 
@@ -190,8 +190,8 @@ public class MachineTests
             enciphered.Append(cc);
         }
 
-        Assert.False(Message.Equals(enciphered));
-        Assert.Equal(Message.Length, enciphered.Length);
+        Assert.False(message.Equals(enciphered));
+        Assert.Equal(message.Length, enciphered.Length);
         
         var deciphered = new StringBuilder();
 
@@ -226,13 +226,13 @@ public class MachineTests
             deciphered.Append(cc);
         }
         
-        Assert.True(Message.Equals(deciphered));
+        Assert.True(message.Equals(deciphered));
     }
     
 	[Fact]
 	public void ManualClassicMachineTest()
     {
-        const string Message = "THIS IS A TEST MESSAGE WITH SPACES";
+        const string message = "THIS IS A TEST MESSAGE WITH SPACES";
 
         var machine = new Machine()
             .AddPlugBoard(new Dictionary<char, char>
@@ -263,27 +263,27 @@ public class MachineTests
                 ReflectorPreset = ReflectorPresets.Wehrmacht_B
             });
 
-        var enciphered = machine.Encipher(Message);
+        var enciphered = machine.Encipher(message);
         
-        Assert.NotEqual(Message, enciphered);
-        Assert.Equal(Message.Length, enciphered.Length);
+        Assert.NotEqual(message, enciphered);
+        Assert.Equal(message.Length, enciphered.Length);
 
         machine.Reset();
         
         var deciphered = machine.Encipher(enciphered);
 
-        Assert.Equal(Message, deciphered);
+        Assert.Equal(message, deciphered);
     }
     
 	[Fact]
 	public void ManualAsciiMachineTest()
     {
-        var Message = new StringBuilder();
+        var message = new StringBuilder();
         var ci = 0;
 
         for (var i = 0; i < Constants.CharacterSetValues[CharacterSets.Ascii].Length * Constants.CharacterSetValues[CharacterSets.Ascii].Length * Constants.CharacterSetValues[CharacterSets.Ascii].Length; i++)
         {
-            Message.Append(Constants.CharacterSetValues[CharacterSets.Ascii][ci++]);
+            message.Append(Constants.CharacterSetValues[CharacterSets.Ascii][ci++]);
 
             if (ci == Constants.CharacterSetValues[CharacterSets.Ascii].Length)
                 ci = 0;
@@ -321,54 +321,54 @@ public class MachineTests
                 ReflectorPreset = ReflectorPresets.Ascii
             });
 
-        var enciphered = machine.Encipher(Message.ToString());
+        var enciphered = machine.Encipher(message.ToString());
         
-        Assert.NotEqual(Message.ToString(), enciphered);
-        Assert.Equal(Message.Length, enciphered.Length);
+        Assert.NotEqual(message.ToString(), enciphered);
+        Assert.Equal(message.Length, enciphered.Length);
 
         machine.Reset();
         
         var deciphered = machine.Encipher(enciphered);
 
-        Assert.Equal(Message.ToString(), deciphered);
+        Assert.Equal(message.ToString(), deciphered);
     }
     
     [Fact]
     public void GeneratedAsciiMachineTest()
     {
-        var Message = new StringBuilder();
+        var message = new StringBuilder();
         var ci = 0;
 
         for (var i = 0; i < Constants.CharacterSetValues[CharacterSets.Ascii].Length * Constants.CharacterSetValues[CharacterSets.Ascii].Length * Constants.CharacterSetValues[CharacterSets.Ascii].Length; i++)
         {
-            Message.Append(Constants.CharacterSetValues[CharacterSets.Ascii][ci++]);
+            message.Append(Constants.CharacterSetValues[CharacterSets.Ascii][ci++]);
 
             if (ci == Constants.CharacterSetValues[CharacterSets.Ascii].Length)
                 ci = 0;
         }
 
         var machine = new Machine("ThisIsA32ByteLongSecretKey123456", "UniqueNonce12345");
-        var enciphered = machine.Encipher(Message.ToString());
+        var enciphered = machine.Encipher(message.ToString());
         
-        Assert.NotEqual(Message.ToString(), enciphered);
-        Assert.Equal(Message.Length, enciphered.Length);
+        Assert.NotEqual(message.ToString(), enciphered);
+        Assert.Equal(message.Length, enciphered.Length);
 
         machine.Reset();
         
         var deciphered = machine.Encipher(enciphered);
 
-        Assert.Equal(Message.ToString(), deciphered);
+        Assert.Equal(message.ToString(), deciphered);
     }
     
     [Fact]
     public void MachinePresetTest()
     {
-        var Message = new StringBuilder();
+        var message = new StringBuilder();
         var ci = 0;
 
         for (var i = 0; i < Constants.CharacterSetValues[CharacterSets.Ascii].Length * Constants.CharacterSetValues[CharacterSets.Ascii].Length * Constants.CharacterSetValues[CharacterSets.Ascii].Length; i++)
         {
-            Message.Append(Constants.CharacterSetValues[CharacterSets.Ascii][ci++]);
+            message.Append(Constants.CharacterSetValues[CharacterSets.Ascii][ci++]);
 
             if (ci == Constants.CharacterSetValues[CharacterSets.Ascii].Length)
                 ci = 0;
@@ -380,16 +380,16 @@ public class MachineTests
             Rotor1RingPosition = 15,
         });
 
-        var enciphered = machine.Encipher(Message.ToString());
+        var enciphered = machine.Encipher(message.ToString());
         
-        Assert.NotEqual(Message.ToString(), enciphered);
-        Assert.Equal(Message.Length, enciphered.Length);
+        Assert.NotEqual(message.ToString(), enciphered);
+        Assert.Equal(message.Length, enciphered.Length);
 
         machine.Reset();
         
         var deciphered = machine.Encipher(enciphered);
 
-        Assert.Equal(Message.ToString(), deciphered);
+        Assert.Equal(message.ToString(), deciphered);
         
         machine = new Machine(new MachineConfiguration
         {
@@ -417,15 +417,15 @@ public class MachineTests
             }
         });
 
-        enciphered = machine.Encipher(Message.ToString());
+        enciphered = machine.Encipher(message.ToString());
         
-        Assert.NotEqual(Message.ToString(), enciphered);
-        Assert.Equal(Message.Length, enciphered.Length);
+        Assert.NotEqual(message.ToString(), enciphered);
+        Assert.Equal(message.Length, enciphered.Length);
 
         machine.Reset();
         
         deciphered = machine.Encipher(enciphered);
 
-        Assert.Equal(Message.ToString(), deciphered);
+        Assert.Equal(message.ToString(), deciphered);
     }
 }

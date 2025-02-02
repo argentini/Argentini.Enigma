@@ -1,6 +1,8 @@
 using System.Security.Cryptography;
 using System.Text;
 
+// ReSharper disable MemberCanBePrivate.Global
+
 namespace Enigma;
 
 /// <summary>

@@ -1,3 +1,5 @@
+// ReSharper disable InconsistentNaming
+
 namespace Enigma;
 
 public enum CharacterSets
@@ -46,9 +48,9 @@ public enum RotorPresets
     Swiss_K_III,
 
     // German Railway (Rocket; 1941)
-    Railway_Rocket_I,
-    Railway_Rocket_II,
-    Railway_Rocket_III,
+    RailwayRocket_I,
+    RailwayRocket_II,
+    RailwayRocket_III,
     
     // Wehrmacht and Kriegsmarine (1930)
     Wehrmacht_I,
@@ -108,13 +110,13 @@ public enum EntryWheelPresets
 
 public static class Constants
 {
-    public static readonly Dictionary<CharacterSets, string> CharacterSetValues = new()
+    public static readonly Dictionary<CharacterSets, string> CharacterSetValues = new Dictionary<CharacterSets, string>
     {
         { CharacterSets.Classic, "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
         { CharacterSets.Ascii, @" !""#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~" },
     };
 
-    public static readonly Dictionary<RotorPresets, string> RotorPresetsCiphers = new()
+    public static readonly Dictionary<RotorPresets, string> RotorPresetsCiphers = new Dictionary<RotorPresets, string>
     {
         { RotorPresets.Commercial_I, "DMTWSILRUYQNKFEJCAZBPGXOHV" },
         { RotorPresets.Commercial_II, "HQZGPJTMOBLNCIFDYAWVEUSRKX" },
@@ -124,9 +126,9 @@ public static class Constants
         { RotorPresets.Swiss_K_II, "ZOUESYDKFWPCIQXHMVBLGNJRAT" },
         { RotorPresets.Swiss_K_III, "EHRVXGAOBQUSIMZFLYNWKTPDJC" },
 
-        { RotorPresets.Railway_Rocket_I, "JGDQOXUSCAMIFRVTPNEWKBLZYH" },
-        { RotorPresets.Railway_Rocket_II, "NTZPSFBOKMWRCJDIVLAEYUXHGQ" },
-        { RotorPresets.Railway_Rocket_III, "JVIUBHTCDYAKEQZPOSGXNRMWFL" },
+        { RotorPresets.RailwayRocket_I, "JGDQOXUSCAMIFRVTPNEWKBLZYH" },
+        { RotorPresets.RailwayRocket_II, "NTZPSFBOKMWRCJDIVLAEYUXHGQ" },
+        { RotorPresets.RailwayRocket_III, "JVIUBHTCDYAKEQZPOSGXNRMWFL" },
 
         { RotorPresets.Wehrmacht_I, "EKMFLGDQVZNTOWYHXUSPAIBRCJ" },
         { RotorPresets.Wehrmacht_II, "AJDKSIRUXBLHWTMCQGZNPYFVOE" },
@@ -146,7 +148,7 @@ public static class Constants
         { RotorPresets.Ascii_III , @"':6/w`o8(fA5$)e!YDW>c%vb_P<SilB@L,kG;V^+jH7E&1pyM=FRm-hatz|#{rQq U.4""g~?NT3ZKn2\C9XIJ}d[Ous]0x*" },
     };
 
-    public static readonly Dictionary<RotorPresets, string> TurnoverNotchPositions = new()
+    public static readonly Dictionary<RotorPresets, string> TurnoverNotchPositions = new Dictionary<RotorPresets, string>
     {
         { RotorPresets.Commercial_I, "16,-1" },
         { RotorPresets.Commercial_II, "4,-1" },
@@ -156,9 +158,9 @@ public static class Constants
         { RotorPresets.Swiss_K_II, "4,-1" },
         { RotorPresets.Swiss_K_III, "21,-1" },
 
-        { RotorPresets.Railway_Rocket_I, "16,-1" },
-        { RotorPresets.Railway_Rocket_II, "4,-1" },
-        { RotorPresets.Railway_Rocket_III, "21,-1" },
+        { RotorPresets.RailwayRocket_I, "16,-1" },
+        { RotorPresets.RailwayRocket_II, "4,-1" },
+        { RotorPresets.RailwayRocket_III, "21,-1" },
         
         { RotorPresets.Wehrmacht_I, "16,-1" },
         { RotorPresets.Wehrmacht_II, "4,-1" },
@@ -170,15 +172,15 @@ public static class Constants
         { RotorPresets.Kriegsmarine_M3_M4_VII, "12,25" },
         { RotorPresets.Kriegsmarine_M3_M4_VIII, "12,25" },
         
-        { RotorPresets.Zusatzwalzen_Beta, "-1,-1" },
-        { RotorPresets.Zusatzwalzen_Gamma, "-1,-1" },
+        { RotorPresets.Zusatzwalzen_Beta, "0,-1" },
+        { RotorPresets.Zusatzwalzen_Gamma, "0,-1" },
         
         { RotorPresets.Ascii_I , "47,94" },
         { RotorPresets.Ascii_II , "33,80" },
         { RotorPresets.Ascii_III , "15,45" },
     };
 
-    public static readonly Dictionary<ReflectorPresets, string> ReflectorPresetsCiphers = new()
+    public static readonly Dictionary<ReflectorPresets, string> ReflectorPresetsCiphers = new Dictionary<ReflectorPresets, string>
     {
         { ReflectorPresets.Swiss_K_UKW, "IMETCGFRAYSQBZXWLHKDVUPOJN" },
 
@@ -194,7 +196,7 @@ public static class Constants
         { ReflectorPresets.Ascii , @"BIK}p/h@b58fMo_%i3c1P)sH*?XwCm{9'J <vL|g7!A""E,~T4zSROWZU:tVdjxk.la(2[r+G&0\^`=q-$ne6YuD;]yQ>F#N" },
     };
 
-    public static readonly Dictionary<EntryWheelPresets, string> EntryWheelPresetsCiphers = new()
+    public static readonly Dictionary<EntryWheelPresets, string> EntryWheelPresetsCiphers = new Dictionary<EntryWheelPresets, string>
     {
         { EntryWheelPresets.Commercial_ETW, "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
         { EntryWheelPresets.Swiss_K_ETW, "QWERTZUIOASDFGHJKPYXCVBNML" },

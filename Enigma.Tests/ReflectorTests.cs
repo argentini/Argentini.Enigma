@@ -29,7 +29,7 @@ public class ReflectorTests
     {
         var reflector = new Reflector(new ReflectorConfiguration
         {
-            CharacterSets = CharacterSets.Ascii,
+            CharacterSet = CharacterSets.Ascii,
             Secret = "ThisIsA32ByteLongSecretKey123456",
             Nonce = "UniqueNonce12345"
         });

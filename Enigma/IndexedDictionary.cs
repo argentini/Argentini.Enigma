@@ -1,3 +1,5 @@
+// ReSharper disable MemberCanBePrivate.Global
+
 namespace Enigma;
 
 public sealed class IndexedDictionary<TKey, TValue> where TKey : notnull where TValue : notnull
@@ -106,8 +108,8 @@ public sealed class IndexedDictionary<TKey, TValue> where TKey : notnull where T
 
             if (EqualityComparer<TValue>.Default.Equals(oldValue, value) == false)
             {
-                // if (ValueIndex.ContainsKey(value))
-                //     throw new ArgumentException("Another entry already has this value.", nameof(value));
+                if (ValueIndex.ContainsKey(value))
+                    throw new ArgumentException("Another entry already has this value.", nameof(value));
 
                 ValueIndex.Remove(oldValue);
                 KeyValues[index] = (oldKey, value);
@@ -122,17 +124,17 @@ public sealed class IndexedDictionary<TKey, TValue> where TKey : notnull where T
 
     public int IndexOfKey(TKey key)
     {
-        return KeyIndex.TryGetValue(key, out int idx) ? idx : -1;
+        return KeyIndex.GetValueOrDefault(key, -1);
     }
 
     public int IndexOfValue(TValue value)
     {
-        return ValueIndex.TryGetValue(value, out int idx) ? idx : -1;
+        return ValueIndex.GetValueOrDefault(value, -1);
     }
 
     public bool TryGetValue(TKey key, out TValue value)
     {
-        if (KeyIndex.TryGetValue(key, out int index))
+        if (KeyIndex.TryGetValue(key, out var index))
         {
             value = KeyValues[index].Value;
             return true;
@@ -145,7 +147,7 @@ public sealed class IndexedDictionary<TKey, TValue> where TKey : notnull where T
 
     public bool TryGetKey(TValue value, out TKey key)
     {
-        if (ValueIndex.TryGetValue(value, out int index))
+        if (ValueIndex.TryGetValue(value, out var index))
         {
             key = KeyValues[index].Key;
             return true;
@@ -158,7 +160,7 @@ public sealed class IndexedDictionary<TKey, TValue> where TKey : notnull where T
 
     public bool Remove(TKey key)
     {
-        if (KeyIndex.TryGetValue(key, out int index) == false)
+        if (KeyIndex.TryGetValue(key, out var index) == false)
             return false;
 
         var (existingKey, existingValue) = KeyValues[index];

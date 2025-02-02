@@ -2,6 +2,8 @@ using System.Text;
 using MethodTimer;
 using Microsoft.Extensions.ObjectPool;
 
+// ReSharper disable MemberCanBePrivate.Global
+
 namespace Enigma;
 
 /// <summary>
@@ -15,7 +17,7 @@ public class Machine
     public EntryWheel? EntryWheel { get; set; }
     public Dictionary<int,Rotor> Rotors { get; set; } = [];
     public Reflector? Reflector { get; set; }
-    public AesCtrRandomNumberGenerator? Acrn { get; set; }
+    public AesCtrRandomNumberGenerator? AesGenerator { get; set; }
 
     private ObjectPool<StringBuilder> StringBuilderPool { get; } = new DefaultObjectPoolProvider().CreateStringBuilderPool();
 
@@ -33,284 +35,305 @@ public class Machine
     public Machine(MachineConfiguration configuration)
     {
         AddPlugBoard(configuration.PlugBoardWires);
-        
-        if (configuration.MachinePreset == MachinePresets.Commercial_1924)
+
+        switch (configuration.MachinePreset)
         {
-            AddEntryWheel(new EntryWheelConfiguration
-            {
-                EntryWheelPreset = EntryWheelPresets.Commercial_ETW
-            });
+            case MachinePresets.Commercial_1924:
 
-            Rotors.Add(0, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Commercial_I,
-                RingPosition = configuration.Rotor1RingPosition,
-                StartingRotation = configuration.Rotor1StartingRotation
-            }));
+                AddEntryWheel(new EntryWheelConfiguration
+                {
+                    EntryWheelPreset = EntryWheelPresets.Commercial_ETW
+                });
 
-            Rotors.Add(1, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Commercial_II,
-                RingPosition = configuration.Rotor2RingPosition,
-                StartingRotation = configuration.Rotor2StartingRotation
-            }));
+                Rotors.Add(0, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.Commercial_I,
+                    RingPosition = configuration.Rotor1RingPosition,
+                    StartingRotation = configuration.Rotor1StartingRotation
+                }));
 
-            Rotors.Add(2, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Commercial_III,
-                RingPosition = configuration.Rotor3RingPosition,
-                StartingRotation = configuration.Rotor3StartingRotation
-            }));
+                Rotors.Add(1, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.Commercial_II,
+                    RingPosition = configuration.Rotor2RingPosition,
+                    StartingRotation = configuration.Rotor2StartingRotation
+                }));
 
-            AddReflector(new ReflectorConfiguration
-            {
-                ReflectorPreset = ReflectorPresets.Wehrmacht_A
-            });
-        }
-        else if (configuration.MachinePreset == MachinePresets.Wehrmacht_Kriegsmarine_1930)
-        {
-            AddEntryWheel(new EntryWheelConfiguration
-            {
-                EntryWheelPreset = EntryWheelPresets.Wehrmacht
-            });
+                Rotors.Add(2, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.Commercial_III,
+                    RingPosition = configuration.Rotor3RingPosition,
+                    StartingRotation = configuration.Rotor3StartingRotation
+                }));
 
-            Rotors.Add(0, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Wehrmacht_I,
-                RingPosition = configuration.Rotor1RingPosition,
-                StartingRotation = configuration.Rotor1StartingRotation
-            }));
+                AddReflector(new ReflectorConfiguration
+                {
+                    ReflectorPreset = ReflectorPresets.Wehrmacht_A
+                });
 
-            Rotors.Add(1, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Wehrmacht_II,
-                RingPosition = configuration.Rotor2RingPosition,
-                StartingRotation = configuration.Rotor2StartingRotation
-            }));
+                break;
 
-            Rotors.Add(2, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Wehrmacht_III,
-                RingPosition = configuration.Rotor3RingPosition,
-                StartingRotation = configuration.Rotor3StartingRotation
-            }));
+            case MachinePresets.Wehrmacht_Kriegsmarine_1930:
+                
+                AddEntryWheel(new EntryWheelConfiguration
+                {
+                    EntryWheelPreset = EntryWheelPresets.Wehrmacht
+                });
 
-            AddReflector(new ReflectorConfiguration
-            {
-                ReflectorPreset = ReflectorPresets.Wehrmacht_A
-            });
-        }
-        else if (configuration.MachinePreset == MachinePresets.Wehrmacht_Kriegsmarine_1938)
-        {
-            AddEntryWheel(new EntryWheelConfiguration
-            {
-                EntryWheelPreset = EntryWheelPresets.Wehrmacht
-            });
+                Rotors.Add(0, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.Wehrmacht_I,
+                    RingPosition = configuration.Rotor1RingPosition,
+                    StartingRotation = configuration.Rotor1StartingRotation
+                }));
 
-            Rotors.Add(0, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Wehrmacht_III,
-                RingPosition = configuration.Rotor1RingPosition,
-                StartingRotation = configuration.Rotor1StartingRotation
-            }));
+                Rotors.Add(1, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.Wehrmacht_II,
+                    RingPosition = configuration.Rotor2RingPosition,
+                    StartingRotation = configuration.Rotor2StartingRotation
+                }));
 
-            Rotors.Add(1, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Wehrmacht_IV,
-                RingPosition = configuration.Rotor2RingPosition,
-                StartingRotation = configuration.Rotor2StartingRotation
-            }));
+                Rotors.Add(2, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.Wehrmacht_III,
+                    RingPosition = configuration.Rotor3RingPosition,
+                    StartingRotation = configuration.Rotor3StartingRotation
+                }));
 
-            Rotors.Add(2, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Wehrmacht_V,
-                RingPosition = configuration.Rotor3RingPosition,
-                StartingRotation = configuration.Rotor3StartingRotation
-            }));
+                AddReflector(new ReflectorConfiguration
+                {
+                    ReflectorPreset = ReflectorPresets.Wehrmacht_A
+                });
 
-            AddReflector(new ReflectorConfiguration
-            {
-                ReflectorPreset = ReflectorPresets.Wehrmacht_B
-            });
-        }
-        else if (configuration.MachinePreset == MachinePresets.Swiss_K_1939)
-        {
-            AddEntryWheel(new EntryWheelConfiguration
-            {
-                EntryWheelPreset = EntryWheelPresets.Swiss_K_ETW
-            });
+                break;
 
-            Rotors.Add(0, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Swiss_K_I,
-                RingPosition = configuration.Rotor1RingPosition,
-                StartingRotation = configuration.Rotor1StartingRotation
-            }));
+            case MachinePresets.Wehrmacht_Kriegsmarine_1938:
+                
+                AddEntryWheel(new EntryWheelConfiguration
+                {
+                    EntryWheelPreset = EntryWheelPresets.Wehrmacht
+                });
 
-            Rotors.Add(1, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Swiss_K_II,
-                RingPosition = configuration.Rotor2RingPosition,
-                StartingRotation = configuration.Rotor2StartingRotation
-            }));
+                Rotors.Add(0, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.Wehrmacht_III,
+                    RingPosition = configuration.Rotor1RingPosition,
+                    StartingRotation = configuration.Rotor1StartingRotation
+                }));
 
-            Rotors.Add(2, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Swiss_K_III,
-                RingPosition = configuration.Rotor3RingPosition,
-                StartingRotation = configuration.Rotor3StartingRotation
-            }));
+                Rotors.Add(1, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.Wehrmacht_IV,
+                    RingPosition = configuration.Rotor2RingPosition,
+                    StartingRotation = configuration.Rotor2StartingRotation
+                }));
 
-            AddReflector(new ReflectorConfiguration
-            {
-                ReflectorPreset = ReflectorPresets.Swiss_K_UKW
-            });
-        }
-        else if (configuration.MachinePreset == MachinePresets.Kriegsmarine_M3_1939)
-        {
-            AddEntryWheel(new EntryWheelConfiguration
-            {
-                EntryWheelPreset = EntryWheelPresets.Kriegsmarine
-            });
+                Rotors.Add(2, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.Wehrmacht_V,
+                    RingPosition = configuration.Rotor3RingPosition,
+                    StartingRotation = configuration.Rotor3StartingRotation
+                }));
 
-            Rotors.Add(0, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Wehrmacht_I,
-                RingPosition = configuration.Rotor1RingPosition,
-                StartingRotation = configuration.Rotor1StartingRotation
-            }));
+                AddReflector(new ReflectorConfiguration
+                {
+                    ReflectorPreset = ReflectorPresets.Wehrmacht_B
+                });
 
-            Rotors.Add(1, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VI,
-                RingPosition = configuration.Rotor2RingPosition,
-                StartingRotation = configuration.Rotor2StartingRotation
-            }));
+                break;
 
-            Rotors.Add(2, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VII,
-                RingPosition = configuration.Rotor3RingPosition,
-                StartingRotation = configuration.Rotor3StartingRotation
-            }));
+            case MachinePresets.Swiss_K_1939:
+                
+                AddEntryWheel(new EntryWheelConfiguration
+                {
+                    EntryWheelPreset = EntryWheelPresets.Swiss_K_ETW
+                });
 
-            Rotors.Add(3, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VIII,
-                RingPosition = configuration.Rotor4RingPosition,
-                StartingRotation = configuration.Rotor4StartingRotation
-            }));
+                Rotors.Add(0, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.Swiss_K_I,
+                    RingPosition = configuration.Rotor1RingPosition,
+                    StartingRotation = configuration.Rotor1StartingRotation
+                }));
 
-            AddReflector(new ReflectorConfiguration
-            {
-                ReflectorPreset = ReflectorPresets.Kriegsmarine_M4_B_Thin
-            });
-        }
-        else if (configuration.MachinePreset == MachinePresets.German_Railway_Rocket_1941)
-        {
-            AddEntryWheel(new EntryWheelConfiguration
-            {
-                EntryWheelPreset = EntryWheelPresets.Railway_Rocket_ETW
-            });
+                Rotors.Add(1, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.Swiss_K_II,
+                    RingPosition = configuration.Rotor2RingPosition,
+                    StartingRotation = configuration.Rotor2StartingRotation
+                }));
 
-            Rotors.Add(0, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Railway_Rocket_I,
-                RingPosition = configuration.Rotor1RingPosition,
-                StartingRotation = configuration.Rotor1StartingRotation
-            }));
+                Rotors.Add(2, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.Swiss_K_III,
+                    RingPosition = configuration.Rotor3RingPosition,
+                    StartingRotation = configuration.Rotor3StartingRotation
+                }));
 
-            Rotors.Add(1, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Railway_Rocket_II,
-                RingPosition = configuration.Rotor2RingPosition,
-                StartingRotation = configuration.Rotor2StartingRotation
-            }));
+                AddReflector(new ReflectorConfiguration
+                {
+                    ReflectorPreset = ReflectorPresets.Swiss_K_UKW
+                });
 
-            Rotors.Add(2, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Railway_Rocket_III,
-                RingPosition = configuration.Rotor3RingPosition,
-                StartingRotation = configuration.Rotor3StartingRotation
-            }));
+                break;
 
-            AddReflector(new ReflectorConfiguration
-            {
-                ReflectorPreset = ReflectorPresets.Railway_Rocket_UKW
-            });
-        }
-        else if (configuration.MachinePreset == MachinePresets.Kriegsmarine_M4_1941)
-        {
-            AddEntryWheel(new EntryWheelConfiguration
-            {
-                EntryWheelPreset = EntryWheelPresets.Kriegsmarine
-            });
+            case MachinePresets.Kriegsmarine_M3_1939:
 
-            Rotors.Add(0, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Wehrmacht_III,
-                RingPosition = configuration.Rotor1RingPosition,
-                StartingRotation = configuration.Rotor1StartingRotation
-            }));
+                AddEntryWheel(new EntryWheelConfiguration
+                {
+                    EntryWheelPreset = EntryWheelPresets.Kriegsmarine
+                });
 
-            Rotors.Add(1, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VI,
-                RingPosition = configuration.Rotor2RingPosition,
-                StartingRotation = configuration.Rotor2StartingRotation
-            }));
+                Rotors.Add(0, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.Wehrmacht_I,
+                    RingPosition = configuration.Rotor1RingPosition,
+                    StartingRotation = configuration.Rotor1StartingRotation
+                }));
 
-            Rotors.Add(2, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VII,
-                RingPosition = configuration.Rotor3RingPosition,
-                StartingRotation = configuration.Rotor3StartingRotation
-            }));
+                Rotors.Add(1, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VI,
+                    RingPosition = configuration.Rotor2RingPosition,
+                    StartingRotation = configuration.Rotor2StartingRotation
+                }));
 
-            Rotors.Add(3, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VIII,
-                RingPosition = configuration.Rotor4RingPosition,
-                StartingRotation = configuration.Rotor4StartingRotation
-            }));
+                Rotors.Add(2, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VII,
+                    RingPosition = configuration.Rotor3RingPosition,
+                    StartingRotation = configuration.Rotor3StartingRotation
+                }));
 
-            AddReflector(new ReflectorConfiguration
-            {
-                ReflectorPreset = ReflectorPresets.Kriegsmarine_M4_C_Thin
-            });
-        }
-        else if (configuration.MachinePreset == MachinePresets.Modern_Ascii)
-        {
-            AddEntryWheel(new EntryWheelConfiguration
-            {
-                EntryWheelPreset = EntryWheelPresets.Ascii
-            });
+                Rotors.Add(3, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VIII,
+                    RingPosition = configuration.Rotor4RingPosition,
+                    StartingRotation = configuration.Rotor4StartingRotation
+                }));
 
-            Rotors.Add(0, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Ascii_I,
-                RingPosition = configuration.Rotor1RingPosition,
-                StartingRotation = configuration.Rotor1StartingRotation
-            }));
+                AddReflector(new ReflectorConfiguration
+                {
+                    ReflectorPreset = ReflectorPresets.Kriegsmarine_M4_B_Thin
+                });
 
-            Rotors.Add(1, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Ascii_II,
-                RingPosition = configuration.Rotor2RingPosition,
-                StartingRotation = configuration.Rotor2StartingRotation
-            }));
+                break;
+            
+            case MachinePresets.German_Railway_Rocket_1941:
 
-            Rotors.Add(2, new Rotor(new RotorConfiguration
-            {
-                RotorPreset = RotorPresets.Ascii_III,
-                RingPosition = configuration.Rotor3RingPosition,
-                StartingRotation = configuration.Rotor3StartingRotation
-            }));
+                AddEntryWheel(new EntryWheelConfiguration
+                {
+                    EntryWheelPreset = EntryWheelPresets.Railway_Rocket_ETW
+                });
 
-            AddReflector(new ReflectorConfiguration
-            {
-                ReflectorPreset = ReflectorPresets.Ascii
-            });
+                Rotors.Add(0, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.RailwayRocket_I,
+                    RingPosition = configuration.Rotor1RingPosition,
+                    StartingRotation = configuration.Rotor1StartingRotation
+                }));
+
+                Rotors.Add(1, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.RailwayRocket_II,
+                    RingPosition = configuration.Rotor2RingPosition,
+                    StartingRotation = configuration.Rotor2StartingRotation
+                }));
+
+                Rotors.Add(2, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.RailwayRocket_III,
+                    RingPosition = configuration.Rotor3RingPosition,
+                    StartingRotation = configuration.Rotor3StartingRotation
+                }));
+
+                AddReflector(new ReflectorConfiguration
+                {
+                    ReflectorPreset = ReflectorPresets.Railway_Rocket_UKW
+                });
+
+                break;
+            
+            case MachinePresets.Kriegsmarine_M4_1941:
+                
+                AddEntryWheel(new EntryWheelConfiguration
+                {
+                    EntryWheelPreset = EntryWheelPresets.Kriegsmarine
+                });
+
+                Rotors.Add(0, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.Wehrmacht_III,
+                    RingPosition = configuration.Rotor1RingPosition,
+                    StartingRotation = configuration.Rotor1StartingRotation
+                }));
+
+                Rotors.Add(1, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VI,
+                    RingPosition = configuration.Rotor2RingPosition,
+                    StartingRotation = configuration.Rotor2StartingRotation
+                }));
+
+                Rotors.Add(2, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VII,
+                    RingPosition = configuration.Rotor3RingPosition,
+                    StartingRotation = configuration.Rotor3StartingRotation
+                }));
+
+                Rotors.Add(3, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VIII,
+                    RingPosition = configuration.Rotor4RingPosition,
+                    StartingRotation = configuration.Rotor4StartingRotation
+                }));
+
+                AddReflector(new ReflectorConfiguration
+                {
+                    ReflectorPreset = ReflectorPresets.Kriegsmarine_M4_C_Thin
+                });
+                
+                break;
+
+            case MachinePresets.Modern_Ascii:
+            
+                AddEntryWheel(new EntryWheelConfiguration
+                {
+                    EntryWheelPreset = EntryWheelPresets.Ascii
+                });
+
+                Rotors.Add(0, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.Ascii_I,
+                    RingPosition = configuration.Rotor1RingPosition,
+                    StartingRotation = configuration.Rotor1StartingRotation
+                }));
+
+                Rotors.Add(1, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.Ascii_II,
+                    RingPosition = configuration.Rotor2RingPosition,
+                    StartingRotation = configuration.Rotor2StartingRotation
+                }));
+
+                Rotors.Add(2, new Rotor(new RotorConfiguration
+                {
+                    RotorPreset = RotorPresets.Ascii_III,
+                    RingPosition = configuration.Rotor3RingPosition,
+                    StartingRotation = configuration.Rotor3StartingRotation
+                }));
+
+                AddReflector(new ReflectorConfiguration
+                {
+                    ReflectorPreset = ReflectorPresets.Ascii
+                });
+            
+                break;
+
+            default:
+                throw new Exception("Machine => Must specify a valid machine preset");
         }
     }
 
@@ -322,15 +345,15 @@ public class Machine
         if (plugWires > Constants.CharacterSetValues[charSet].Length / 2)
             throw new Exception("Machine => too many plug wires specified");
 
-        Acrn = new AesCtrRandomNumberGenerator(secret, nonce);
+        AesGenerator = new AesCtrRandomNumberGenerator(secret, nonce);
 
         if (plugWires > 0)
         {
             var wires = new Dictionary<char, char>();
             var reflector = new Reflector(new ReflectorConfiguration
             {
-                CharacterSets = charSet,
-                Acrn = Acrn
+                CharacterSet = charSet,
+                AesGenerator = AesGenerator
             });
 
             for (var i = 0; i < plugWires; i++)
@@ -345,23 +368,23 @@ public class Machine
 
         AddEntryWheel(new EntryWheelConfiguration
         {
-            CharacterSets = charSet,
-            Acrn = Acrn
+            CharacterSet = charSet,
+            AesGenerator = AesGenerator
         });
 
         for (var i = 0; i < rotorCount; i++)
         {
             Rotors.Add(i, new Rotor(new RotorConfiguration
             {
-                CharacterSets = charSet,
-                Acrn = Acrn
+                CharacterSet = charSet,
+                AesGenerator = AesGenerator
             }));
         }
 
         AddReflector(new ReflectorConfiguration
         {
-            CharacterSets = charSet,
-            Acrn = Acrn
+            CharacterSet = charSet,
+            AesGenerator = AesGenerator
         });
     }
 
@@ -404,14 +427,12 @@ public class Machine
     public void Reset()
     {
         foreach (var t in Rotors)
-        {
             t.Value.ResetRotation();
-        }
     }
     
     /// <summary>
-    /// Encipher a provided string.
-    /// Call Reset() between each successive call.
+    /// Encipher/decipher a provided string.
+    /// Call Reset() between each encipher and decipher call.
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
@@ -446,18 +467,10 @@ public class Machine
 
                 if (EntryWheel is not null)
                     cc = EntryWheel.SendCharacter(cc);
-                
-                foreach (var t in Rotors.OrderBy(r => r.Key))
-                {
-                    cc = t.Value.SendCharacter(cc);
-                }
 
+                cc = Rotors.OrderBy(r => r.Key).Aggregate(cc, (current, t) => t.Value.SendCharacter(current));
                 cc = Reflector.SendCharacter(cc);
-
-                foreach (var t in Rotors.OrderByDescending(r => r.Key))
-                {
-                    cc = t.Value.ReflectedCharacter(cc);
-                }
+                cc = Rotors.OrderByDescending(r => r.Key).Aggregate(cc, (current, t) => t.Value.ReflectedCharacter(current));
 
                 if (EntryWheel is not null)
                     cc = EntryWheel.ReflectedCharacter(cc);

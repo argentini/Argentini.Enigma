@@ -1,3 +1,5 @@
+// ReSharper disable PropertyCanBeMadeInitOnly.Global
+
 namespace Enigma;
 
 public sealed class RotorConfiguration
@@ -9,8 +11,8 @@ public sealed class RotorConfiguration
 
     public string Secret { get; set; } = string.Empty;
     public string Nonce { get; set; } = string.Empty;
-    public AesCtrRandomNumberGenerator? Acrn { get; set; }
-    public CharacterSets CharacterSets { get; set; } = CharacterSets.Ascii;
+    public AesCtrRandomNumberGenerator? AesGenerator { get; set; }
+    public CharacterSets CharacterSet { get; set; } = CharacterSets.Ascii;
     
     public Dictionary<char, char> RotorWheel { get; } = [];
     public RotorPresets? RotorPreset { get; set; }
@@ -26,16 +28,18 @@ public sealed class RotorConfiguration
             for (var i = 0; i < charSet.Length; i++)
                 RotorWheel.Add(charSet[i], Constants.RotorPresetsCiphers[RotorPreset.Value][i]);
         }
-        else if (Acrn is not null || (string.IsNullOrEmpty(Secret) == false && string.IsNullOrEmpty(Nonce) == false))
+        else if (AesGenerator is not null || (string.IsNullOrEmpty(Secret) == false && string.IsNullOrEmpty(Nonce) == false))
         {
-            if (Acrn is null && Secret.Length < 32)
-                throw new Exception("RotorConfiguration.Initialize() => key must be at least 32 characters");
+            switch (AesGenerator)
+            {
+                case null when Secret.Length < 32:
+                    throw new Exception("RotorConfiguration.Initialize() => key must be at least 32 characters");
+                case null when Nonce.Length < 16:
+                    throw new Exception("RotorConfiguration.Initialize() => nonce must be at least 16 characters");
+            }
 
-            if (Acrn is null && Nonce.Length < 16)
-                throw new Exception("RotorConfiguration.Initialize() => nonce must be at least 16 characters");
-
-            var aesCtrRng = Acrn ?? new AesCtrRandomNumberGenerator(Secret, Nonce);
-            var characters = CharacterSets is CharacterSets.Ascii ? Constants.CharacterSetValues[CharacterSets.Ascii] : Constants.CharacterSetValues[CharacterSets.Classic];
+            var aesCtrRng = AesGenerator ?? new AesCtrRandomNumberGenerator(Secret, Nonce);
+            var characters = Constants.CharacterSetValues[CharacterSet];
             var cipher = new string(characters.OrderBy(_ => aesCtrRng.NextUInt32()).ToArray());
 
             RotorWheel.Clear();
