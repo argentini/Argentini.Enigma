@@ -42,11 +42,13 @@ public class Machine
 
                 AddEntryWheel(new EntryWheelConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     EntryWheelPreset = EntryWheelPresets.Commercial_ETW
                 });
 
                 Rotors.Add(0, new Rotor(new RotorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     RotorPreset = RotorPresets.Commercial_I,
                     RingPosition = configuration.Rotor1RingPosition,
                     StartingRotation = configuration.Rotor1StartingRotation
@@ -54,6 +56,7 @@ public class Machine
 
                 Rotors.Add(1, new Rotor(new RotorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     RotorPreset = RotorPresets.Commercial_II,
                     RingPosition = configuration.Rotor2RingPosition,
                     StartingRotation = configuration.Rotor2StartingRotation
@@ -61,6 +64,7 @@ public class Machine
 
                 Rotors.Add(2, new Rotor(new RotorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     RotorPreset = RotorPresets.Commercial_III,
                     RingPosition = configuration.Rotor3RingPosition,
                     StartingRotation = configuration.Rotor3StartingRotation
@@ -68,6 +72,7 @@ public class Machine
 
                 AddReflector(new ReflectorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     ReflectorPreset = ReflectorPresets.Wehrmacht_A
                 });
 
@@ -77,11 +82,13 @@ public class Machine
                 
                 AddEntryWheel(new EntryWheelConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     EntryWheelPreset = EntryWheelPresets.Wehrmacht
                 });
 
                 Rotors.Add(0, new Rotor(new RotorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     RotorPreset = RotorPresets.Wehrmacht_I,
                     RingPosition = configuration.Rotor1RingPosition,
                     StartingRotation = configuration.Rotor1StartingRotation
@@ -89,6 +96,7 @@ public class Machine
 
                 Rotors.Add(1, new Rotor(new RotorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     RotorPreset = RotorPresets.Wehrmacht_II,
                     RingPosition = configuration.Rotor2RingPosition,
                     StartingRotation = configuration.Rotor2StartingRotation
@@ -96,6 +104,7 @@ public class Machine
 
                 Rotors.Add(2, new Rotor(new RotorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     RotorPreset = RotorPresets.Wehrmacht_III,
                     RingPosition = configuration.Rotor3RingPosition,
                     StartingRotation = configuration.Rotor3StartingRotation
@@ -103,6 +112,7 @@ public class Machine
 
                 AddReflector(new ReflectorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     ReflectorPreset = ReflectorPresets.Wehrmacht_A
                 });
 
@@ -112,11 +122,13 @@ public class Machine
                 
                 AddEntryWheel(new EntryWheelConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     EntryWheelPreset = EntryWheelPresets.Wehrmacht
                 });
 
                 Rotors.Add(0, new Rotor(new RotorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     RotorPreset = RotorPresets.Wehrmacht_III,
                     RingPosition = configuration.Rotor1RingPosition,
                     StartingRotation = configuration.Rotor1StartingRotation
@@ -124,6 +136,7 @@ public class Machine
 
                 Rotors.Add(1, new Rotor(new RotorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     RotorPreset = RotorPresets.Wehrmacht_IV,
                     RingPosition = configuration.Rotor2RingPosition,
                     StartingRotation = configuration.Rotor2StartingRotation
@@ -131,6 +144,7 @@ public class Machine
 
                 Rotors.Add(2, new Rotor(new RotorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     RotorPreset = RotorPresets.Wehrmacht_V,
                     RingPosition = configuration.Rotor3RingPosition,
                     StartingRotation = configuration.Rotor3StartingRotation
@@ -138,6 +152,7 @@ public class Machine
 
                 AddReflector(new ReflectorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     ReflectorPreset = ReflectorPresets.Wehrmacht_B
                 });
 
@@ -147,11 +162,13 @@ public class Machine
                 
                 AddEntryWheel(new EntryWheelConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     EntryWheelPreset = EntryWheelPresets.Swiss_K_ETW
                 });
 
                 Rotors.Add(0, new Rotor(new RotorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     RotorPreset = RotorPresets.Swiss_K_I,
                     RingPosition = configuration.Rotor1RingPosition,
                     StartingRotation = configuration.Rotor1StartingRotation
@@ -159,6 +176,7 @@ public class Machine
 
                 Rotors.Add(1, new Rotor(new RotorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     RotorPreset = RotorPresets.Swiss_K_II,
                     RingPosition = configuration.Rotor2RingPosition,
                     StartingRotation = configuration.Rotor2StartingRotation
@@ -166,6 +184,7 @@ public class Machine
 
                 Rotors.Add(2, new Rotor(new RotorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     RotorPreset = RotorPresets.Swiss_K_III,
                     RingPosition = configuration.Rotor3RingPosition,
                     StartingRotation = configuration.Rotor3StartingRotation
@@ -173,6 +192,7 @@ public class Machine
 
                 AddReflector(new ReflectorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     ReflectorPreset = ReflectorPresets.Swiss_K_UKW
                 });
 
@@ -182,11 +202,13 @@ public class Machine
 
                 AddEntryWheel(new EntryWheelConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     EntryWheelPreset = EntryWheelPresets.Kriegsmarine
                 });
 
                 Rotors.Add(0, new Rotor(new RotorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     RotorPreset = RotorPresets.Wehrmacht_I,
                     RingPosition = configuration.Rotor1RingPosition,
                     StartingRotation = configuration.Rotor1StartingRotation
@@ -194,6 +216,7 @@ public class Machine
 
                 Rotors.Add(1, new Rotor(new RotorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VI,
                     RingPosition = configuration.Rotor2RingPosition,
                     StartingRotation = configuration.Rotor2StartingRotation
@@ -201,6 +224,7 @@ public class Machine
 
                 Rotors.Add(2, new Rotor(new RotorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VII,
                     RingPosition = configuration.Rotor3RingPosition,
                     StartingRotation = configuration.Rotor3StartingRotation
@@ -208,6 +232,7 @@ public class Machine
 
                 Rotors.Add(3, new Rotor(new RotorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VIII,
                     RingPosition = configuration.Rotor4RingPosition,
                     StartingRotation = configuration.Rotor4StartingRotation
@@ -215,6 +240,7 @@ public class Machine
 
                 AddReflector(new ReflectorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     ReflectorPreset = ReflectorPresets.Kriegsmarine_M4_B_Thin
                 });
 
@@ -224,11 +250,13 @@ public class Machine
 
                 AddEntryWheel(new EntryWheelConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     EntryWheelPreset = EntryWheelPresets.Railway_Rocket_ETW
                 });
 
                 Rotors.Add(0, new Rotor(new RotorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     RotorPreset = RotorPresets.RailwayRocket_I,
                     RingPosition = configuration.Rotor1RingPosition,
                     StartingRotation = configuration.Rotor1StartingRotation
@@ -236,6 +264,7 @@ public class Machine
 
                 Rotors.Add(1, new Rotor(new RotorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     RotorPreset = RotorPresets.RailwayRocket_II,
                     RingPosition = configuration.Rotor2RingPosition,
                     StartingRotation = configuration.Rotor2StartingRotation
@@ -243,6 +272,7 @@ public class Machine
 
                 Rotors.Add(2, new Rotor(new RotorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     RotorPreset = RotorPresets.RailwayRocket_III,
                     RingPosition = configuration.Rotor3RingPosition,
                     StartingRotation = configuration.Rotor3StartingRotation
@@ -250,6 +280,7 @@ public class Machine
 
                 AddReflector(new ReflectorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     ReflectorPreset = ReflectorPresets.Railway_Rocket_UKW
                 });
 
@@ -259,11 +290,13 @@ public class Machine
                 
                 AddEntryWheel(new EntryWheelConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     EntryWheelPreset = EntryWheelPresets.Kriegsmarine
                 });
 
                 Rotors.Add(0, new Rotor(new RotorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     RotorPreset = RotorPresets.Wehrmacht_III,
                     RingPosition = configuration.Rotor1RingPosition,
                     StartingRotation = configuration.Rotor1StartingRotation
@@ -271,6 +304,7 @@ public class Machine
 
                 Rotors.Add(1, new Rotor(new RotorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VI,
                     RingPosition = configuration.Rotor2RingPosition,
                     StartingRotation = configuration.Rotor2StartingRotation
@@ -278,6 +312,7 @@ public class Machine
 
                 Rotors.Add(2, new Rotor(new RotorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VII,
                     RingPosition = configuration.Rotor3RingPosition,
                     StartingRotation = configuration.Rotor3StartingRotation
@@ -285,6 +320,7 @@ public class Machine
 
                 Rotors.Add(3, new Rotor(new RotorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     RotorPreset = RotorPresets.Kriegsmarine_M3_M4_VIII,
                     RingPosition = configuration.Rotor4RingPosition,
                     StartingRotation = configuration.Rotor4StartingRotation
@@ -292,6 +328,7 @@ public class Machine
 
                 AddReflector(new ReflectorConfiguration
                 {
+                    CharacterSet = CharacterSets.Classic, 
                     ReflectorPreset = ReflectorPresets.Kriegsmarine_M4_C_Thin
                 });
                 
@@ -337,20 +374,35 @@ public class Machine
         }
     }
 
-    public Machine(string secret, string nonce, CharacterSets charSet = CharacterSets.Ascii, int rotorCount = 3, int plugWires = 10)
+    /// <summary>
+    /// Used to create a custom machine with a specified AES key and nonce.
+    /// </summary>
+    /// <param name="key">AES key must be 16, 24, or 32 bytes for AES-128, AES-192, or AES-256.</param>
+    /// <param name="nonce">Nonce or initial counter value must be 16 bytes.</param>
+    /// <param name="charSet"></param>
+    /// <param name="rotorCount"></param>
+    /// <param name="plugWires"></param>
+    /// <exception cref="Exception"></exception>
+    public Machine(string key, string nonce, CharacterSets charSet = CharacterSets.Ascii, int rotorCount = 3, int plugWires = -1)
     {
-        if (string.IsNullOrEmpty(secret) || string.IsNullOrEmpty(nonce))
+        if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(nonce))
             throw new Exception("Machine => invalid secret or nonce");
 
+        if (rotorCount < 1)
+            throw new Exception("Machine => must specify 1 or more rotors");
+
+        if (plugWires < 0)
+            plugWires = Constants.CharacterSetValues[charSet].Length / 2;
+        
         if (plugWires > Constants.CharacterSetValues[charSet].Length / 2)
             throw new Exception("Machine => too many plug wires specified");
 
-        AesGenerator = new AesCtrRandomNumberGenerator(secret, nonce);
+        AesGenerator = new AesCtrRandomNumberGenerator(key, nonce);
 
         if (plugWires > 0)
         {
             var wires = new Dictionary<char, char>();
-            var reflector = new Reflector(new ReflectorConfiguration
+            var tempReflector = new Reflector(new ReflectorConfiguration
             {
                 CharacterSet = charSet,
                 AesGenerator = AesGenerator
@@ -358,7 +410,7 @@ public class Machine
 
             for (var i = 0; i < plugWires; i++)
             {
-                var pair = reflector.Configuration.ReflectorWheel.ElementAt(i);
+                var pair = tempReflector.Configuration.ReflectorWheel.ElementAt(i);
 
                 wires.Add(pair.Key, pair.Value);
             }

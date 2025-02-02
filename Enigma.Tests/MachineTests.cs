@@ -366,11 +366,11 @@ public class MachineTests
         var message = new StringBuilder();
         var ci = 0;
 
-        for (var i = 0; i < Constants.CharacterSetValues[CharacterSets.Ascii].Length * Constants.CharacterSetValues[CharacterSets.Ascii].Length * Constants.CharacterSetValues[CharacterSets.Ascii].Length; i++)
+        for (var i = 0; i < Constants.CharacterSetValues[CharacterSets.Classic].Length * Constants.CharacterSetValues[CharacterSets.Classic].Length * Constants.CharacterSetValues[CharacterSets.Classic].Length * Constants.CharacterSetValues[CharacterSets.Classic].Length; i++)
         {
-            message.Append(Constants.CharacterSetValues[CharacterSets.Ascii][ci++]);
+            message.Append(Constants.CharacterSetValues[CharacterSets.Classic][ci++]);
 
-            if (ci == Constants.CharacterSetValues[CharacterSets.Ascii].Length)
+            if (ci == Constants.CharacterSetValues[CharacterSets.Classic].Length)
                 ci = 0;
         }
 

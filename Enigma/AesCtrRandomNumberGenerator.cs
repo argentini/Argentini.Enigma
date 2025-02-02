@@ -20,8 +20,8 @@ public sealed class AesCtrRandomNumberGenerator : IDisposable
     /// <summary>
     /// Initializes the generator with a specified key and nonce.
     /// </summary>
-    /// <param name="key">AES key (must be 16, 24, or 32 bytes for AES-128, AES-192, or AES-256).</param>
-    /// <param name="nonce">Nonce or initial counter value (must be 16 bytes).</param>
+    /// <param name="key">AES key must be 16, 24, or 32 bytes for AES-128, AES-192, or AES-256.</param>
+    /// <param name="nonce">Nonce or initial counter value must be 16 bytes.</param>
     public AesCtrRandomNumberGenerator(string key, string nonce)
     {
         if (key is not { Length: 16 or 24 or 32 })
