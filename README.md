@@ -28,7 +28,7 @@ Additionally, characters in the source string that do not exist in the cipher ch
 
 ## Cipher Strength
 
-The physical machine modified with a plug board provided 150 trillion possible settings combinations for the 26 letter character set, with a 10^16^ key space for a 3 rotor configuration. 4 rotors yielded a key space of 10^19^, 5 rotors yielded a key space of 10^23^, and so on.
+The physical machine modified with a plug board provided 150 trillion possible settings combinations for the 26 letter character set, with a 10^16 key space for a 3 rotor configuration. 4 rotors yielded a key space of 10^19, 5 rotors yielded a key space of 10^23, and so on.
 
 So by simply using the full 95 character ASCII character set the cipher strength will be exponentially better than the original machine, even without additional rotors or other configuration, and should meet modern quantum-resistant cryptography needs.  
 
