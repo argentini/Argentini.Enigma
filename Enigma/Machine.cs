@@ -383,7 +383,7 @@ public class Machine
     /// <param name="rotorCount"></param>
     /// <param name="plugWires"></param>
     /// <exception cref="Exception"></exception>
-    public Machine(string key, string nonce, CharacterSets charSet = CharacterSets.Ascii, int rotorCount = 3, int plugWires = -1)
+    public Machine(string key, string nonce, CharacterSets charSet = CharacterSets.Ascii, int rotorCount = 3, int plugWires = 10)
     {
         if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(nonce))
             throw new Exception("Machine => invalid secret or nonce");
@@ -392,7 +392,7 @@ public class Machine
             throw new Exception("Machine => must specify 1 or more rotors");
 
         if (plugWires < 0)
-            plugWires = Constants.CharacterSetValues[charSet].Length / 2;
+            plugWires = 0;
         
         if (plugWires > Constants.CharacterSetValues[charSet].Length / 2)
             throw new Exception("Machine => too many plug wires specified");
