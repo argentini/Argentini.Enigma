@@ -11,7 +11,7 @@ This project is a high performance *Enigma Machine* emulator that allows you to:
 - Explore historical configurations using the classic 26 letter alphabet (no spaces!)  
 - Use for modern quantum-resistant cryptography with the full 95-character ASCII character set.  
   
-Just like the physical device, machine state is used to both encipher and decipher text with the same `Encipher()` function (like a text toggle). Machine state had to match on both the sender and receiver machines. Each operator would add specific rotors in a specific order, set rotor notch positions and starting rotations, as well as set plug wire positions. This emulator uses virtual versions of all key machine components by way of a deterministic random number generator using AES in counter (CTR) mode.  
+Just like the physical device, machine state is used to both encipher and decipher text with the same `Encipher()` method (like a text toggle). Machine state had to match on both the encipher and decipher machines. Each operator would add specific rotors in a specific order, set rotor ring positions and starting rotations, as well as set plug wire positions. This emulator provides virtual versions of all key machine components by way of a deterministic random number generator using AES in counter (CTR) mode.  
 
 The emulated components include:  
 
@@ -22,21 +22,25 @@ The emulated components include:
 
 Additionally, characters in the source string that do not exist in the cipher character set are kept as-is in the enciphered text. For example, if you encipher a string with line breaks they are maintained in-place in the enciphered text since neither the classic 26 letter character set nor the 95 character ASCII set contain line break characters.
 
-Note that by simply using the full 95-character ASCII character set the cipher strength will be exponentially better than the original machine even without additional rotors or other configuration, and should meet modern quantum-resistant cryptography needs.  
-
 ## Performance
 
-**The emulator is FAST!** When using the full 95-character ASCII character set, a large 800KB text string takes about 1 second to encipher. Typical text sizes encipher in a few milliseconds.
+**The emulator is FAST!** When using the full 95 character ASCII character set, a large 800KB text string takes about 1 second to encipher. Typical text sizes encipher in a few milliseconds.
 
-## Unit Tests
+## Cipher Strength
 
-The included units tests show basic usage across various configurations and verify the code as working properly. They're also a great way to qucikly see the *Enigma Machine* in action!
+The physical machine modified with a plug board provided 150 trillion possible settings combinations for the 26 letter character set.
+
+So by simply using the full 95 character ASCII character set the cipher strength will be exponentially better than the original machine, even without additional rotors or other configuration, and should meet modern quantum-resistant cryptography needs.  
 
 ## Examples
 
+### Unit Tests
+
+The included units tests show basic usage across various configurations and verify the code as working properly. They're also a great way to qucikly see the *Enigma Machine* in action!
+
 ### Example 1: Historical Presets
 
-It's easy to create a new virtual Enigma Machine and encipher your own text by using one of the provided presets based on historical machine configurations:  
+It's easy to create a new virtual Enigma Machine and encipher your own text by using one of the provided presets based on one of the provided historical machine configurations:  
 
 - Commercial Enigma (1924)
 - Wehrmacht and Kriegsmarine (1930)
@@ -54,7 +58,14 @@ var message = "FYNYDD IS A SOFTWARE DEVELOPMENT AND HOSTING COMPANY";
 var machine = new Machine(new MachineConfiguration
 {
     MachinePreset = MachinePresets.Commercial_1924,
-    Rotor1RingPosition = 15,
+    PlugBoardWires =
+    {
+        { 'A', 'T' },
+        { 'B', 'V' },
+        { 'C', 'M' },
+        { 'D', 'O' },
+        { 'E', 'Y' },
+    }
 });
 
 var enciphered = machine.Encipher(message.ToString());
@@ -68,7 +79,7 @@ var deciphered = machine.Encipher(enciphered);
 Assert.Equal(message.ToString(), deciphered);
 ```
 
-To more completely customize the preset-based machine, as was done by actual users of the device, you can include additional configuration options:
+To more completely customize the preset-based machine, as was done by operators of the physical device, you can include additional configuration options:
 
 ```C#
 var message = "FYNYDD IS A SOFTWARE DEVELOPMENT AND HOSTING COMPANY";
@@ -110,9 +121,9 @@ var deciphered = machine.Encipher(enciphered);
 Assert.Equal(message.ToString(), deciphered);
 ```
 
-Rotor ring position values are 1 through the number of characters in the character set. In the previous example we're using the original 26 letter character set, which would be a ring position range of 1-26. Rotor starting rotation values are the same as ring position values.  
+Rotor ring position values are 1 through the number of characters in the character set. In the previous example we're using the original 26 letter character set, which would be a ring position range of 1-26. Rotor starting rotation values use the same range.  
 
-Plug board wires are a simple map of two letters, like the original machine used by Germany in World War II, which provides another layer of cipher strength.
+Plug board wires are a simple map of two letters, like the machine modified by Nazi Germany in World War II, which provides another layer of cipher strength. The number of plug board wires cannot exceed half the length of the character set, since they're letter pairs.
 
 ### Example 2: Fully Custom Machine
 
@@ -177,23 +188,23 @@ Assert.Equal(message.ToString(), deciphered);
 
 ### Example 3: Practical Usage
 
-To use the *Enigma Machine* for modern encryption is even easier than using a historical preset, since all you need to provide are a cipher key, nonce, and the number of relevant machine components. There's no need to change rotor ring positions and rotations or set plug board wire pair values since your cipher key and nonce are unique and drive the creation of all machine components.  
+It's even easier to use the *Enigma Machine* for modern encryption, since all you need to provide are a cipher key, nonce, and the number of relevant machine components. There's no need to change rotor ring positions and rotations, or set plug board wire pair values, since your cipher key and nonce are unique and drive the creation of all machine components.  
 
 Here's an example of using the *Enigma Machine* without a historical preset:  
 
 ```C#
+var message = @"
+Fynydd is a software development & hosting company.
+Fynydd is a Welsh word that means mountain or hill.
+";
+
 /*
     AES key must be 16, 24, or 32 bytes for AES-128, AES-192, or AES-256
     Nonce or initial counter value must be 16 bytes
 
     This constructor creates a custom machine using the full ASCII character set,
-    3 Rotors, and 10 Plug Board wire pairs.
+    3 Rotors (default), and 10 Plug Board wire pairs (default).
 */
-
-var message = @"
-Fynydd is a software development & hosting company.
-Fynydd is a Welsh word that means mountain or hill.
-";
 
 var machine = new Machine(
     "ThisIsA32ByteLongSecretKey123456",
@@ -213,21 +224,21 @@ Assert.Equal(message.ToString(), deciphered);
 You can also specify the number of various components to increase cipher strength:
 
 ```C#
-/*
-    AES key must be 16, 24, or 32 bytes for AES-128, AES-192, or AES-256
-    Nonce or initial counter value must be 16 bytes
-*/
-
 var message = @"
 Fynydd is a software development & hosting company.
 Fynydd is a Welsh word that means mountain or hill.
 ";
 
+/*
+    AES key must be 16, 24, or 32 bytes for AES-128, AES-192, or AES-256
+    Nonce or initial counter value must be 16 bytes
+*/
+
 var machine = new Machine(
     "ThisIsA32ByteLongSecretKey123456",
     "UniqueNonce12345",
-    rotorCount: 5,
-    plugWires: 13);
+    rotorCount: 6,
+    plugWires: 47);
 
 var enciphered = machine.Encipher(message.ToString());
 
