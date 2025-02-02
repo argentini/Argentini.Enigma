@@ -32,13 +32,13 @@ The physical machine modified with a plug board provided 150 trillion possible s
 
 So by simply using the full 95 character ASCII character set the cipher strength will be exponentially better than the original machine, even without additional rotors or other configuration, and should meet modern quantum-resistant cryptography needs.  
 
-## Examples
+# Examples
 
-### Unit Tests
+## Unit Tests
 
 The included units tests show basic usage across various configurations and verify the code as working properly. They're also a great way to qucikly see the *Enigma Machine* in action!
 
-### Example 1: Historical Presets
+## Example 1: Historical Presets
 
 It's easy to create a new virtual Enigma Machine and encipher your own text by using one of the provided presets based on one of the provided historical machine configurations:  
 
@@ -125,7 +125,7 @@ Rotor ring position values are 1 through the number of characters in the charact
 
 Plug board wires are a simple map of two letters, like the machine modified by Nazi Germany in World War II, which provides another layer of cipher strength. The number of plug board wires cannot exceed half the length of the character set, since they're letter pairs.
 
-### Example 2: Fully Custom Machine
+## Example 2: Fully Custom Machine
 
 You can also manually assemble an *Enigma Machine* from the various components.
 
@@ -186,7 +186,7 @@ var deciphered = machine.Encipher(enciphered);
 Assert.Equal(message.ToString(), deciphered);
 ```
 
-### Example 3: Practical Usage
+## Example 3: Practical Usage
 
 It's even easier to use the *Enigma Machine* for modern encryption, since all you need to provide are a cipher key, nonce, and the number of relevant machine components. There's no need to change rotor ring positions and rotations, or set plug board wire pair values, since your cipher key and nonce are unique and drive the creation of all machine components.  
 
